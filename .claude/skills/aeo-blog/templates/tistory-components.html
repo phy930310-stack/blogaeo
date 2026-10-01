@@ -1,0 +1,53 @@
+<!--
+  티스토리 본문용 HTML 부품 모음
+  - 티스토리 스킨이 <blockquote>를 가운데 정렬하고, 표 칸이 좁으면 모바일에서 글자가 세로로 쪼개지는 문제를 막기 위한 인라인 스타일 부품입니다.
+  - tistory.html 작성 시 아래 부품을 그대로 복사해 내용만 바꿔 사용합니다. (class 대신 inline style만 사용 — 티스토리 편집기가 유지함을 확인)
+-->
+
+<!-- [1] 핵심 요약 박스 : blockquote 대신 사용 -->
+<div style="background:#F4F6FB;border-left:4px solid #1E2A78;border-radius:8px;padding:16px 20px;margin:20px 0;text-align:left;word-break:keep-all;">
+<p style="margin:0 0 8px;font-weight:bold;color:#1E2A78;">핵심 요약</p>
+<ul style="margin:0;padding-left:20px;text-align:left;">
+<li style="margin:4px 0;">{요약 1}</li>
+<li style="margin:4px 0;">{요약 2}</li>
+<li style="margin:4px 0;">{요약 3}</li>
+</ul>
+</div>
+
+<!-- [2] 표 : 가로 스크롤 래퍼 + 줄바꿈 방지. 열은 최대 3개 권장(4개 이상이면 min-width를 640px로) -->
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;">
+<table style="width:100%;min-width:520px;border-collapse:collapse;font-size:15px;line-height:1.5;word-break:keep-all;">
+<thead>
+<tr>
+<th style="background:#1E2A78;color:#fff;padding:10px 12px;border:1px solid #1E2A78;text-align:left;white-space:nowrap;">{열1}</th>
+<th style="background:#1E2A78;color:#fff;padding:10px 12px;border:1px solid #1E2A78;text-align:left;white-space:nowrap;">{열2}</th>
+<th style="background:#1E2A78;color:#fff;padding:10px 12px;border:1px solid #1E2A78;text-align:left;white-space:nowrap;">{열3}</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding:10px 12px;border:1px solid #DCE1EE;white-space:nowrap;font-weight:bold;text-align:left;">{행 이름 — 짧은 첫 열은 nowrap}</td>
+<td style="padding:10px 12px;border:1px solid #DCE1EE;text-align:left;">{값}</td>
+<td style="padding:10px 12px;border:1px solid #DCE1EE;text-align:left;">{값}</td>
+</tr>
+<tr style="background:#F9FAFD;">
+<td style="padding:10px 12px;border:1px solid #DCE1EE;white-space:nowrap;font-weight:bold;text-align:left;">{행 이름}</td>
+<td style="padding:10px 12px;border:1px solid #DCE1EE;text-align:left;">{값}</td>
+<td style="padding:10px 12px;border:1px solid #DCE1EE;text-align:left;">{값}</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- [3] 회색 보조 문구 (기준 시점 등). ※ 기호로 시작하지 않는다 — 안내문으로 오인되어 삭제될 수 있음 -->
+<p style="color:#5B6380;font-size:0.9em;">{보조 문구}</p>
+
+<!-- [4] 가상 사례 박스 : 소제목 끝에 "(가상 사례)", 박스 첫 줄은 고지 문장(※ 기호 금지) -->
+<h2>{상황 요약} (가상 사례)</h2>
+<div style="border:1px solid #DCE1EE;border-radius:8px;padding:16px 20px;margin:16px 0;text-align:left;word-break:keep-all;">
+<p style="margin:0 0 10px;color:#5B6380;">아래는 상담에서 자주 나오는 고민을 재구성한 가상 사례입니다.</p>
+<p style="margin:6px 0;"><b>상황</b> — {…}</p>
+<p style="margin:6px 0;"><b>고민</b> — {…}</p>
+<p style="margin:6px 0;"><b>확인한 것</b> — {…}</p>
+<p style="margin:6px 0;"><b>세운 계획</b> — {…}</p>
+</div>
