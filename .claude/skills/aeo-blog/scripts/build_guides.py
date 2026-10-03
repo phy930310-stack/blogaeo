@@ -190,7 +190,9 @@ def _clean(x):
     x = re.sub(r"&[a-z]+;", " ", x); return re.sub(r"\[[^\]]*\]", "", x)
 def _sents(x):
     return [y for y in (re.sub(r"\s+", " ", z).strip(" ·①②③④-—") for z in re.split(r"(?<=[.?!요다])\s+|\n", x)) if len(y) >= 15]
-_n, _t = _clean(naver), _clean(tist)
+# 참고 자료·연락처(고정 문구)와 가상 사례 고지 문장은 두 플랫폼이 같아야 하므로 비교에서 제외
+_cut = lambda x: x.split("참고 자료")[0].replace("재구성한 가상 사례", "")
+_n, _t = _cut(_clean(naver)), _cut(_clean(tist))
 _ns, _ts = _sents(_n), _sents(_t)
 # 사실·수치 문장은 표현만 바꿔도 비슷할 수밖에 없으므로, 85% 이상 비슷한 문장 수와 5글자 조각 겹침률로 판단
 _near = [a for a in _ns if any(difflib.SequenceMatcher(None, a, b).ratio() >= 0.85 for b in _ts)]
