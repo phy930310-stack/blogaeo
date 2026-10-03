@@ -31,7 +31,8 @@ for name, body in (("네이버", naver), ("티스토리", tist)):
             problems.append(f"{name}: 가상 사례 소제목에 '(가상 사례)' 없음")
         if "재구성한 가상 사례" not in body:
             problems.append(f"{name}: 가상 사례 고지 문장 없음")
-    order = [body.find(k) for k in ("자주 묻는 질문", "참고 자료", "042-716-7439")]
+    keys = [k for k in ("자주 묻는 질문", "참고 자료", "042-716-7439") if k != "자주 묻는 질문" or k in body]
+    order = [body.find(k) for k in keys]
     if -1 in order or order != sorted(order):
         problems.append(f"{name}: 글 끝 순서(FAQ → 참고 자료 → 연락처) 불일치")
     if "대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호)" not in body:
@@ -50,11 +51,14 @@ for t in re.finditer(r"<table", tist):
 faq = tist.split("자주 묻는 질문</h2>")[1].split("<h2")[0] if "자주 묻는 질문</h2>" in tist else ""
 pairs = [(re.sub("<[^>]+>", "", q).strip().removeprefix("Q.").strip(), re.sub("<[^>]+>", "", a).strip())
          for q, a in re.findall(r"<h3[^>]*>(.*?)</h3>\s*<p[^>]*>(.*?)</p>", faq, re.S)]
-if len(pairs) < 3:
-    problems.append(f"티스토리: FAQ 문항 {len(pairs)}개 (3개 이상 필요)")
+# FAQ 정책: 본문에서 답하지 못한 실제 질문이 있을 때만 2~3개. 없으면 FAQ 섹션·FAQPage 모두 생략
+if faq and not (2 <= len(pairs) <= 3):
+    problems.append(f"티스토리: FAQ 문항 {len(pairs)}개 (있다면 2~3개)")
+if ("자주 묻는 질문" in naver) != bool(pairs):
+    problems.append("네이버·티스토리 FAQ 유무가 다름")
 ld = {"@context": "https://schema.org", "@type": "FAQPage",
       "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pairs]}
-script = '<script type="application/ld+json">\n' + json.dumps(ld, ensure_ascii=False, indent=2) + "\n</script>"
+script = ('<script type="application/ld+json">\n' + json.dumps(ld, ensure_ascii=False, indent=2) + "\n</script>") if pairs else ""
 t_imgs = re.findall(r"\[이미지 업로드: (\S+) / 대체텍스트: ([^\]]+)\]", tist)
 t_real = re.findall(r"\[(실제 사진 \d): ([^/\]]+) / 대체텍스트: ([^\]]+)\]", tist)
 
@@ -94,7 +98,7 @@ tg = f"""==================================================
 
 ④ FAQ 코드 — 맨 마지막 작업! HTML 모드 → 코드 창 맨 아래(Ctrl+End)에 붙여넣기 → 이후 모드 전환 없이 바로 발행
 --------------------------------------------------
-{script}
+{script or "(이 글은 FAQ가 없어 생략합니다)"}
 
 
 ⑤ 태그 — 태그 칸에 붙여넣기 (한 덩어리로 들어가면 하나씩 입력)
@@ -180,6 +184,11 @@ naver.md 를 메모장으로 열어 전체 복사(Ctrl+A → Ctrl+C) → 본문�
 """
 
 open(P("tistory-붙여넣기안내.txt"), "w", encoding="utf-8").write(tg)
+# 업로더(tools/tistory-uploader)가 본문 끝에 붙일 FAQ 코드
+if script:
+    open(P("tistory-faq.html"), "w", encoding="utf-8").write(script + "\n")
+elif os.path.exists(P("tistory-faq.html")):
+    os.remove(P("tistory-faq.html"))
 open(P("naver-붙여넣기안내.txt"), "w", encoding="utf-8").write(ng)
 print(f"FAQ {len(pairs)}문항 / 티스토리 이미지 {len(t_imgs)}+실제 {len(t_real)} / 네이버 이미지 {len(n_imgs)}+실제 {len(n_real)}")
 print("점검: 이상 없음" if not problems else "점검 결과:\n- " + "\n- ".join(problems))

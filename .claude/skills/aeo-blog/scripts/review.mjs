@@ -46,6 +46,39 @@ async function shots(p, name, width) {
     await p.screenshot({ path: join(out, `${name}-${k}.png`), fullPage: true, clip: { x: 0, y, width, height: Math.min(step, H - y) } });
 }
 
+// 검색 수집 준비 점검: 비로그인 외부 접근 / robots.txt 허용 / RSS·사이트맵 포함 여부
+// (색인 여부 자체는 네이버 서치어드바이저·구글 서치콘솔의 URL 검사로만 확인 가능)
+async function searchReadiness(ctx, postUrl) {
+  const u = new URL(postUrl); const origin = u.origin; const path = u.pathname;
+  const get = async (url) => { try { const r = await ctx.request.get(url, { failOnStatusCode: false, timeout: 20000, headers: { cookie: "" } }); return { status: r.status(), text: await r.text() }; } catch { return { status: null, text: "" }; } };
+  const page = await get(postUrl);
+  const robots = await get(`${origin}/robots.txt`);
+  // robots: User-agent * 그룹에서 이 글 경로가 Disallow 되는지 단순 판정
+  let robotsAllows = null;
+  if (robots.text) {
+    let inStar = false, blocked = false;
+    for (const line of robots.text.split(/\r?\n/).map((l) => l.replace(/#.*/, "").trim()).filter(Boolean)) {
+      const [k, ...v] = line.split(":"); const key = k.trim().toLowerCase(); const val = v.join(":").trim();
+      if (key === "user-agent") inStar = val === "*";
+      else if (inStar && key === "disallow" && val && path.startsWith(val)) blocked = true;
+    }
+    robotsAllows = !blocked;
+  }
+  const rss = await get(`${origin}/rss`);
+  const sitemap = await get(`${origin}/sitemap.xml`);
+  const id = path.replace(/\/$/, "").split("/").pop();
+  const has = (t) => t.includes(postUrl) || t.includes(`${origin}${path}`) || new RegExp(`${origin.replace(/[.]/g, "\\.")}/(entry/)?[^<\\s]*\\b${id}\\b`).test(t);
+  return {
+    publicStatus: page.status,
+    // 비로그인 요청으로 글 본문(article)이 열리면 공개 상태
+    publicAccessible: page.status === 200 && /og:type"\s+content="article"|class="(?:article-view|tt_article_useless_p_margin)/.test(page.text),
+    robotsAllows,
+    inRss: rss.status === 200 ? has(rss.text) : null,
+    inSitemap: sitemap.status === 200 ? has(sitemap.text) : null,
+    note: "통과해도 실제 색인은 네이버 서치어드바이저·구글 서치콘솔 URL 검사로 확인",
+  };
+}
+
 const report = {};
 
 if (tUrl && tUrl !== "-") {
@@ -73,6 +106,7 @@ if (tUrl && tUrl !== "-") {
       hasSources: /참고 자료/.test(text),
     };
   });
+  report.tistory.searchReadiness = await searchReadiness(ctx, tUrl);
   await shots(p, "t-desk", 1280); await ctx.close();
   const m = await open(u.mob, true);
   report.tistory.mobileVerticalBreakCells = await m.p.evaluate(() =>
