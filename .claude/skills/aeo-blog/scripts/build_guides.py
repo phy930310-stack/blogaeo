@@ -125,6 +125,10 @@ if "|" in naver and re.search(r"^\|.*\|$", naver, re.M):
     problems.append("네이버: 표(| |) 사용 — 목록이나 이미지로 대체")
 n_imgs = re.findall(r"\[이미지: (\S+) / 사진 설명: ([^\]]+)\]", naver)
 n_real = re.findall(r"\[(실제 사진 \d): ([^/\]]+) / 사진 설명: ([^\]]+)\]", naver)
+if "sbsdaejeon-game.co.kr" not in naver:
+    problems.append("네이버: 글 끝 홈페이지 링크 없음")
+if "tel:042-716-7439" not in tist or "sbsdaejeon-game.co.kr" not in tist:
+    problems.append("티스토리: 글 끝 상담 배너(CTA: 전화·홈페이지 버튼) 없음 — templates/tistory-components.html [5]")
 if "[지도]" not in naver:
     problems.append("네이버: [지도] 표시 없음")
 
@@ -165,8 +169,10 @@ ng = f"""==================================================
              네이버와 티스토리에는 같은 사진 말고 다른 컷 사용
 
 
-⑤ 지도
+⑤ 홈페이지 링크 카드 · 지도
 --------------------------------------------------
+"▶ 게임학원 홈페이지: http://…" 줄의 주소 부분만 복사 → 바로 아래 빈 줄에 붙여넣고 Enter → 링크 카드(미리보기)가 생기면 성공
+(카드가 생기지 않아도 글자 링크로 동작합니다)
 맨 아래 [지도] 줄 자리 → 툴바 '장소' → "{meta.get('map_name', 'SBS아카데미게임학원 대전점')}" 검색 → 추가 → [지도] 줄 삭제
 
 
