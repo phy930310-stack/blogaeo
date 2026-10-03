@@ -1,4 +1,4 @@
-// 티스토리 비공개 업로더 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
+// 티스토리 비공개 업로더 v0.1.3 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
 //
 //   node upload.mjs login              티스토리 로그인 창 열기(최초 1회·세션 만료 시). 로그인 후 창을 닫으면 끝
 //   node upload.mjs check              로그인 상태 확인
@@ -75,7 +75,7 @@ function compose(post, urls) {
     if (url) out = out.replace(s.marker, figure(url, s.alt));
     else missing.push(s.kind); // 사진이 없으면 안내 줄을 그대로 남겨 사람이 보고 채우게 한다
   }
-  if (/<p>\[이미지 업로드:/.test(out)) fail("생성 이미지 자리 중 채워지지 않은 곳이 있습니다.");
+  if (/<p>\[이미지 업로드:/.test(out)) throw new Error("생성 이미지 자리 중 채워지지 않은 곳이 있습니다.");
   return { html: out + (post.faq ? `\n${post.faq}\n` : ""), missing };
 }
 
@@ -136,14 +136,31 @@ async function cdnImages(page) {
 async function upload(cfg, dir) {
   const post = readPost(dir);
   for (const s of post.slots) if (s.kind === "생성 이미지" && !fs.existsSync(s.file)) fail(`이미지 파일이 없습니다: ${s.file}`);
+  console.log(`\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
   const ctx = await browser(false); // 진행 과정을 눈으로 볼 수 있게 창을 띄운다
   try {
-    if (!await isLoggedIn(ctx, cfg.blogUrl)) fail("티스토리 로그인이 필요합니다. login.cmd 를 먼저 실행해 주세요.");
     const page = ctx.pages()[0] || await ctx.newPage();
     // '작성 중인 글을 이어서 쓸까요?' 같은 확인창이 뜨면 '취소'(새 글)로 진행
     page.on("dialog", (d) => d.dismiss().catch(() => {}));
-    await page.goto(`${cfg.blogUrl}/manage/newpost`, { waitUntil: "domcontentloaded", timeout: 60000 });
+    const newpost = `${cfg.blogUrl}/manage/newpost`;
+    const onLogin = () => /auth\/login|accounts\.kakao\.com|logins\.daum|\/login/i.test(page.url());
+    console.log("[2/6] 로그인 확인 …");
+    await page.goto(newpost, { waitUntil: "domcontentloaded", timeout: 60000 });
+    if (onLogin()) {
+      // 세션이 없거나 만료됨 → 같은 창에서 로그인하면 이어서 진행
+      console.log("      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인을 해 주세요. (최대 10분 대기)");
+      const end = Date.now() + 10 * 60_000;
+      while (Date.now() < end) {
+        await page.waitForTimeout(3000);
+        if (await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) break;
+      }
+      if (!await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) throw new Error("10분 안에 로그인이 확인되지 않았습니다");
+      console.log("      로그인 확인 — 계속 진행합니다");
+      await page.goto(newpost, { waitUntil: "domcontentloaded", timeout: 60000 });
+    }
+    if (!/\/manage\/newpost/.test(page.url())) throw new Error(`글쓰기 화면으로 가지 못했습니다. 현재 주소: ${page.url()}`);
     await page.waitForTimeout(2500);
+    console.log("[3/6] 제목·이미지 입력 …");
 
     // 1) 제목
     const title = page.locator('textarea[placeholder*="제목"], input[placeholder*="제목"], #post-title-inp').first();
@@ -159,6 +176,7 @@ async function upload(cfg, dir) {
       console.log("완료");
     }
 
+    console.log("[4/6] 본문·FAQ 코드 입력 …");
     // 3) 본문 + FAQ 코드 입력 후 코드가 살아 있는지 확인 (TinyMCE가 완전히 초기화된 뒤 입력 — 초기화 전 입력 시 빈 글로 저장된 사례 있음)
     await page.waitForFunction(() => window.tinymce?.activeEditor?.initialized === true, null, { timeout: 30000 })
       .catch(() => { throw new Error("편집기 초기화를 확인하지 못했습니다"); });
@@ -173,6 +191,7 @@ async function upload(cfg, dir) {
     if (!res || !res.len) throw new Error("편집기에 본문을 넣지 못했습니다");
     if (res.ld < expected) throw new Error(`FAQ 코드가 편집기에서 제거되었습니다(${res.ld}/${expected}) — 저장하지 않고 중단`);
 
+    console.log("[5/6] 카테고리·태그 입력 …");
     // 4) 카테고리 · 태그
     const warns = [];
     if (post.meta.tistory_category) {
@@ -188,6 +207,7 @@ async function upload(cfg, dir) {
     if (await tagInput.count()) { for (const t of (post.meta.tistory_tags || []).slice(0, 10)) { await tagInput.fill(t); await page.keyboard.press("Enter"); } }
     else warns.push("태그 입력칸을 찾지 못함");
 
+    console.log("[6/6] 비공개 저장 …");
     // 5) 비공개 저장 (확인 못 하면 저장하지 않음)
     await page.locator("#publish-layer-btn:visible").first().click();
     await page.waitForTimeout(600);
@@ -216,8 +236,9 @@ async function upload(cfg, dir) {
     console.log("  · 티스토리에서 내용을 검수한 뒤 '공개'로 전환하세요. 공개 후 Claude에게 주소를 주면 검색 수집 준비까지 점검합니다.\n");
   } catch (e) {
     console.error(`\n[실패] ${e.message}\n원고와 이미지는 그대로 있습니다. 문제를 해결한 뒤 다시 실행하면 됩니다.`);
-    console.error("창은 30초 뒤 닫힙니다(화면을 캡처해 두면 원인 파악에 도움이 됩니다).");
-    await new Promise((r) => setTimeout(r, 30000));
+    console.error("크롬 창과 이 창을 캡처해 Claude에게 보내 주세요.");
+    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    await rl.question("Enter 를 누르면 크롬 창을 닫습니다 … "); rl.close();
     process.exitCode = 1;
   } finally { await ctx.close(); }
 }
