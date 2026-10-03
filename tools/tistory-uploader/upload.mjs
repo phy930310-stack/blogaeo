@@ -31,10 +31,10 @@ function loadConfig() {
 async function pickPost(arg) {
   if (arg) {
     const p = fs.existsSync(arg) ? arg : path.join(POSTS, arg);
-    if (!fs.existsSync(path.join(p, "tistory.html"))) fail(`원고 폴더가 아닙니다: ${p}`);
+    if (!fs.existsSync(path.join(p, "티스토리_본문.html"))) fail(`원고 폴더가 아닙니다: ${p}`);
     return path.resolve(p);
   }
-  const list = fs.existsSync(POSTS) ? fs.readdirSync(POSTS).filter((d) => fs.existsSync(path.join(POSTS, d, "tistory.html"))).sort().reverse() : [];
+  const list = fs.existsSync(POSTS) ? fs.readdirSync(POSTS).filter((d) => fs.existsSync(path.join(POSTS, d, "티스토리_본문.html"))).sort().reverse() : [];
   if (!list.length) fail(`posts 폴더에 원고가 없습니다. 받은 압축 파일을 ${POSTS} 안에 풀어 주세요.`);
   console.log("\n업로드할 원고를 고르세요:");
   list.forEach((d, i) => console.log(`  ${i + 1}) ${d}${fs.existsSync(path.join(POSTS, d, "uploaded.json")) ? "   (이미 업로드함)" : ""}`));
@@ -50,13 +50,13 @@ const REAL_RE = /<p>\[실제 사진 (\d+): [^\]]*? \/ 대체텍스트: ([^\]]+)\
 
 function readPost(dir) {
   const meta = JSON.parse(fs.readFileSync(path.join(dir, "meta.json"), "utf-8"));
-  const html = fs.readFileSync(path.join(dir, "tistory.html"), "utf-8");
-  const faqPath = path.join(dir, "tistory-faq.html");
+  const html = fs.readFileSync(path.join(dir, "티스토리_본문.html"), "utf-8");
+  const faqPath = path.join(dir, "티스토리_FAQ코드.html");
   const faq = fs.existsSync(faqPath) ? fs.readFileSync(faqPath, "utf-8").trim() : "";
   const slots = [];
   for (const m of html.matchAll(IMG_RE)) slots.push({ marker: m[0], file: path.join(dir, "images", m[1]), alt: m[2].trim(), kind: "생성 이미지" });
   for (const m of html.matchAll(REAL_RE)) {
-    const base = path.join(dir, "photos", `실제사진${m[1]}`);
+    const base = path.join(dir, "실제사진", `실제사진${m[1]}`);
     const file = [".jpg", ".jpeg", ".png", ".webp", ".JPG", ".JPEG", ".PNG"].map((e) => base + e).find((f) => fs.existsSync(f));
     slots.push({ marker: m[0], file, alt: m[2].trim(), kind: `실제 사진 ${m[1]}` });
   }
@@ -153,7 +153,7 @@ async function upload(cfg, dir) {
     // 2) 이미지 업로드(생성 이미지 + 있는 실제 사진)
     const urls = new Map();
     for (const s of post.slots) {
-      if (!s.file) { console.log(`  - ${s.kind}: photos 폴더에 파일이 없어 건너뜀(안내 줄 유지)`); continue; }
+      if (!s.file) { console.log(`  - ${s.kind}: 실제사진 폴더에 파일이 없어 건너뜀(안내 줄 유지)`); continue; }
       process.stdout.write(`  - ${s.kind} 업로드: ${path.basename(s.file)} … `);
       urls.set(s.marker, await uploadImage(page, s.file));
       console.log("완료");

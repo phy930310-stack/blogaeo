@@ -1,4 +1,4 @@
-"""원고 폴더의 naver.md / tistory.html / meta.json 으로 붙여넣기 안내 파일 2개를 만들고 자동 점검한다.
+"""원고 폴더의 네이버_본문.txt / 티스토리_본문.html / meta.json 으로 붙여넣기 안내 파일 2개를 만들고 자동 점검한다.
 사용: python3 .claude/skills/aeo-blog/scripts/build_guides.py posts/<폴더>
 
 meta.json 예:
@@ -18,8 +18,8 @@ import json, re, sys, os
 folder = sys.argv[1]
 P = lambda f: os.path.join(folder, f)
 meta = json.load(open(P("meta.json"), encoding="utf-8"))
-naver = open(P("naver.md"), encoding="utf-8").read()
-tist = open(P("tistory.html"), encoding="utf-8").read()
+naver = open(P("네이버_본문.txt"), encoding="utf-8").read()
+tist = open(P("티스토리_본문.html"), encoding="utf-8").read()
 problems = []
 
 # ---------- 공통 점검 ----------
@@ -84,7 +84,7 @@ tg = f"""==================================================
 
 ② 본문
 --------------------------------------------------
-글쓰기 → 우측 상단 '기본모드' → 'HTML' → tistory.html 전체 복사(Ctrl+A, Ctrl+C) → 붙여넣기
+글쓰기 → 우측 상단 '기본모드' → 'HTML' → 티스토리_본문.html 을 메모장으로 열어(오른쪽 클릭 → 연결 프로그램 → 메모장) 전체 복사(Ctrl+A, Ctrl+C) → 붙여넣기
 
 
 ③ 이미지 — 기본모드로 바꾼 뒤 [이미지 업로드: …] / [실제 사진 …] 자리에 업로드 → 이미지 클릭 → 대체텍스트 입력 → 안내 줄 삭제
@@ -142,7 +142,7 @@ ng = f"""==================================================
 
 ② 본문
 --------------------------------------------------
-naver.md 를 메모장으로 열어 전체 복사(Ctrl+A → Ctrl+C) → 본문에 붙여넣기
+네이버_본문.txt 를 메모장으로 열어 전체 복사(Ctrl+A → Ctrl+C) → 본문에 붙여넣기
 
 
 ③ 서식 적용 (가독성에 가장 큰 영향)
@@ -183,13 +183,13 @@ naver.md 를 메모장으로 열어 전체 복사(Ctrl+A → Ctrl+C) → 본문�
 [ ] 본문에 "[" 로 시작하는 안내 표시가 남아 있지 않다 (Ctrl+F 로 "[" 검색)
 """
 
-open(P("tistory-붙여넣기안내.txt"), "w", encoding="utf-8").write(tg)
+open(P("티스토리_붙여넣기안내.txt"), "w", encoding="utf-8").write(tg)
 # 업로더(tools/tistory-uploader)가 본문 끝에 붙일 FAQ 코드
 if script:
-    open(P("tistory-faq.html"), "w", encoding="utf-8").write(script + "\n")
-elif os.path.exists(P("tistory-faq.html")):
-    os.remove(P("tistory-faq.html"))
-open(P("naver-붙여넣기안내.txt"), "w", encoding="utf-8").write(ng)
+    open(P("티스토리_FAQ코드.html"), "w", encoding="utf-8").write(script + "\n")
+elif os.path.exists(P("티스토리_FAQ코드.html")):
+    os.remove(P("티스토리_FAQ코드.html"))
+open(P("네이버_붙여넣기안내.txt"), "w", encoding="utf-8").write(ng)
 print(f"FAQ {len(pairs)}문항 / 티스토리 이미지 {len(t_imgs)}+실제 {len(t_real)} / 네이버 이미지 {len(n_imgs)}+실제 {len(n_real)}")
 print("점검: 이상 없음" if not problems else "점검 결과:\n- " + "\n- ".join(problems))
 sys.exit(1 if problems else 0)
