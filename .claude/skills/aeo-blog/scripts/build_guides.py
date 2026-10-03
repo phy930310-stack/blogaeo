@@ -183,6 +183,25 @@ ng = f"""==================================================
 [ ] 본문에 "[" 로 시작하는 안내 표시가 남아 있지 않다 (Ctrl+F 로 "[" 검색)
 """
 
+# ---------- 플랫폼 차별화 점검 (네이버가 티스토리도 수집하므로 유사문서 위험 관리) ----------
+import difflib
+def _clean(x):
+    x = re.sub(r"<script.*?</script>", "", x, flags=re.S); x = re.sub(r"<[^>]+>", "\n", x)
+    x = re.sub(r"&[a-z]+;", " ", x); return re.sub(r"\[[^\]]*\]", "", x)
+def _sents(x):
+    return [y for y in (re.sub(r"\s+", " ", z).strip(" ·①②③④-—") for z in re.split(r"(?<=[.?!요다])\s+|\n", x)) if len(y) >= 15]
+_n, _t = _clean(naver), _clean(tist)
+_ns, _ts = _sents(_n), _sents(_t)
+# 사실·수치 문장은 표현만 바꿔도 비슷할 수밖에 없으므로, 85% 이상 비슷한 문장 수와 5글자 조각 겹침률로 판단
+_near = [a for a in _ns if any(difflib.SequenceMatcher(None, a, b).ratio() >= 0.85 for b in _ts)]
+_g = lambda x: {re.sub(r"\s", "", x)[i:i + 5] for i in range(len(re.sub(r"\s", "", x)) - 5)}
+_jac = len(_g(_n) & _g(_t)) / max(1, len(_g(_n) | _g(_t)))
+print(f"플랫폼 차별화: 거의 같은 문장 {len(_near)}개 / 5글자 조각 겹침률 {_jac:.0%} (기준: 5개 이하, 20% 이하)")
+if len(_near) > 5 or _jac > 0.20:
+    problems.append(f"네이버·티스토리 문장이 너무 비슷함 (거의 같은 문장 {len(_near)}개, 겹침률 {_jac:.0%}) — 어미만 바꾸지 말고 문장 구조·예시를 다시 쓸 것")
+    for a in _near[:8]:
+        problems.append(f"  ≈ {a[:60]}")
+
 open(P("티스토리_붙여넣기안내.txt"), "w", encoding="utf-8").write(tg)
 # 업로더(tools/tistory-uploader)가 본문 끝에 붙일 FAQ 코드
 if script:
