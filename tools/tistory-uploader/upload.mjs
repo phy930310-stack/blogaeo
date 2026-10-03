@@ -1,9 +1,10 @@
-// 티스토리 비공개 업로더 v0.1.4 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
+// 티스토리 비공개 업로더 v0.1.5 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
 //
 //   node upload.mjs login              티스토리 로그인 창 열기(최초 1회·세션 만료 시). 로그인 후 창을 닫으면 끝
 //   node upload.mjs check              로그인 상태 확인
 //   node upload.mjs preview [폴더]     업로드 없이 최종 HTML 미리보기(preview.html) 생성
 //   node upload.mjs upload  [폴더]     이미지 업로드 → 본문·FAQ 코드·카테고리·태그 입력 → 비공개 저장
+//   node upload.mjs cta <글번호> <배너.html>   이미 올린 글의 맨 아래 연락처 문단을 상담 배너로 교체(공개 상태 유지)
 //
 // 원칙
 // - 로그인은 사람이 직접 한다. 비밀번호를 저장하지 않는다(로그인 세션은 이 PC의 브라우저 프로필에만 저장).
@@ -136,7 +137,7 @@ async function cdnImages(page) {
 async function upload(cfg, dir) {
   const post = readPost(dir);
   for (const s of post.slots) if (s.kind === "생성 이미지" && !fs.existsSync(s.file)) fail(`이미지 파일이 없습니다: ${s.file}`);
-  console.log(`\n업로더 v0.1.4\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
+  console.log(`\n업로더 v0.1.5\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
   const ctx = await browser(false); // 진행 과정을 눈으로 볼 수 있게 창을 띄운다
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -243,6 +244,72 @@ async function upload(cfg, dir) {
   } finally { await ctx.close(); }
 }
 
+// ---------- 이미 올린 글에 상담 배너 넣기 ----------
+async function ensureLogin(ctx, page, cfg, url) {
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+  if (/auth\/login|accounts\.kakao\.com|\/login/i.test(page.url())) {
+    console.log("      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인('로그인 상태 유지' 체크)을 해 주세요. (최대 10분)");
+    const end = Date.now() + 10 * 60_000;
+    while (Date.now() < end) { await page.waitForTimeout(3000); if (await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) break; }
+    if (!await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) throw new Error("10분 안에 로그인이 확인되지 않았습니다");
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+  }
+}
+async function addCta(cfg, postId, ctaFile) {
+  if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요. 예: node upload.mjs cta 4 cta\\CTA_4.html");
+  const ctaPath = path.isAbsolute(ctaFile) ? ctaFile : path.join(ROOT, ctaFile);
+  if (!fs.existsSync(ctaPath)) fail(`배너 파일이 없습니다: ${ctaPath}`);
+  const cta = fs.readFileSync(ctaPath, "utf-8").trim();
+  console.log(`\n업로더 v0.1.5 · 상담 배너 넣기 — ${cfg.blogUrl}/${postId}`);
+  const ctx = await browser(false);
+  try {
+    const page = ctx.pages()[0] || await ctx.newPage();
+    page.on("dialog", (d) => d.dismiss().catch(() => {}));
+    console.log("[1/4] 글 수정 화면 열기 …");
+    await ensureLogin(ctx, page, cfg, `${cfg.blogUrl}/manage/post/${postId}`);
+    await page.waitForFunction(() => window.tinymce?.activeEditor?.initialized === true, null, { timeout: 30000 })
+      .catch(() => { throw new Error("편집기 초기화를 확인하지 못했습니다"); });
+    await page.waitForTimeout(1500);
+    console.log("[2/4] 연락처 문단 → 상담 배너 교체 …");
+    const r = await page.evaluate((ctaHtml) => {
+      const ed = window.tinymce.activeEditor; const before = String(ed.getContent() || "");
+      const ld = (x) => (x.match(/application\/ld\+json/g) || []).length;
+      if (before.includes("tel:042-716-7439")) return { skip: true };
+      const re = /<p[^>]*>\s*<(b|strong)>SBS아카데미게임학원 대전점<\/\1>[\s\S]*?<\/p>/;
+      let after, how;
+      if (re.test(before)) { after = before.replace(re, ctaHtml); how = "연락처 문단 교체"; }
+      else if (before.includes('<script type="application/ld+json">')) { after = before.replace('<script type="application/ld+json">', ctaHtml + '\n<script type="application/ld+json">'); how = "FAQ 코드 앞에 추가"; }
+      else { after = before + "\n" + ctaHtml; how = "글 맨 끝에 추가"; }
+      ed.setContent(after); ed.fire("change"); ed.save();
+      const saved = String(ed.getContent() || "");
+      return { how, beforeLen: before.length, ok: saved.includes("tel:042-716-7439"), ldBefore: ld(before), ldAfter: ld(saved) };
+    }, cta);
+    if (r.skip) { console.log("      이미 배너가 들어 있어 건너뜁니다."); return; }
+    if (!r.beforeLen) throw new Error("기존 본문을 읽지 못했습니다 — 저장하지 않고 중단");
+    if (!r.ok) throw new Error("배너가 편집기에 들어가지 않았습니다 — 저장하지 않고 중단");
+    if (r.ldAfter < r.ldBefore) throw new Error(`FAQ 코드가 사라졌습니다(${r.ldAfter}/${r.ldBefore}) — 저장하지 않고 중단`);
+    console.log(`      ${r.how} 완료`);
+    console.log("[3/4] 저장(공개 상태는 그대로 유지) …");
+    await page.locator("#publish-layer-btn:visible").first().click();
+    await page.waitForTimeout(800);
+    const save = page.locator("#publish-btn:visible").first();
+    if (!await save.count()) throw new Error("저장 버튼을 찾지 못했습니다(티스토리 화면 변경 가능성)");
+    console.log(`      저장 버튼: '${(await save.innerText()).trim()}' (공개 설정은 건드리지 않음)`);
+    await save.click();
+    await page.waitForTimeout(3000);
+    console.log("[4/4] 실제 글에서 배너 확인 …");
+    const res = await ctx.request.get(`${cfg.blogUrl}/${postId}?t=${Date.now()}`, { failOnStatusCode: false });
+    const body = await res.text();
+    if (res.status() === 200 && body.includes("tel:042-716-7439")) console.log(`\n[완료] 배너 적용 확인: ${cfg.blogUrl}/${postId}\n`);
+    else console.log(`\n[확인 필요] 저장은 했지만 글에서 배너를 아직 확인하지 못했습니다(상태 ${res.status()}). 잠시 뒤 글을 열어 확인해 주세요.\n`);
+  } catch (e) {
+    console.error(`\n[실패] ${e.message}\n글은 바뀌지 않았거나 저장 전에 멈췄습니다. 크롬 창과 이 창을 캡처해 Claude에게 보내 주세요.`);
+    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    await rl.question("Enter 를 누르면 크롬 창을 닫습니다 … "); rl.close();
+    process.exitCode = 1;
+  } finally { await ctx.close(); }
+}
+
 function preview(dir) {
   const post = readPost(dir);
   const urls = new Map(post.slots.filter((s) => s.file).map((s) => [s.marker, "file:///" + s.file.replace(/\\/g, "/")]));
@@ -259,4 +326,5 @@ if (cmd === "login") await login(cfg);
 else if (cmd === "check") { const ctx = await browser(true); console.log((await isLoggedIn(ctx, cfg.blogUrl)) ? "로그인 상태: 정상" : "로그인 필요: login.cmd 실행"); await ctx.close(); }
 else if (cmd === "preview") preview(await pickPost(arg));
 else if (cmd === "upload") await upload(cfg, await pickPost(arg));
-else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더]");
+else if (cmd === "cta") await addCta(cfg, arg, process.argv[4]);
+else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html>");
