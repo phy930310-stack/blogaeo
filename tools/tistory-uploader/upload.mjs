@@ -159,7 +159,9 @@ async function upload(cfg, dir) {
       console.log("완료");
     }
 
-    // 3) 본문 + FAQ 코드 입력 후 코드가 살아 있는지 확인
+    // 3) 본문 + FAQ 코드 입력 후 코드가 살아 있는지 확인 (TinyMCE가 완전히 초기화된 뒤 입력 — 초기화 전 입력 시 빈 글로 저장된 사례 있음)
+    await page.waitForFunction(() => window.tinymce?.activeEditor?.initialized === true, null, { timeout: 30000 })
+      .catch(() => { throw new Error("편집기 초기화를 확인하지 못했습니다"); });
     const { html, missing } = compose(post, urls);
     const expected = (html.match(/application\/ld\+json/g) || []).length;
     const res = await page.evaluate((content) => {
