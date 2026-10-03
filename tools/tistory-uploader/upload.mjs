@@ -1,10 +1,11 @@
-// 티스토리 비공개 업로더 v0.1.5 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
+// 티스토리 비공개 업로더 v0.1.6 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
 //
 //   node upload.mjs login              티스토리 로그인 창 열기(최초 1회·세션 만료 시). 로그인 후 창을 닫으면 끝
 //   node upload.mjs check              로그인 상태 확인
 //   node upload.mjs preview [폴더]     업로드 없이 최종 HTML 미리보기(preview.html) 생성
 //   node upload.mjs upload  [폴더]     이미지 업로드 → 본문·FAQ 코드·카테고리·태그 입력 → 비공개 저장
 //   node upload.mjs cta <글번호> <배너.html>   이미 올린 글의 맨 아래 연락처 문단을 상담 배너로 교체(공개 상태 유지)
+//   node upload.mjs clean <글번호>             이미 올린 글에 남은 [실제 사진 …] 안내 줄 삭제(공개 상태 유지)
 //
 // 원칙
 // - 로그인은 사람이 직접 한다. 비밀번호를 저장하지 않는다(로그인 세션은 이 PC의 브라우저 프로필에만 저장).
@@ -74,7 +75,7 @@ function compose(post, urls) {
   for (const s of post.slots) {
     const url = urls.get(s.marker);
     if (url) out = out.replace(s.marker, figure(url, s.alt));
-    else missing.push(s.kind); // 사진이 없으면 안내 줄을 그대로 남겨 사람이 보고 채우게 한다
+    else { missing.push(s.kind); out = out.replace(s.marker, ""); } // 사진이 없으면 안내 줄을 지운다(공개 글에 안내 문구가 노출되지 않게)
   }
   if (/<p>\[이미지 업로드:/.test(out)) throw new Error("생성 이미지 자리 중 채워지지 않은 곳이 있습니다.");
   return { html: out + (post.faq ? `\n${post.faq}\n` : ""), missing };
@@ -137,7 +138,7 @@ async function cdnImages(page) {
 async function upload(cfg, dir) {
   const post = readPost(dir);
   for (const s of post.slots) if (s.kind === "생성 이미지" && !fs.existsSync(s.file)) fail(`이미지 파일이 없습니다: ${s.file}`);
-  console.log(`\n업로더 v0.1.5\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
+  console.log(`\n업로더 v0.1.6\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
   const ctx = await browser(false); // 진행 과정을 눈으로 볼 수 있게 창을 띄운다
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -171,7 +172,7 @@ async function upload(cfg, dir) {
     // 2) 이미지 업로드(생성 이미지 + 있는 실제 사진)
     const urls = new Map();
     for (const s of post.slots) {
-      if (!s.file) { console.log(`  - ${s.kind}: 실제사진 폴더에 파일이 없어 건너뜀(안내 줄 유지)`); continue; }
+      if (!s.file) { console.log(`  - ${s.kind}: 실제사진 폴더에 파일이 없어 건너뜀(안내 줄은 지움 — 사진은 나중에 편집 화면에서 추가 가능)`); continue; }
       process.stdout.write(`  - ${s.kind} 업로드: ${path.basename(s.file)} … `);
       urls.set(s.marker, await uploadImage(page, s.file));
       console.log("완료");
@@ -232,7 +233,7 @@ async function upload(cfg, dir) {
 
     fs.writeFileSync(path.join(dir, "uploaded.json"), JSON.stringify({ at: new Date().toISOString(), url: href, private: true, missingPhotos: missing, warnings: warns }, null, 2));
     console.log(`\n[완료] 비공개 저장됨: ${href}`);
-    if (missing.length) console.log(`  · 사진 미첨부: ${missing.join(", ")} → 티스토리 편집 화면에서 안내 줄 자리에 직접 넣어 주세요.`);
+    if (missing.length) console.log(`  · 사진 미첨부: ${missing.join(", ")} → 필요하면 티스토리 편집 화면에서 직접 추가하세요.`);
     for (const w of warns) console.log(`  · ${w}`);
     console.log("  · 티스토리에서 내용을 검수한 뒤 '공개'로 전환하세요. 공개 후 Claude에게 주소를 주면 검색 수집 준비까지 점검합니다.\n");
   } catch (e) {
@@ -255,12 +256,9 @@ async function ensureLogin(ctx, page, cfg, url) {
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
   }
 }
-async function addCta(cfg, postId, ctaFile) {
-  if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요. 예: node upload.mjs cta 4 cta\\CTA_4.html");
-  const ctaPath = path.isAbsolute(ctaFile) ? ctaFile : path.join(ROOT, ctaFile);
-  if (!fs.existsSync(ctaPath)) fail(`배너 파일이 없습니다: ${ctaPath}`);
-  const cta = fs.readFileSync(ctaPath, "utf-8").trim();
-  console.log(`\n업로더 v0.1.5 · 상담 배너 넣기 — ${cfg.blogUrl}/${postId}`);
+async function editPost(cfg, postId, label, transform) {
+  if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요.");
+  console.log(`\n업로더 v0.1.6 · ${label} — ${cfg.blogUrl}/${postId}`);
   const ctx = await browser(false);
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -270,25 +268,19 @@ async function addCta(cfg, postId, ctaFile) {
     await page.waitForFunction(() => window.tinymce?.activeEditor?.initialized === true, null, { timeout: 30000 })
       .catch(() => { throw new Error("편집기 초기화를 확인하지 못했습니다"); });
     await page.waitForTimeout(1500);
-    console.log("[2/4] 연락처 문단 → 상담 배너 교체 …");
-    const r = await page.evaluate((ctaHtml) => {
-      const ed = window.tinymce.activeEditor; const before = String(ed.getContent() || "");
-      const ld = (x) => (x.match(/application\/ld\+json/g) || []).length;
-      if (before.includes("tel:042-716-7439")) return { skip: true };
-      const re = /<p[^>]*>\s*<(b|strong)>SBS아카데미게임학원 대전점<\/\1>[\s\S]*?<\/p>/;
-      let after, how;
-      if (re.test(before)) { after = before.replace(re, ctaHtml); how = "연락처 문단 교체"; }
-      else if (before.includes('<script type="application/ld+json">')) { after = before.replace('<script type="application/ld+json">', ctaHtml + '\n<script type="application/ld+json">'); how = "FAQ 코드 앞에 추가"; }
-      else { after = before + "\n" + ctaHtml; how = "글 맨 끝에 추가"; }
-      ed.setContent(after); ed.fire("change"); ed.save();
-      const saved = String(ed.getContent() || "");
-      return { how, beforeLen: before.length, ok: saved.includes("tel:042-716-7439"), ldBefore: ld(before), ldAfter: ld(saved) };
-    }, cta);
-    if (r.skip) { console.log("      이미 배너가 들어 있어 건너뜁니다."); return; }
-    if (!r.beforeLen) throw new Error("기존 본문을 읽지 못했습니다 — 저장하지 않고 중단");
-    if (!r.ok) throw new Error("배너가 편집기에 들어가지 않았습니다 — 저장하지 않고 중단");
-    if (r.ldAfter < r.ldBefore) throw new Error(`FAQ 코드가 사라졌습니다(${r.ldAfter}/${r.ldBefore}) — 저장하지 않고 중단`);
-    console.log(`      ${r.how} 완료`);
+    console.log(`[2/4] ${label} …`);
+    const before = await page.evaluate(() => String(window.tinymce.activeEditor.getContent() || ""));
+    if (!before) throw new Error("기존 본문을 읽지 못했습니다 — 저장하지 않고 중단");
+    const t = transform(before);
+    if (t.skip) { console.log(`      ${t.skip}`); return; }
+    const ld = (x) => (x.match(/application\/ld\+json/g) || []).length;
+    const r = await page.evaluate((after) => {
+      const ed = window.tinymce.activeEditor; ed.setContent(after); ed.fire("change"); ed.save();
+      return String(ed.getContent() || "");
+    }, t.html);
+    if (!t.verify(r)) throw new Error("변경 내용이 편집기에 반영되지 않았습니다 — 저장하지 않고 중단");
+    if (ld(r) < ld(before)) throw new Error(`FAQ 코드가 사라졌습니다(${ld(r)}/${ld(before)}) — 저장하지 않고 중단`);
+    console.log(`      ${t.how}`);
     console.log("[3/4] 저장(공개 상태는 그대로 유지) …");
     await page.locator("#publish-layer-btn:visible").first().click();
     await page.waitForTimeout(800);
@@ -297,17 +289,43 @@ async function addCta(cfg, postId, ctaFile) {
     console.log(`      저장 버튼: '${(await save.innerText()).trim()}' (공개 설정은 건드리지 않음)`);
     await save.click();
     await page.waitForTimeout(3000);
-    console.log("[4/4] 실제 글에서 배너 확인 …");
+    console.log("[4/4] 실제 글에서 확인 …");
     const res = await ctx.request.get(`${cfg.blogUrl}/${postId}?t=${Date.now()}`, { failOnStatusCode: false });
     const body = await res.text();
-    if (res.status() === 200 && body.includes("tel:042-716-7439")) console.log(`\n[완료] 배너 적용 확인: ${cfg.blogUrl}/${postId}\n`);
-    else console.log(`\n[확인 필요] 저장은 했지만 글에서 배너를 아직 확인하지 못했습니다(상태 ${res.status()}). 잠시 뒤 글을 열어 확인해 주세요.\n`);
+    if (res.status() === 200 && t.verify(body)) console.log(`\n[완료] ${label} 확인: ${cfg.blogUrl}/${postId}\n`);
+    else console.log(`\n[확인 필요] 저장은 했지만 글에서 아직 확인하지 못했습니다(상태 ${res.status()}). 잠시 뒤 글을 열어 확인해 주세요.\n`);
   } catch (e) {
     console.error(`\n[실패] ${e.message}\n글은 바뀌지 않았거나 저장 전에 멈췄습니다. 크롬 창과 이 창을 캡처해 Claude에게 보내 주세요.`);
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
     await rl.question("Enter 를 누르면 크롬 창을 닫습니다 … "); rl.close();
     process.exitCode = 1;
   } finally { await ctx.close(); }
+}
+
+// 맨 아래 연락처 문단 → 상담 배너
+async function addCta(cfg, postId, ctaFile) {
+  const ctaPath = path.isAbsolute(ctaFile || "") ? ctaFile : path.join(ROOT, ctaFile || "");
+  if (!ctaFile || !fs.existsSync(ctaPath)) fail(`배너 파일이 없습니다: ${ctaPath}`);
+  const cta = fs.readFileSync(ctaPath, "utf-8").trim();
+  await editPost(cfg, postId, "상담 배너 넣기", (html) => {
+    if (html.includes("tel:042-716-7439")) return { skip: "이미 배너가 들어 있어 건너뜁니다." };
+    const re = /<p[^>]*>\s*<(b|strong)>SBS아카데미게임학원 대전점<\/\1>[\s\S]*?<\/p>/;
+    let out, how;
+    if (re.test(html)) { out = html.replace(re, cta); how = "연락처 문단을 배너로 교체"; }
+    else if (html.includes('<script type="application/ld+json">')) { out = html.replace('<script type="application/ld+json">', cta + '\n<script type="application/ld+json">'); how = "FAQ 코드 앞에 배너 추가"; }
+    else { out = html + "\n" + cta; how = "글 맨 끝에 배너 추가"; }
+    return { html: out, how, verify: (x) => x.includes("tel:042-716-7439") };
+  });
+}
+
+// 본문에 남은 [실제 사진 …] / [이미지 업로드 …] 안내 줄 지우기
+async function cleanMarkers(cfg, postId) {
+  const re = /<p[^>]*>\s*\[(?:실제 사진 \d+|이미지 업로드)[^\]]*\]\s*<\/p>/g;
+  await editPost(cfg, postId, "안내 줄 지우기", (html) => {
+    const n = (html.match(re) || []).length;
+    if (!n) return { skip: "지울 안내 줄이 없습니다." };
+    return { html: html.replace(re, ""), how: `안내 줄 ${n}개 삭제`, verify: (x) => !/\[(?:실제 사진 \d+|이미지 업로드)[^\]]*\]/.test(x) };
+  });
 }
 
 function preview(dir) {
@@ -327,4 +345,5 @@ else if (cmd === "check") { const ctx = await browser(true); console.log((await 
 else if (cmd === "preview") preview(await pickPost(arg));
 else if (cmd === "upload") await upload(cfg, await pickPost(arg));
 else if (cmd === "cta") await addCta(cfg, arg, process.argv[4]);
-else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html>");
+else if (cmd === "clean") await cleanMarkers(cfg, arg);
+else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호>");

@@ -85,7 +85,7 @@ if (tUrl && tUrl !== "-") {
   const u = tistoryUrls(tUrl);
   const { ctx, p } = await open(u.desk, false);
   report.tistory = await p.evaluate(() => {
-    const body = document.querySelector(".article-view, .tt_article_useless_p_margin, .entry-content, article") || document.body;
+    const body = document.querySelector(".tt_article_useless_p_margin") || document.querySelector(".article-view, .entry-content, article") || document.body;
     const text = body.innerText;
     const lds = [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent);
     const imgs = [...body.querySelectorAll("img")].filter((i) => i.naturalWidth > 200 || i.width > 200);
@@ -97,7 +97,8 @@ if (tUrl && tUrl !== "-") {
       imagesMissingAlt: imgs.filter((i) => !i.alt || i.alt.length < 5).length,
       imagesBroken: imgs.filter((i) => i.complete && i.naturalWidth === 0).length,
       leftoverMarkers: ["[이미지 업로드", "대체텍스트:", '"@context"', "본문 시작"].filter((m) => text.includes(m)),
-      category: (document.querySelector(".category, .tit_category, [class*=category]") || {}).innerText?.trim().slice(0, 30) || null,
+      // 상단 메뉴의 카테고리 링크가 아니라, 글 제목 근처(작성일 앞)의 카테고리 표시를 읽는다
+      category: (() => { const d = document.querySelector(".date, .txt_date, time"); let el = d; for (let i = 0; el && i < 6; i++, el = el.parentElement) { const c = el.querySelector("[class*=category]:not(.t_menu_category) , a[href*='/category/']:not(.t_menu_category a)"); if (c && !c.closest("nav, .menu, #gnb, .t_menu_category")) return c.innerText.trim().slice(0, 30); } return null; })(),
       tags: [...document.querySelectorAll('a[rel="tag"], .tag_label a, .area_tag a')].map((a) => a.innerText.trim()).filter(Boolean),
       tablesTotal: tables.length,
       tablesWithoutScrollWrapper: tables.filter((t) => !/overflow-x/.test(t.parentElement?.getAttribute("style") || "")).length,
