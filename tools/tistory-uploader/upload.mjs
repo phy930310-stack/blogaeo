@@ -1,4 +1,4 @@
-// 티스토리 비공개 업로더 v0.1.3 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
+// 티스토리 비공개 업로더 v0.1.4 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
 //
 //   node upload.mjs login              티스토리 로그인 창 열기(최초 1회·세션 만료 시). 로그인 후 창을 닫으면 끝
 //   node upload.mjs check              로그인 상태 확인
@@ -97,7 +97,7 @@ async function login(cfg) {
   const ctx = await browser(false);
   const page = ctx.pages()[0] || await ctx.newPage();
   await page.goto("https://www.tistory.com/auth/login");
-  console.log("\n열린 창에서 카카오 계정으로 로그인하세요. 로그인이 확인되면 자동으로 창이 닫힙니다. (최대 10분)");
+  console.log("\n열린 창에서 카카오 계정으로 로그인하세요. 반드시 '로그인 상태 유지'에 체크하세요(체크하지 않으면 창을 닫을 때 로그인이 사라집니다). 로그인이 확인되면 자동으로 창이 닫힙니다. (최대 10분)");
   const end = Date.now() + 10 * 60_000;
   while (Date.now() < end) {
     await page.waitForTimeout(3000).catch(() => {});
@@ -136,7 +136,7 @@ async function cdnImages(page) {
 async function upload(cfg, dir) {
   const post = readPost(dir);
   for (const s of post.slots) if (s.kind === "생성 이미지" && !fs.existsSync(s.file)) fail(`이미지 파일이 없습니다: ${s.file}`);
-  console.log(`\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
+  console.log(`\n업로더 v0.1.4\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
   const ctx = await browser(false); // 진행 과정을 눈으로 볼 수 있게 창을 띄운다
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -148,7 +148,7 @@ async function upload(cfg, dir) {
     await page.goto(newpost, { waitUntil: "domcontentloaded", timeout: 60000 });
     if (onLogin()) {
       // 세션이 없거나 만료됨 → 같은 창에서 로그인하면 이어서 진행
-      console.log("      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인을 해 주세요. (최대 10분 대기)");
+      console.log("      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인을 해 주세요. '로그인 상태 유지'에 체크하면 다음부터는 이 단계가 생략됩니다. (최대 10분 대기)");
       const end = Date.now() + 10 * 60_000;
       while (Date.now() < end) {
         await page.waitForTimeout(3000);
