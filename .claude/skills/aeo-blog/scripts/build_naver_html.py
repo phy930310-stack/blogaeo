@@ -2,11 +2,11 @@
 사용: python3 .claude/skills/aeo-blog/scripts/build_naver_html.py posts/<폴더>
 
 - 브라우저로 열고 [본문 복사] 버튼 → 네이버 편집기 본문에 Ctrl+V
-- 생성 이미지는 파일 안에 넣어(data URI) 함께 복사되게 한다
-- 실제 사진·지도 자리는 노란 안내 줄 1줄 (사진/지도 넣은 뒤 그 줄만 삭제)
+- 네이버 편집기는 붙여넣은 이미지·소제목·인용구 서식을 받지 않는다(2026-10-04 사용자 시험)
+  → 이미지·실제 사진·지도 자리는 노란 안내 줄 1줄(넣은 뒤 그 줄만 삭제), 소제목·인용구는 굵은 글씨로 들어간다
 - 제목·태그는 별도 [복사] 버튼 (본문 복사에 섞이지 않음)
 """
-import base64, html, json, re, sys
+import html, json, re, sys
 from pathlib import Path
 
 d = Path(sys.argv[1])
@@ -16,7 +16,6 @@ lines = (d / "네이버_본문.txt").read_text(encoding="utf-8").splitlines()
 BODY = "font-size:15px;line-height:1.8;color:#222;margin:0;"
 H2 = "font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"
 QT = "font-size:15px;line-height:1.8;color:#333;margin:0;"
-CAP = "font-size:13px;line-height:1.6;color:#888;text-align:center;margin:0;"
 MARK = "font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;"
 
 
@@ -28,10 +27,6 @@ def link(s):  # http 주소를 링크로
     return re.sub(r"(https?://\S+)", lambda m: f'<a href="{m.group(1)}">{m.group(1)}</a>', s)
 
 
-def img_tag(name):
-    f = d / "images" / name
-    b64 = base64.b64encode(f.read_bytes()).decode()
-    return f'<p style="text-align:center;margin:0;"><img src="data:image/png;base64,{b64}" alt="" style="width:100%;max-width:700px;"></p>'
 
 
 out, quote, imgs, photos = [], False, 0, 0
@@ -44,8 +39,7 @@ for raw in lines:
         continue
     m = re.match(r"\[이미지:\s*(.+?)\s*/\s*사진 설명:\s*(.+?)\]$", s)
     if m:
-        out.append(img_tag(m.group(1)))
-        out.append(f'<p style="{CAP}">{esc(m.group(2))}</p>')
+        out.append(f'<p style="{MARK}">🖼 [이미지 넣는 자리] {esc(m.group(1))} — 사진 설명: {esc(m.group(2))}</p>')
         imgs += 1
         continue
     m = re.match(r"\[실제 사진 (\d+):\s*(.+?)\s*/\s*사진 설명:\s*(.+?)\]$", s)
@@ -96,7 +90,7 @@ body{{margin:0;background:#EEF1F7;font-family:'Malgun Gothic',sans-serif}}
 <div class="row"><button onclick="copyPost()">① 본문 복사</button><button class="sub" onclick="copyText('t')">제목 복사</button><button class="sub" onclick="copyText('g')">태그 복사</button><span id="ok"></span></div>
 <div class="row">제목: <span class="val" id="t">{esc(meta['naver_title'])}</span></div>
 <div class="row">태그: <span class="val" id="g">{esc(tags)}</span></div>
-<div>네이버 글쓰기 → 제목 칸에 제목 붙여넣기 → 본문 첫 줄 클릭 → <b>Ctrl+V</b> → 노란 줄 자리에 실제 사진 {photos}장·지도 넣고 노란 줄 삭제 → 태그 입력 → 발행</div>
+<div>네이버 글쓰기 → 제목 칸에 제목 붙여넣기 → 본문 첫 줄 클릭 → <b>Ctrl+V</b> → 노란 줄 자리에 이미지 {imgs}장·실제 사진 {photos}장·지도 넣고 노란 줄 삭제 → (선택) 남색 굵은 줄은 '소제목', 💡 묶음은 '인용구' 서식 → 태그 입력 → 발행</div>
 </div>
 <div id="post">
 {body}
@@ -109,4 +103,4 @@ function copyText(id){{navigator.clipboard.writeText(document.getElementById(id)
 </body></html>
 """
 (d / "네이버_붙여넣기용.html").write_text(page, encoding="utf-8")
-print(f"네이버_붙여넣기용.html: 생성 이미지 {imgs}장 포함 / 실제 사진 자리 {photos} / 지도 자리 1")
+print(f"네이버_붙여넣기용.html: 이미지 자리 {imgs} / 실제 사진 자리 {photos} / 지도 자리 1")

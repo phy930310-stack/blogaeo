@@ -129,7 +129,7 @@ description: 키워드 하나를 받아 AEO(답변 엔진 최적화) 기준의 �
 ### 6. 자체 검수
 - 작업 폴더에 `meta.json`(제목·태그·카테고리)을 만들고 `python3 .claude/skills/aeo-blog/scripts/build_guides.py posts/<폴더>` 실행
   → 두 붙여넣기 안내 파일 자동 생성(FAQ 코드는 본문 FAQ에서 자동 추출 → 문장 일치 보장) + 자동 점검(※ 사용, 가상 사례 고지, 글 끝 순서, NAP, 표 래퍼·열 수, blockquote, 지도 표시). "이상 없음"이 나올 때까지 수정
-- 이어서 `python3 .claude/skills/aeo-blog/scripts/build_naver_html.py posts/<폴더>` → `네이버_붙여넣기용.html` 생성(2026-10-04 반자동 방식). 브라우저로 열어 [본문 복사] → 네이버 본문 Ctrl+V. 생성 이미지는 파일에 포함, 실제 사진·지도 자리는 노란 줄. 사용자 시험 결과에 따라 서식을 조정한다. zip에 포함
+- 이어서 `python3 .claude/skills/aeo-blog/scripts/build_naver_html.py posts/<폴더>` → `네이버_붙여넣기용.html` 생성(2026-10-04 반자동 방식). 브라우저로 열어 [본문 복사] → 네이버 본문 Ctrl+V. 편집기가 이미지·소제목·인용구 서식을 받지 않아(시험 결과) 이미지·실제 사진·지도 자리는 노란 줄, 소제목·인용구는 굵은 글씨. 사용자 시험 결과에 따라 서식을 조정한다. zip에 포함
 - `templates/checklist.md` 항목을 **두 원고 각각** 점검해 `작업보고서.md`에 ✅/❌로 기록한다.
 - ❌는 고친 뒤 재점검. 사실 확인처럼 자동으로 해결할 수 없는 것은 "발행 전 확인" 목록으로 넘긴다.
 
