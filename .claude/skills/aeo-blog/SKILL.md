@@ -32,7 +32,7 @@ description: 키워드 하나를 받아 AEO(답변 엔진 최적화) 기준의 �
 1. `pip install openpyxl` (없으면) → `python3 .claude/skills/aeo-blog/scripts/keywords.py`
    - `keywords/raw/*.xlsx` 병합 → 관련 키워드만 질문군별 정리(`backlog.md/csv`) → 주제 묶음별 합산 검색량(`clusters.md`)
    - 관련성 규칙(질문군 패턴·제외어)은 스크립트 상단 `GROUPS`/`EXCLUDE`, 주제 묶음은 `keywords/clusters.csv`에서 관리. 새 엑셀에서 묶음에 없는 유망 키워드가 보이면 clusters.csv에 행을 추가한다
-2. 추천 기준: ① 상태가 빈 묶음 중 ② 학원 상담 의도가 강한 것(입시·직군·취업 > 도구 이름·회사명 검색) ③ 합산 검색량 순. 허브(입시 허브·취업 허브)를 먼저 쓰고 직군·입시 세부 주제를 이어서 쓴다
+3. 사용자에게 추천 2개(하루 2키워드 = 네이버 2편 + 티스토리 2편)와 근거(합산 검색량·포함 키워드)를 보여 주고 확인받은 뒤 2편 모두 작성한다. 같은 날 2편은 서로 "다음 글"로 연결한다
 3. 사용자에게 추천 2개와 근거(합산 검색량·포함 키워드)를 보여 주고 확인받은 뒤 작성한다
 4. 글 작성 후 `keywords/used.csv`에 `대표키워드,작성일,글폴더` 추가, `keywords/clusters.csv` 해당 행 `상태`에 `작성 YYYY-MM-DD` 기입 → 스크립트 재실행
 
