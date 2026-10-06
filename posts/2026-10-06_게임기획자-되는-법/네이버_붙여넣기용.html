@@ -1,0 +1,140 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>네이버 붙여넣기 — 2026-10-06_게임기획자-되는-법</title>
+<style>
+body{margin:0;background:#EEF1F7;font-family:'Malgun Gothic',sans-serif}
+.panel{position:sticky;top:0;z-index:9;background:#1E2A78;color:#fff;padding:14px 20px;font-size:14px;line-height:1.7}
+.panel b{color:#FFB199} .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0}
+.panel button{background:#FF5A36;color:#fff;border:0;border-radius:6px;padding:8px 14px;font-weight:bold;cursor:pointer;font-size:14px}
+.panel button.sub{background:#fff;color:#1E2A78}
+.val{background:rgba(255,255,255,.12);padding:4px 8px;border-radius:4px}
+#ok{color:#9EF0B5;font-weight:bold}
+#post{max-width:700px;margin:24px auto;background:#fff;padding:40px 36px;font-family:'Nanum Gothic','Malgun Gothic',sans-serif}
+</style></head><body>
+<div class="panel">
+<div class="row"><button onclick="copyPost()">① 본문 복사</button><button class="sub" onclick="copyText('t')">제목 복사</button><button class="sub" onclick="copyText('g')">태그 복사</button><span id="ok"></span></div>
+<div class="row">제목: <span class="val" id="t">게임기획자 되려면 뭐부터 해야 할까요? 기획 직무 종류부터 포트폴리오까지 정리했어요</span></div>
+<div class="row">태그: <span class="val" id="g">#게임기획자 #게임기획 #게임기획자되는법 #게임기획서 #역기획서 #게임기획포트폴리오 #시스템기획 #게임기획전문가 #대전게임학원 #SBS아카데미게임학원대전점</span></div>
+<div>네이버 글쓰기 → 제목 칸에 제목 붙여넣기 → 본문 첫 줄 클릭 → <b>Ctrl+V</b> → 노란 줄 자리에 이미지 4장·실제 사진 2장·지도 넣고 노란 줄 삭제 → (선택) 남색 굵은 줄은 '소제목', 💡 묶음은 '인용구' 서식 → 태그 입력 → 발행</div>
+</div>
+<div id="post">
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 네이버_썸네일.png — 사진 설명: 게임기획자, 아이디어보다 문서가 먼저예요</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">게임기획자, 아이디어만 좋으면 될까요?</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">상담에서 이렇게 물어보시는 분들이 많은데요, 답은 "아이디어보다 정리하는 힘"이에요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">기획자는 게임이 어떻게 돌아가야 하는지 정하고, 그걸 문서로 만들어 개발팀 모두가 같은 그림을 보게 하는 사람이거든요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">그래서 신입 포트폴리오도 역기획서, 시스템 기획서, 밸런스 시트처럼 '생각을 정리해 전달한 결과물'을 봐요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">(2026년 10월, 현직자 Q&amp;A와 게임 자격 안내를 바탕으로 정리했어요.)</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;"><b>💡 먼저 결론</b></p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;">① 기획은 시스템·레벨·밸런스·시나리오로 나뉘어요. 처음엔 하나만 깊게!</p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;">② 많이 하는 것보다, 왜 재밌는지 기록하는 습관이 실력이 돼요.</p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;">③ 포트폴리오 = 역기획서 + 시스템 기획서 + 밸런스 시트 + 직접 만든 결과물</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>기획자도 종류가 있나요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">네, 회사마다 이름은 조금씩 다르지만 크게 네 갈래예요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 시스템 — 전투, 성장, 상점, 보상 같은 규칙을 설계해요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 콘텐츠·레벨 — 퀘스트, 던전, 맵 배치처럼 플레이할 거리를 만들어요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 밸런스 — 능력치, 확률, 재화 수치를 엑셀로 맞춰요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 시나리오 — 세계관, 캐릭터 설정, 대사를 써요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 공통_planner-roles.png — 사진 설명: 게임기획 네 분야와 각자 만드는 문서</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">전부 잘할 필요는 없어요. 관심 가는 하나를 중심에 두고, 나머지는 이해할 수 있을 정도면 충분해요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>어떤 능력이 있어야 할까요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">현직자들이 공통으로 꼽는 건 이 네 가지예요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 글로 전달하는 힘: 개발자·아티스트가 질문 없이 만들 수 있게</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 분석 습관: "이 튜토리얼은 왜 좋지?", "왜 자꾸 접속하게 되지?"를 적어 보기</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 엑셀과 숫자 감각: 기본 함수와 표 정리는 필수</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 개발 이해: 엔진을 조금만 만져 봐도 기획서가 달라져요</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>공부는 어떤 순서로 하면 될까요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">분석에서 시작해서 문서, 숫자, 구현 순서로 넓혀 가 보세요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">① 게임 분석 노트: 일주일에 한 게임, 좋았던 점과 이유</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">② 역기획서 1편: 그 게임 시스템 하나를 문서로</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">③ 엑셀 기초: 성장 곡선, 보상표 만들어 보기</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">④ 프로토타입: 유니티·언리얼로 핵심 규칙만 움직이게</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">⑤ 팀 프로젝트·게임잼: 프로그래머·아티스트와 실제로 만들어 보기</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 공통_planner-roadmap.png — 사진 설명: 게임기획자 공부 순서 다섯 단계</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>포트폴리오는 어떻게 꾸리나요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">신입은 양보다 "얼마나 깊게 고민했고, 얼마나 잘 전달했나"를 봐요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">☑ 역기획서: 있는 게임을 거꾸로 분석</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">☑ 시스템 기획서: 새 시스템 하나를 규칙·예외·화면 흐름까지</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">☑ 밸런스 시트: 숫자와 그 근거</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">☑ 직접 만든 결과물: 프로토타입, 게임잼, 팀 프로젝트에서 맡은 역할</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 공통_planner-portfolio.png — 사진 설명: 기획 포트폴리오에 들어갈 4가지</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">📷 [실제 사진 1 넣는 자리] 수강생이 기획서나 엑셀 밸런스 시트를 작성 중인 모니터 화면. 얼굴·이름은 안 보이게 — 사진 설명: 기획서와 밸런스 시트를 직접 써 보는 수업</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">참고로 입시도 비슷해요. 청강대 게임과 면접전형에선 기획 분야 지원자가 창작기획서(A4 50매 이내)를 내요(2027학년도).</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>상담에서 자주 만나는 상황이에요 (가상 사례)</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">아래는 상담에서 자주 나오는 고민을 재구성한 가상 사례예요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">게임을 오래 즐겨 온 인문계열 대학교 2학년 학생이었어요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">"아이디어는 많은데, 이걸 어떻게 포트폴리오로 만들지 모르겠어요."</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">메모장엔 아이디어가 가득했지만 규칙, 예외 상황, 수치까지 정리된 문서는 하나도 없었어요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">그래서 자주 하는 게임으로 역기획서부터 쓰고, 같은 장르에 새 시스템 하나를 더하는 기획서를 이어서 쓰기로 했어요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">방학 땐 게임잼에 나가서 기획을 직접 구현해 보는 게 목표고요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>자주 묻는 질문</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;"><b>Q. 기획자도 코딩을 해야 하나요?</b></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">A. 꼭 그렇진 않아요. 다만 엔진으로 간단한 프로토타입을 만들 줄 알면 현실적인 기획을 쓰기 쉽고, 개발자와 이야기할 때도 확실히 유리해요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;"><b>Q. 게임기획전문가 자격증 따면 도움 돼요?</b></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">A. 한국콘텐츠진흥원이 시행하는 국가기술자격이고 누구나 응시할 수 있어요. 그래도 채용에선 자격증보다 기획 문서와 프로젝트 경험이 담긴 포트폴리오를 더 크게 봐요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>다음 글에서 이어서 알려드릴게요</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 청강대 게임과 기획 분야 포트폴리오는? (청강대 게임과 포트폴리오 글)</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 게임 프로그래머는 어떤 언어부터? (게임 프로그래머 되는 법 글)</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 게임원화가는 어떤 그림부터? (게임원화가 되는 법 글)</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;"><b>참고 자료 (2026년 10월 6일 확인)</b></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 코멘토 게임기획 직무 현직자 Q&amp;A</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 잡플래닛 게임기획 직무 콘텐츠</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 정부24 게임 국가기술자격검정, 한국콘텐츠진흥원 게임국가기술자격 안내</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">채용 방식과 자격 제도는 바뀔 수 있어요. 지원 전에 꼭 공식 공고를 확인해 주세요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">📷 [실제 사진 2 넣는 자리] 팀 프로젝트 회의나 강의실 모습을 뒤쪽에서 넓게 찍은 사진. 얼굴이 나오지 않게 — 사진 설명: SBS아카데미게임학원 대전점 강의실</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;color:#bbb;">─────────────</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">SBS아카데미게임학원 대전점 입시&amp;취업상담팀</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">📍 대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호)</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">📞 042-716-7439</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">🕘 운영시간 09:00~22:00</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">관심 분야와 경험을 같이 보고 첫 기획서 주제와 준비 순서를 잡아 드려요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">▶ 게임학원 홈페이지: <a href="http://sbsdaejeon-game.co.kr/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-10-06_게임기획자-되는-법">http://sbsdaejeon-game.co.kr/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-10-06_게임기획자-되는-법</a></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">▶ 웹툰학원 홈페이지: <a href="http://webtoon-daejeon.com/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-10-06_게임기획자-되는-법">http://webtoon-daejeon.com/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-10-06_게임기획자-되는-법</a></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">📍 [지도 넣는 자리] 툴바 '장소' → "SBS아카데미게임학원 대전점" 검색 → 추가 → 이 줄 삭제</p>
+</div>
+<script>
+function flash(m){const o=document.getElementById('ok');o.textContent=m;setTimeout(()=>o.textContent='',2500)}
+function copyPost(){const r=document.createRange();r.selectNodeContents(document.getElementById('post'));const s=getSelection();s.removeAllRanges();s.addRange(r);const ok=document.execCommand('copy');s.removeAllRanges();flash(ok?'본문 복사됨 — 네이버 본문에 Ctrl+V':'복사 실패 — 본문을 드래그해 Ctrl+C')}
+function copyText(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>flash('복사됨'),()=>{const r=document.createRange();r.selectNodeContents(document.getElementById(id));const s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();flash('복사됨')})}
+</script>
+</body></html>
