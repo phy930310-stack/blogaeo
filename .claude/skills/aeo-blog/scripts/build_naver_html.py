@@ -90,7 +90,7 @@ body{{margin:0;background:#EEF1F7;font-family:'Malgun Gothic',sans-serif}}
 <div class="row"><button onclick="copyPost()">① 본문 복사</button><button class="sub" onclick="copyText('t')">제목 복사</button><button class="sub" onclick="copyText('g')">태그 복사</button><span id="ok"></span></div>
 <div class="row">제목: <span class="val" id="t">{esc(meta['naver_title'])}</span></div>
 <div class="row">태그: <span class="val" id="g">{esc(tags)}</span></div>
-<div>네이버 글쓰기 → 제목 칸에 제목 붙여넣기 → 본문 첫 줄 클릭 → <b>Ctrl+V</b> → 노란 줄 자리에 이미지 {imgs}장·실제 사진 {photos}장·지도 넣고 노란 줄 삭제 → (선택) 남색 굵은 줄은 '소제목', 💡 묶음은 '인용구' 서식 → 태그 입력 → 발행</div>
+<div>네이버 글쓰기 → 제목 칸에 제목 붙여넣기 → 본문 첫 줄 클릭 → <b>Ctrl+V</b> → 노란 줄 자리에 이미지 {imgs}장{('·실제 사진 ' + str(photos) + '장') if photos else ''}·지도 넣고 노란 줄 삭제 → (선택) 남색 굵은 줄은 '소제목', 💡 묶음은 '인용구' 서식 → 태그 입력 → 발행</div>
 </div>
 <div id="post">
 {body}
