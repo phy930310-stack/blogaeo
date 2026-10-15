@@ -1,4 +1,4 @@
-// 티스토리 비공개 업로더 v0.1.6 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
+// 티스토리 비공개 업로더 v0.1.7 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
 //
 //   node upload.mjs login              티스토리 로그인 창 열기(최초 1회·세션 만료 시). 로그인 후 창을 닫으면 끝
 //   node upload.mjs check              로그인 상태 확인
@@ -81,6 +81,13 @@ function compose(post, urls) {
   return { html: out + (post.faq ? `\n${post.faq}\n` : ""), missing };
 }
 
+// 크롬 창을 열어 둔 채 기다림: Enter 입력 또는 창 닫힘 중 먼저 일어나는 쪽에서 끝남
+async function keepOpen(ctx, msg) {
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  await Promise.race([rl.question(msg), new Promise((r) => ctx.on("close", r))]);
+  rl.close();
+}
+
 // ---------- 브라우저 ----------
 async function browser(headless) {
   const { chromium } = await import("playwright");
@@ -138,7 +145,7 @@ async function cdnImages(page) {
 async function upload(cfg, dir) {
   const post = readPost(dir);
   for (const s of post.slots) if (s.kind === "생성 이미지" && !fs.existsSync(s.file)) fail(`이미지 파일이 없습니다: ${s.file}`);
-  console.log(`\n업로더 v0.1.6\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
+  console.log(`\n업로더 v0.1.7\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
   const ctx = await browser(false); // 진행 과정을 눈으로 볼 수 있게 창을 띄운다
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -236,11 +243,13 @@ async function upload(cfg, dir) {
     if (missing.length) console.log(`  · 사진 미첨부: ${missing.join(", ")} → 필요하면 티스토리 편집 화면에서 직접 추가하세요.`);
     for (const w of warns) console.log(`  · ${w}`);
     console.log("  · 티스토리에서 내용을 검수한 뒤 '공개'로 전환하세요. 공개 후 Claude에게 주소를 주면 검색 수집 준비까지 점검합니다.\n");
+    // 저장된 글을 열어 둔 채 창을 유지 — 사용자가 Enter 를 누르거나 크롬 창을 직접 닫으면 종료
+    if (href) await page.goto(href.startsWith("http") ? href : `${cfg.blogUrl}${href}`, { waitUntil: "domcontentloaded" }).catch(() => {});
+    await keepOpen(ctx, "검수가 끝나면 Enter 를 누르세요 (크롬 창을 직접 닫아도 됩니다) … ");
   } catch (e) {
     console.error(`\n[실패] ${e.message}\n원고와 이미지는 그대로 있습니다. 문제를 해결한 뒤 다시 실행하면 됩니다.`);
     console.error("크롬 창과 이 창을 캡처해 Claude에게 보내 주세요.");
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    await rl.question("Enter 를 누르면 크롬 창을 닫습니다 … "); rl.close();
+    await keepOpen(ctx, "Enter 를 누르면 크롬 창을 닫습니다 … ");
     process.exitCode = 1;
   } finally { await ctx.close(); }
 }
@@ -258,7 +267,7 @@ async function ensureLogin(ctx, page, cfg, url) {
 }
 async function editPost(cfg, postId, label, transform) {
   if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요.");
-  console.log(`\n업로더 v0.1.6 · ${label} — ${cfg.blogUrl}/${postId}`);
+  console.log(`\n업로더 v0.1.7 · ${label} — ${cfg.blogUrl}/${postId}`);
   const ctx = await browser(false);
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -296,8 +305,7 @@ async function editPost(cfg, postId, label, transform) {
     else console.log(`\n[확인 필요] 저장은 했지만 글에서 아직 확인하지 못했습니다(상태 ${res.status()}). 잠시 뒤 글을 열어 확인해 주세요.\n`);
   } catch (e) {
     console.error(`\n[실패] ${e.message}\n글은 바뀌지 않았거나 저장 전에 멈췄습니다. 크롬 창과 이 창을 캡처해 Claude에게 보내 주세요.`);
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    await rl.question("Enter 를 누르면 크롬 창을 닫습니다 … "); rl.close();
+    await keepOpen(ctx, "Enter 를 누르면 크롬 창을 닫습니다 … ");
     process.exitCode = 1;
   } finally { await ctx.close(); }
 }
