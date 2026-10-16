@@ -18,12 +18,14 @@ import json, re, sys, os
 folder = sys.argv[1]
 P = lambda f: os.path.join(folder, f)
 meta = json.load(open(P("meta.json"), encoding="utf-8"))
-naver = open(P("네이버_본문.txt"), encoding="utf-8").read()
+# 티스토리만 쓰는 날(2026-10-16~): 네이버_본문.txt가 없으면 네이버 관련 점검·안내를 건너뛴다
+HAS_NAVER = os.path.exists(P("네이버_본문.txt"))
+naver = open(P("네이버_본문.txt"), encoding="utf-8").read() if HAS_NAVER else ""
 tist = open(P("티스토리_본문.html"), encoding="utf-8").read()
 problems = []
 
 # ---------- 공통 점검 ----------
-for name, body in (("네이버", naver), ("티스토리", tist)):
+for name, body in ((("네이버", naver),) if HAS_NAVER else ()) + (("티스토리", tist),):
     if "※" in body:
         problems.append(f"{name}: 본문에 ※ 사용 (안내문으로 오인되어 삭제될 수 있음)")
     if "가상 사례" in body:
@@ -54,7 +56,7 @@ pairs = [(re.sub("<[^>]+>", "", q).strip().removeprefix("Q.").strip(), re.sub("<
 # FAQ 정책: 본문에서 답하지 못한 실제 질문이 있을 때만 2~3개. 없으면 FAQ 섹션·FAQPage 모두 생략
 if faq and not (2 <= len(pairs) <= 3):
     problems.append(f"티스토리: FAQ 문항 {len(pairs)}개 (있다면 2~3개)")
-if ("자주 묻는 질문" in naver) != bool(pairs):
+if HAS_NAVER and ("자주 묻는 질문" in naver) != bool(pairs):
     problems.append("네이버·티스토리 FAQ 유무가 다름")
 ld = {"@context": "https://schema.org", "@type": "FAQPage",
       "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pairs]}
@@ -124,14 +126,14 @@ if "|" in naver and re.search(r"^\|.*\|$", naver, re.M):
     problems.append("네이버: 표(| |) 사용 — 목록이나 이미지로 대체")
 n_imgs = re.findall(r"\[이미지: (\S+) / 사진 설명: ([^\]]+)\]", naver)
 n_real = re.findall(r"\[(실제 사진 \d): ([^/\]]+) / 사진 설명: ([^\]]+)\]", naver)
-if "sbsdaejeon-game.co.kr" not in naver:
+if HAS_NAVER and "sbsdaejeon-game.co.kr" not in naver:
     problems.append("네이버: 글 끝 홈페이지 링크 없음")
 if "tel:042-716-7439" not in tist or "sbsdaejeon-game.co.kr" not in tist:
     problems.append("티스토리: 글 끝 상담 배너(CTA: 전화·홈페이지 버튼) 없음 — templates/tistory-components.html [5]")
-if "[지도]" not in naver:
+if HAS_NAVER and "[지도]" not in naver:
     problems.append("네이버: [지도] 표시 없음")
 
-ng = f"""==================================================
+ng = "" if not HAS_NAVER else f"""==================================================
 네이버 붙여넣기 안내 (메모장으로 여세요)
 ==================================================
 
@@ -199,8 +201,8 @@ _ns, _ts = _sents(_n), _sents(_t)
 _near = [a for a in _ns if any(difflib.SequenceMatcher(None, a, b).ratio() >= 0.85 for b in _ts)]
 _g = lambda x: {re.sub(r"\s", "", x)[i:i + 5] for i in range(len(re.sub(r"\s", "", x)) - 5)}
 _jac = len(_g(_n) & _g(_t)) / max(1, len(_g(_n) | _g(_t)))
-print(f"플랫폼 차별화: 거의 같은 문장 {len(_near)}개 / 5글자 조각 겹침률 {_jac:.0%} (기준: 5개 이하, 20% 이하)")
-if len(_near) > 5 or _jac > 0.20:
+if HAS_NAVER: print(f"플랫폼 차별화: 거의 같은 문장 {len(_near)}개 / 5글자 조각 겹침률 {_jac:.0%} (기준: 5개 이하, 20% 이하)")
+if HAS_NAVER and (len(_near) > 5 or _jac > 0.20):
     problems.append(f"네이버·티스토리 문장이 너무 비슷함 (거의 같은 문장 {len(_near)}개, 겹침률 {_jac:.0%}) — 어미만 바꾸지 말고 문장 구조·예시를 다시 쓸 것")
     for a in _near[:8]:
         problems.append(f"  ≈ {a[:60]}")
@@ -211,7 +213,7 @@ if script:
     open(P("티스토리_FAQ코드.html"), "w", encoding="utf-8").write(script + "\n")
 elif os.path.exists(P("티스토리_FAQ코드.html")):
     os.remove(P("티스토리_FAQ코드.html"))
-open(P("네이버_붙여넣기안내.txt"), "w", encoding="utf-8").write(ng)
+if HAS_NAVER: open(P("네이버_붙여넣기안내.txt"), "w", encoding="utf-8").write(ng)
 if t_real or n_real:
     problems.append("실제 사진 자리가 남아 있음 — 2026-10-13부터 실제 사진 자리는 넣지 않음")
 print(f"FAQ {len(pairs)}문항 / 티스토리 이미지 {len(t_imgs)}+실제 {len(t_real)} / 네이버 이미지 {len(n_imgs)}+실제 {len(n_real)}")
