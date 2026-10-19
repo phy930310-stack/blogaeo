@@ -44,8 +44,11 @@ run_agy() {
   command -v agy >/dev/null || { echo "[agy] 미설치 — tools/image-cli/setup.sh 실행 필요"; return 1; }
   timeout 40 agy models >/dev/null 2>&1 || { echo "[agy] 로그인 필요 — 'agy'를 인자 없이 실행해 구글 로그인"; return 1; }
   agy -p "Use your generate_image tool to create ONE image, aspect ratio ${AR}. Image prompt: ${PROMPT}. Do not write or modify any files; just generate the image." \
-      --mode accept-edits --print-timeout 540s >/dev/null 2>&1
-  local f; f=$(wait_new "$HOME/.gemini/antigravity-cli/brain") || { echo "[agy] 이미지가 만들어지지 않았습니다"; return 1; }
+      --mode accept-edits --print-timeout 540s >/tmp/agy_draw.log 2>&1
+  if grep -qiE "RESOURCE_EXHAUSTED|quota|429" /tmp/agy_draw.log; then
+    echo "[agy] 구글 이미지 생성 한도 소진(429) — 한도가 풀린 뒤 다시 시도하세요"; return 1
+  fi
+  local f; f=$(wait_new "$HOME/.gemini/antigravity-cli/brain") || { echo "[agy] 이미지가 만들어지지 않았습니다 (/tmp/agy_draw.log 확인)"; return 1; }
   echo "[agy] 저장: $(to_png "$f" "$(outname antigravity)")"
 }
 run_codex() {
