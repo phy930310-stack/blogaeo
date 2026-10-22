@@ -12,6 +12,10 @@ description: 사용자가 "그려줘", "이미지 만들어줘", "일러스트 �
 2. **영어 프롬프트 작성** — 한 문단, 구체적으로: 주제·인물/사물, 행동·포즈, 화풍(예: clean cel-shaded 2D illustration), 색감·조명, 배경, 구도, 그리고 항상 `no text, no watermark`.
    - 학원 홍보용이면 밝고 친근한 톤. 실존 인물·실제 상표·로고·저작권 캐릭터를 흉내 내지 않는다.
    - 작성한 프롬프트를 사용자에게 한 줄로 보여 준다.
+   - **기본 화풍 프리셋** (2026-10-22 사용자 지정, 사용자가 다른 화풍을 말하지 않으면 항상 붙인다):
+     `high-end Korean webtoon and gacha-game character illustration style, semi-realistic anime rendering, delicate thin line art, soft painterly shading with subtle gradients, large luminous detailed eyes with layered highlights, fine individual hair strands, refined clothing details such as frills, ribbons, buttons and pleats, muted desaturated palette with one accent color, soft rim light, high detail`
+     - 구도는 인물 상반신·클로즈업 중심이 이 화풍과 잘 맞는다
+     - 블로그·홍보용이면 `fully clothed, modest`를 넣고 노출·선정적 의상/포즈는 만들지 않는다. 특정 작가 이름·작품명은 프롬프트에 넣지 않는다
 3. **생성** — 저장소 루트에서 실행:
    ```bash
    bash tools/image-cli/draw.sh --tool <agy|codex|both> --ratio <square|portrait|landscape> --prompt "<영어 프롬프트>"
