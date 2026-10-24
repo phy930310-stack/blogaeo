@@ -17,6 +17,20 @@ const NOTIFY_EMAIL = 'phy930310@gmail.com';
 const SEND_EMAIL = true; // 디스코드가 끊겼을 때를 대비한 예비 알림. 메일이 필요 없으면 false
 const PHONE = '042-716-7439';
 
+// 관심 과정 선택지 (2026-10-24 사용자 확정: 언리얼·AI개발·애니메이션 추가)
+const COURSES = [
+  '게임기획',
+  '게임프로그래밍(유니티&언리얼)',
+  'AI개발',
+  '게임원화·일러스트',
+  '애니메이션(2D, 3D)',
+  '3D 그래픽',
+  '웹툰',
+  '웹소설',
+  '아직 모르겠어요',
+];
+const COURSE_TITLE = '관심 있는 과정 (여러 개 선택 가능)';
+
 // 유입 경로 선택지 — brand/channels.md 의 목록과 동일하게 유지
 const SOURCES = [
   '네이버 블로그',
@@ -54,16 +68,8 @@ function createConsultForm() {
     .setRequired(true);
 
   form.addCheckboxItem()
-    .setTitle('관심 있는 과정 (여러 개 선택 가능)')
-    .setChoiceValues([
-      '게임기획',
-      '게임프로그래밍(유니티)',
-      '게임원화·일러스트·애니메이션',
-      '3D 그래픽',
-      '웹툰',
-      '웹소설',
-      '아직 모르겠어요',
-    ])
+    .setTitle(COURSE_TITLE)
+    .setChoiceValues(COURSES)
     .setRequired(true);
 
   // ── 2-A. 입시 ────────────────────────────────
@@ -213,7 +219,7 @@ function notifyOnSubmit(e) {
     : kind === '취업' ? [a['현재 상황'], '내일배움카드 ' + (a['국민내일배움카드가 있으신가요?'] || '-')] : [];
   sendDiscord_([
     '[상담 신청] ' + [kind].concat(who).filter(String).join(' · ') + '  (' + time + ')',
-    '관심: ' + (a['관심 있는 과정 (여러 개 선택 가능)'] || '-'),
+    '관심: ' + (a[COURSE_TITLE] || '-'),
     '유입: ' + (a['저희 학원을 어떻게 알게 되셨나요?'] || '-'),
     '연락: ' + (a['편한 연락 방법'] || '-') + ' / ' + maskPhone_(a['연락처 (휴대폰)']) +
       (a['연락 가능한 시간대 (여러 개 선택 가능)'] ? ' / ' + a['연락 가능한 시간대 (여러 개 선택 가능)'] : ''),
@@ -291,4 +297,16 @@ function decorateForm() {
     form.moveItem(img.getIndex(), breakItem.getIndex() + 1);
     Logger.log(p.section + ' 섹션에 ' + p.file + ' 추가');
   });
+}
+
+// 이미 만든 폼의 '관심 있는 과정' 선택지를 COURSES 로 바꾼다 (기존 응답은 그대로 남는다)
+function updateCourseChoices() {
+  const formId = PropertiesService.getScriptProperties().getProperty('FORM_ID');
+  if (!formId) throw new Error('FORM_ID 가 없습니다.');
+  const item = FormApp.openById(formId).getItems(FormApp.ItemType.CHECKBOX).filter(function (it) {
+    return it.getTitle() === COURSE_TITLE;
+  })[0];
+  if (!item) throw new Error('"' + COURSE_TITLE + '" 문항을 찾지 못했습니다.');
+  item.asCheckboxItem().setChoiceValues(COURSES);
+  Logger.log('관심 과정 선택지 변경: ' + COURSES.join(' / '));
 }

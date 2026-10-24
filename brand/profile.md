@@ -12,7 +12,7 @@
 - 운영시간: 09:00~22:00
 - 홈페이지: http://sbsdaejeon-game.co.kr/ (게임학원)
 - 웹툰학원 홈페이지: http://webtoon-daejeon.com/ (https 접속 불가 — http로 표기)
-- 온라인 상담 신청 폼: **구글 폼(입시/취업 분기형)으로 일원화** — https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform (2026-10-24 공개 접속 확인). 네이버 폼은 종료 예정(brand/channels.md). 폼 **편집 주소는 관리자용이므로 외부에 쓰지 않는다**
+- 온라인 상담 신청 폼: **구글 폼(입시/취업 분기형)으로 일원화** — https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform (2026-10-24 공개 접속 확인). 짧은 주소: https://forms.gle/8CNmS6Nvh5BNBhZe7 네이버 폼은 종료 예정(brand/channels.md). 폼 **편집 주소는 관리자용이므로 외부에 쓰지 않는다**
 - 카카오톡 오픈채팅(1:1): https://open.kakao.com/o/srqyuFLc — 공식 카카오톡 채널(pf.kakao.com)과는 다름
 - 인스타그램: 개설 예정
 - 네이버 플레이스: https://map.naver.com/p/entry/place/1652785251
@@ -22,6 +22,7 @@
 ## 전문 분야 (질문군의 범위)
 - 주요 주제: 게임학과 입시, 게임 포트폴리오, 게임 업계 취업
 - 주요 과정: 게임그래픽 · 웹툰 · 웹소설 · 게임프로그래밍 · 게임기획 (입시 및 취업 포트폴리오) — 티스토리 블로그 설명 기준
+  - 추가 확인(2026-10-24 사용자): 게임프로그래밍은 **유니티&언리얼** 모두, **AI개발**, **애니메이션(2D, 3D)** 과정도 있음. 국비(고용24) 프로그래밍 과정은 유니티 기준 그대로
 - 3D 그래픽 주력 툴: **3ds Max · 지브러쉬(ZBrush) · 서브스턴스 페인터** (2026-10-13 사용자 확인). 3D 관련 글은 이 조합을 중심에 두고, 블렌더 등은 무료 연습용 대안으로만 언급
 - 국비(고용24 등재) 과정 3개 (2026-10-15 사용자 확인)
   - 게임그래픽 — 국민내일배움카드 과정

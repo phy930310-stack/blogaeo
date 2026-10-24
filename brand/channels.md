@@ -16,7 +16,7 @@
 | 전화 | 042-716-7439 | 운영 중 |
 | 네이버 폼 | https://form.naver.com/response/8QZ5haH_1w99sYrZl_NGhQ | **종료 예정** (구글 폼으로 대체) |
 | 카카오톡 오픈채팅(1:1) | https://open.kakao.com/o/srqyuFLc | 운영 중 (제목 수정 권장) |
-| 구글 폼 (**메인 상담 창구**) | https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform | `tools/google-form/` 스크립트로 생성 — 입시/취업 분기형. 신청 알림 = 디스코드 웹후크(연락처 일부 가림) + 메일(예비) |
+| 구글 폼 (**메인 상담 창구**) | https://forms.gle/8CNmS6Nvh5BNBhZe7 (원 주소 https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform) | `tools/google-form/` 스크립트로 생성 — 입시/취업 분기형. 신청 알림 = 디스코드 웹후크(연락처 일부 가림) + 메일(예비) |
 | 인스타그램 DM | - | 계정 개설 예정 |
 
 ## 유입 경로 선택지 (폼·상담일지 공통)
@@ -28,7 +28,8 @@
 - [x] 구글 폼 생성 스크립트 작성·실행, 디스코드 알림 연결 테스트 성공 (2026-10-24, 첫 시도 429/1015 → 재시도로 해결, 중계 서버 불필요)
 - [x] 폼 꾸미기 이미지 4장 제작, decorateForm(GitHub에서 이미지 자동 삽입) 추가 (2026-10-24) — 머리글·색상은 폼 화면에서 직접
 - [x] 공식 로고 머리글 반영 (2026-10-24) — 사업부 공유폴더 `회사 로고(무단 수정 금지)/PNG/SBS아카데미게임학원_White.png`를 "상담 준비 자료 정리" 세션이 구글 드라이브 `학원로고_전달`에 복사 → 드라이브 커넥터로 받아 원본 그대로 사용(색·비율 변경 금지)
-- [ ] 실제 테스트 제출(입시·취업·미정 3건)로 분기·알림 확인 → 구글 폼 응답용 주소 기록
+- [x] 폼 머리글·테마·섹션 이미지 적용(Kegone 세션 Chrome 조작), 사용자 테스트 제출·디스코드 알림 확인 (2026-10-24)
+- [ ] 관심 과정 선택지 변경(유니티&언리얼, AI개발, 애니메이션(2D, 3D) 추가) — updateCourseChoices 실행
 - [ ] 블로그 CTA·티스토리 서식·사이드바에 폼 링크 추가 (주소 받은 뒤)
 - [ ] 상담일지 스킬(contact-consultation-log)에 유입 경로 항목 추가 — 계정 스킬이라 claude.ai에서 수정
 - [ ] 인스타그램 개설 준비물 (계정명·소개문·프로필 이미지·하이라이트·첫 게시물 9개)
