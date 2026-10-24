@@ -198,19 +198,7 @@ function notifyOnSubmit(e) {
   const sheetUrl = 'https://docs.google.com/spreadsheets/d/' + e.source.getDestinationId();
   const time = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM.dd HH:mm');
 
-  // 디스코드: 연락처 일부를 가린 요약만 보낸다(전체 정보는 응답 시트에서 확인)
-  const who = kind === '입시'
-    ? [a['학생 학년'], a['신청하시는 분']]
-    : kind === '취업' ? [a['현재 상황'], '내일배움카드 ' + (a['국민내일배움카드가 있으신가요?'] || '-')] : [];
-  sendDiscord_([
-    '**[상담 신청] ' + [kind].concat(who).filter(String).join(' · ') + '**  (' + time + ')',
-    '관심: ' + (a['관심 있는 과정 (여러 개 선택 가능)'] || '-'),
-    '유입: ' + (a['저희 학원을 어떻게 알게 되셨나요?'] || '-'),
-    '연락: ' + (a['편한 연락 방법'] || '-') + ' / ' + maskPhone_(a['연락처 (휴대폰)']) +
-      (a['연락 가능한 시간대 (여러 개 선택 가능)'] ? ' / ' + a['연락 가능한 시간대 (여러 개 선택 가능)'] : ''),
-    '→ 응답 시트: ' + sheetUrl,
-  ].join('\n'));
-
+  // 메일을 먼저 보낸다 — 메신저 전송이 실패해도 메일 알림은 남도록
   if (SEND_EMAIL) {
     MailApp.sendEmail(
       NOTIFY_EMAIL,
@@ -218,16 +206,52 @@ function notifyOnSubmit(e) {
       Object.keys(a).map(function (k) { return '■ ' + k + '\n' + a[k]; }).join('\n\n')
     );
   }
+
+  // 디스코드: 연락처 일부를 가린 요약만 보낸다(전체 정보는 응답 시트에서 확인)
+  const who = kind === '입시'
+    ? [a['학생 학년'], a['신청하시는 분']]
+    : kind === '취업' ? [a['현재 상황'], '내일배움카드 ' + (a['국민내일배움카드가 있으신가요?'] || '-')] : [];
+  sendDiscord_([
+    '[상담 신청] ' + [kind].concat(who).filter(String).join(' · ') + '  (' + time + ')',
+    '관심: ' + (a['관심 있는 과정 (여러 개 선택 가능)'] || '-'),
+    '유입: ' + (a['저희 학원을 어떻게 알게 되셨나요?'] || '-'),
+    '연락: ' + (a['편한 연락 방법'] || '-') + ' / ' + maskPhone_(a['연락처 (휴대폰)']) +
+      (a['연락 가능한 시간대 (여러 개 선택 가능)'] ? ' / ' + a['연락 가능한 시간대 (여러 개 선택 가능)'] : ''),
+    '→ 응답 시트: ' + sheetUrl,
+  ].join('\n'));
 }
 
+// 디스코드 웹후크로 보낸다. 실패해도 예외를 던지지 않고 결과만 돌려준다(메일 알림·폼 처리를 막지 않도록).
+// 구글 서버에서 discord.com 으로 직접 보내면 429(error 1015) 차단이 생길 수 있다 →
+// 그때는 DISCORD_WEBHOOK_URL 의 'https://discord.com' 부분만 중계 주소로 바꾼다(README '429 오류가 날 때').
 function sendDiscord_(text) {
   const url = PropertiesService.getScriptProperties().getProperty('DISCORD_WEBHOOK_URL');
-  if (!url) return; // 아직 웹후크를 설정하지 않았으면 메일만 보낸다
-  UrlFetchApp.fetch(url, {
-    method: 'post',
-    contentType: 'application/json',
-    payload: JSON.stringify({ username: '상담 신청 알림', content: text }),
-  });
+  if (!url) return ''; // 아직 웹후크를 설정하지 않았으면 메일만 보낸다
+  const result = post_(url, { username: '상담 신청 알림', content: text });
+  Logger.log('디스코드: ' + result);
+  return result;
+}
+
+// 성공하면 '성공', 실패하면 '실패(코드)'. 429(요청 제한)는 잠깐 쉬었다 두 번까지 다시 시도한다.
+function post_(url, body) {
+  let code = 0;
+  for (let i = 0; i < 3; i++) {
+    try {
+      const res = UrlFetchApp.fetch(url, {
+        method: 'post',
+        contentType: 'application/json',
+        payload: JSON.stringify(body),
+        muteHttpExceptions: true,
+      });
+      code = res.getResponseCode();
+      if (code >= 200 && code < 300) return '성공';
+      if (code !== 429) break;
+    } catch (err) {
+      code = String(err);
+    }
+    Utilities.sleep(3000 * (i + 1));
+  }
+  return '실패(' + code + ')';
 }
 
 function maskPhone_(phone) {
@@ -238,8 +262,7 @@ function maskPhone_(phone) {
 // 디스코드 연결 확인용: 웹후크 주소를 넣은 뒤 이 함수를 한 번 실행하면 테스트 메시지가 온다
 // (처음 실행 시 '외부 서비스 연결' 권한을 허용해야 실제 신청 알림도 작동한다)
 function testDiscord() {
-  if (!PropertiesService.getScriptProperties().getProperty('DISCORD_WEBHOOK_URL')) {
-    throw new Error('스크립트 속성에 DISCORD_WEBHOOK_URL 을 먼저 넣어 주세요.');
-  }
-  sendDiscord_('✅ 상담 신청 알림 연결 테스트입니다. 이 메시지가 보이면 설정 완료입니다.');
+  const result = sendDiscord_('✅ 상담 신청 알림 연결 테스트입니다. 이 메시지가 보이면 설정 완료입니다.');
+  if (!result) throw new Error('스크립트 속성에 DISCORD_WEBHOOK_URL 을 먼저 넣어 주세요.');
+  if (result !== '성공') throw new Error('디스코드 전송 ' + result + ' — README의 \'429 오류가 날 때\'를 확인하세요.');
 }
