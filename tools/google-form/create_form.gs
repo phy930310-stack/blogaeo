@@ -269,7 +269,7 @@ function testDiscord() {
 
 // 섹션 이미지 넣기: 한 번만 실행 (다시 실행하면 같은 이미지가 또 들어간다)
 // 이미지는 공개 저장소(GitHub)의 고정 커밋에서 받아 오므로 드라이브에 올릴 필요가 없다.
-const IMAGE_BASE = 'https://raw.githubusercontent.com/phy930310-stack/blogaeo/b2c5615e4bfc8c8b06e9e52881455f89599a7ab3/tools/google-form/assets/';
+const IMAGE_BASE = 'https://raw.githubusercontent.com/phy930310-stack/blogaeo/67705fd9611f58fc799a5720d5334c33f23d05ae/tools/google-form/assets/';
 
 function decorateForm() {
   const formId = PropertiesService.getScriptProperties().getProperty('FORM_ID');
