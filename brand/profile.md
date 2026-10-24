@@ -13,6 +13,12 @@
 - 홈페이지: http://sbsdaejeon-game.co.kr/ (게임학원)
 - 웹툰학원 홈페이지: http://webtoon-daejeon.com/ (https 접속 불가 — http로 표기)
 - 온라인 상담 신청 폼: **구글 폼(입시/취업 분기형)으로 일원화** — https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform (2026-10-24 공개 접속 확인). 짧은 주소: https://forms.gle/8CNmS6Nvh5BNBhZe7 네이버 폼은 종료 예정(brand/channels.md). 폼 **편집 주소는 관리자용이므로 외부에 쓰지 않는다**
+- 상담 폼 채널별 링크(유입 경로 문항이 미리 선택됨, 2026-10-24 동작 확인). 원고·프로필에는 채널에 맞는 링크를 쓴다
+  - 네이버 블로그: https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EB%84%A4%EC%9D%B4%EB%B2%84+%EB%B8%94%EB%A1%9C%EA%B7%B8
+  - 티스토리: https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EA%B5%AC%EA%B8%80+%EA%B2%80%EC%83%89%C2%B7%ED%8B%B0%EC%8A%A4%ED%86%A0%EB%A6%AC
+  - 인스타그램: https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8
+  - 카카오톡: https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1
+  - 유튜브: https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EC%9C%A0%ED%8A%9C%EB%B8%8C
 - 카카오톡 오픈채팅(1:1): https://open.kakao.com/o/srqyuFLc — 공식 카카오톡 채널(pf.kakao.com)과는 다름
 - 인스타그램: 개설 예정
 - 네이버 플레이스: https://map.naver.com/p/entry/place/1652785251

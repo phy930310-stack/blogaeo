@@ -130,6 +130,10 @@ if HAS_NAVER and "sbsdaejeon-game.co.kr" not in naver:
     problems.append("네이버: 글 끝 홈페이지 링크 없음")
 if "tel:042-716-7439" not in tist or "sbsdaejeon-game.co.kr" not in tist:
     problems.append("티스토리: 글 끝 상담 배너(CTA: 전화·홈페이지 버튼) 없음 — templates/tistory-components.html [5]")
+if HAS_NAVER and "entry.607658700" not in naver:
+    problems.append("네이버: 글 끝 온라인 상담 신청(구글 폼, 네이버 블로그용 링크) 없음 — brand/profile.md")
+if "entry.607658700" not in tist:
+    problems.append("티스토리: 상담 배너에 온라인 상담 신청 버튼(구글 폼, 티스토리용 링크) 없음 — templates/tistory-components.html [5]")
 if HAS_NAVER and "[지도]" not in naver:
     problems.append("네이버: [지도] 표시 없음")
 
