@@ -1,5 +1,10 @@
 # 인스타그램 개설 준비 (2026-10-24)
 
+> **계정: @sbs_game_daejeon** (https://www.instagram.com/sbs_game_daejeon/). 비즈니스 계정, 카테고리 '교육'.
+> 2026-10-24 Kegone 세션이 Chrome으로 설정함: 프로필 사진·소개 입력, 비즈니스 전환, 게시물 01 업로드(https://www.instagram.com/p/De4tGvqErMB/).
+> - 소개에 '✔'는 쓸 수 없다(인스타그램 거부) → '•'로 대체.
+> - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
+
 운영 원칙(`brand/channels.md`):
 - 유료 광고 없이 자연 도달만 노린다.
 - 계정 하나로 운영한다. 입시가 메인, 취업을 함께 다룬다(비율 약 7:3).
@@ -37,8 +42,8 @@ python3 instagram/build_assets.py && node .claude/skills/aeo-blog/scripts/render
 SBS아카데미게임학원 대전점 🎮
 게임·웹툰·웹소설·AI개발·애니메이션
 입시 & 취업 포트폴리오
-✔ 성적 걱정? 포트폴리오&면접 전형
-✔ 국비 과정(내일배움카드) 상담
+• 성적 걱정? 포트폴리오&면접 전형
+• 국비 과정(내일배움카드) 상담
 📍 대전 둔산동 ☎ 042-716-7439
 👇 1:1 상담 신청
 ```

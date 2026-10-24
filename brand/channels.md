@@ -17,7 +17,7 @@
 | 네이버 폼 | https://form.naver.com/response/8QZ5haH_1w99sYrZl_NGhQ | **종료 예정** (구글 폼으로 대체) |
 | 카카오톡 오픈채팅(1:1) | https://open.kakao.com/o/srqyuFLc | 운영 중 (제목 수정 권장) |
 | 구글 폼 (**메인 상담 창구**) | https://forms.gle/8CNmS6Nvh5BNBhZe7 (원 주소 https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform) | `tools/google-form/` 스크립트로 생성 — 입시/취업 분기형. 신청 알림 = 디스코드 웹후크(연락처 일부 가림) + 메일(예비) |
-| 인스타그램 DM | - | 계정 개설 예정 |
+| 인스타그램 DM | https://www.instagram.com/sbs_game_daejeon/ (@sbs_game_daejeon) | 2026-10-24 개설·비즈니스 전환. 링크·연락처·고정은 앱에서 설정 필요 |
 
 ## 유입 경로 선택지 (폼·상담일지 공통)
 네이버 블로그 / 네이버 검색·지도(플레이스) / 구글 검색·티스토리 / 인스타그램 / 유튜브 / 카카오톡 / 지인·선후배 추천 / 학교·설명회 / 기타(직접 입력)
@@ -34,6 +34,7 @@
 - [ ] 기존 발행 글·티스토리 서식 2·3·사이드바·네이버 블로그 프로필에 폼 링크 추가 (사용자 결정 대기)
 - [ ] 상담일지 스킬(contact-consultation-log)에 유입 경로 항목 추가 — 계정 스킬이라 claude.ai에서 수정
 - [x] 인스타그램 개설 준비물 (2026-10-24, `instagram/`): 아이디 후보·이름·소개·링크, 프로필·하이라이트 5·게시물 표지 9, 고정 3개 캡션
-- [ ] 인스타그램 계정 개설(사용자) → 아이디 알려 주면 기록
+- [x] 인스타그램 계정 @sbs_game_daejeon 설정 (2026-10-24, Kegone 세션 Chrome): 프로필 사진·소개·비즈니스 전환·게시물 01 업로드
+- [ ] (앱) 링크 4개, 연락처 전화·주소, 게시물 01 고정, 'AI로 생성한 프로필' 표시 끄기, 하이라이트
 - [ ] 게시물 01~09 본문 장(카드뉴스 5~7장)·04~09 캡션
 - [ ] 단계별 실행안, 콘텐츠 캘린더

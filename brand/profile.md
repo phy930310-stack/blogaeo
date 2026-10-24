@@ -21,7 +21,8 @@
   - 유튜브: https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EC%9C%A0%ED%8A%9C%EB%B8%8C
 - 카카오톡 오픈채팅(1:1): https://open.kakao.com/o/srqyuFLc — 공식 카카오톡 채널(pf.kakao.com)과는 다름
 - 인스타그램: 개설 예정
-- 네이버 블로그: https://blog.naver.com/youknowthat- (2026-10-24 사용자 확인)
+- 네이버 블로그: https://blog.naver.com/youknowthat-
+- 인스타그램: https://www.instagram.com/sbs_game_daejeon/ (@sbs_game_daejeon, 2026-10-24 개설) (2026-10-24 사용자 확인)
 - 네이버 플레이스: https://map.naver.com/p/entry/place/1652785251
 
 > 참고: 주소의 "5층"과 "501호"가 함께 표기되어 있습니다. 네이버 플레이스 표기와 동일한지 한 번 확인해 주십시오.
