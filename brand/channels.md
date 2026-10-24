@@ -16,7 +16,7 @@
 | 전화 | 042-716-7439 | 운영 중 |
 | 네이버 폼 | https://form.naver.com/response/8QZ5haH_1w99sYrZl_NGhQ | **종료 예정** (구글 폼으로 대체) |
 | 카카오톡 오픈채팅(1:1) | https://open.kakao.com/o/srqyuFLc | 운영 중 (제목 수정 권장) |
-| 구글 폼 (**메인 상담 창구**) | 생성 후 응답용 주소 기록 | `tools/google-form/` 스크립트로 생성 — 입시/취업 분기형. 신청 알림 = 디스코드 웹후크(연락처 일부 가림) + 메일(예비) |
+| 구글 폼 (**메인 상담 창구**) | https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform | `tools/google-form/` 스크립트로 생성 — 입시/취업 분기형. 신청 알림 = 디스코드 웹후크(연락처 일부 가림) + 메일(예비) |
 | 인스타그램 DM | - | 계정 개설 예정 |
 
 ## 유입 경로 선택지 (폼·상담일지 공통)

@@ -12,7 +12,7 @@
 - 운영시간: 09:00~22:00
 - 홈페이지: http://sbsdaejeon-game.co.kr/ (게임학원)
 - 웹툰학원 홈페이지: http://webtoon-daejeon.com/ (https 접속 불가 — http로 표기)
-- 온라인 상담 신청 폼: **구글 폼(입시/취업 분기형)으로 일원화** — 주소 받으면 기록, 그 전까지 원고에 넣지 않음. 네이버 폼은 종료 예정(brand/channels.md). 폼 **편집 주소는 관리자용이므로 외부에 쓰지 않는다**
+- 온라인 상담 신청 폼: **구글 폼(입시/취업 분기형)으로 일원화** — https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform (2026-10-24 공개 접속 확인). 네이버 폼은 종료 예정(brand/channels.md). 폼 **편집 주소는 관리자용이므로 외부에 쓰지 않는다**
 - 카카오톡 오픈채팅(1:1): https://open.kakao.com/o/srqyuFLc — 공식 카카오톡 채널(pf.kakao.com)과는 다름
 - 인스타그램: 개설 예정
 - 네이버 플레이스: https://map.naver.com/p/entry/place/1652785251
