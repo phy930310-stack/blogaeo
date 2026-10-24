@@ -275,7 +275,7 @@ function testDiscord() {
 
 // 섹션 이미지 넣기: 한 번만 실행 (다시 실행하면 같은 이미지가 또 들어간다)
 // 이미지는 공개 저장소(GitHub)의 고정 커밋에서 받아 오므로 드라이브에 올릴 필요가 없다.
-const IMAGE_BASE = 'https://raw.githubusercontent.com/phy930310-stack/blogaeo/67705fd9611f58fc799a5720d5334c33f23d05ae/tools/google-form/assets/';
+const IMAGE_BASE = 'https://raw.githubusercontent.com/phy930310-stack/blogaeo/7247d27ddd20f9023b7a5aece3786c23f56eff0c/tools/google-form/assets/';
 
 function decorateForm() {
   const formId = PropertiesService.getScriptProperties().getProperty('FORM_ID');
@@ -309,4 +309,23 @@ function updateCourseChoices() {
   if (!item) throw new Error('"' + COURSE_TITLE + '" 문항을 찾지 못했습니다.');
   item.asCheckboxItem().setChoiceValues(COURSES);
   Logger.log('관심 과정 선택지 변경: ' + COURSES.join(' / '));
+}
+
+// 섹션 이미지 교체: 섹션 맨 위의 기존 이미지를 지우고 IMAGE_BASE 의 새 이미지로 바꾼다 (여러 번 실행해도 중복되지 않음)
+function replaceSectionImages() {
+  const targets = [{ section: '취업 상담', file: '폼_취업.png' }];
+  const form = FormApp.openById(PropertiesService.getScriptProperties().getProperty('FORM_ID'));
+  targets.forEach(function (t) {
+    const breakItem = form.getItems(FormApp.ItemType.PAGE_BREAK).filter(function (it) {
+      return it.getTitle() === t.section;
+    })[0];
+    if (!breakItem) throw new Error('폼에서 "' + t.section + '" 섹션을 찾지 못했습니다.');
+    const next = form.getItems()[breakItem.getIndex() + 1];
+    if (next && next.getType() === FormApp.ItemType.IMAGE) form.deleteItem(next);
+    const blob = UrlFetchApp.fetch(IMAGE_BASE + encodeURIComponent(t.file)).getBlob().setName(t.file);
+    const img = form.addImageItem().setImage(blob).setTitle('')
+      .setAlignment(FormApp.Alignment.CENTER).setWidth(640);
+    form.moveItem(img.getIndex(), breakItem.getIndex() + 1);
+    Logger.log(t.section + ' 섹션 이미지 교체: ' + t.file);
+  });
 }
