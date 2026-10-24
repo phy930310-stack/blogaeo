@@ -2,7 +2,8 @@
  * SBS아카데미게임학원 대전점 — 입시·취업 상담 신청 구글 폼 생성 스크립트
  *
  * 사용법: README.md 참고. script.google.com 새 프로젝트에 이 파일 내용을 붙여 넣고
- * createConsultForm 을 한 번 실행하면 폼 + 응답 시트 + 메일 알림이 만들어진다.
+ * createConsultForm 을 한 번 실행하면 폼 + 응답 시트 + 알림(디스코드·메일)이 만들어진다.
+ * 디스코드 웹후크 주소는 코드에 쓰지 않고 '스크립트 속성' DISCORD_WEBHOOK_URL 에 넣는다.
  *
  * 구조(섹션 분기)
  *   1. 상담 목적 → [입시] 2-A로 / [취업] 2-B로 / [모르겠음] 3으로
@@ -13,6 +14,7 @@
 
 const FORM_TITLE = 'SBS아카데미게임학원 대전점 입시·취업 상담 신청';
 const NOTIFY_EMAIL = 'phy930310@gmail.com';
+const SEND_EMAIL = true; // 디스코드가 끊겼을 때를 대비한 예비 알림. 메일이 필요 없으면 false
 const PHONE = '042-716-7439';
 
 // 유입 경로 선택지 — brand/channels.md 의 목록과 동일하게 유지
@@ -185,15 +187,59 @@ function createConsultForm() {
 }
 
 function notifyOnSubmit(e) {
-  const answers = e.response.getItemResponses().map(function (r) {
+  const items = e.response.getItemResponses();
+  const a = {};
+  items.forEach(function (r) {
     const v = r.getResponse();
-    return '■ ' + r.getItem().getTitle() + '\n' + (Array.isArray(v) ? v.join(', ') : v);
+    a[r.getItem().getTitle()] = Array.isArray(v) ? v.join(', ') : String(v);
   });
-  const first = e.response.getItemResponses()[0];
-  const kind = first ? String(first.getResponse()).split(' ')[0] : '';
-  MailApp.sendEmail(
-    NOTIFY_EMAIL,
-    '[상담 신청] ' + kind + ' — ' + Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM.dd HH:mm'),
-    answers.join('\n\n')
-  );
+  const purpose = a['어떤 상담을 원하세요?'] || '';
+  const kind = purpose.indexOf('입시') === 0 ? '입시' : purpose.indexOf('취업') === 0 ? '취업' : '미정';
+  const sheetUrl = 'https://docs.google.com/spreadsheets/d/' + e.source.getDestinationId();
+  const time = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM.dd HH:mm');
+
+  // 디스코드: 연락처 일부를 가린 요약만 보낸다(전체 정보는 응답 시트에서 확인)
+  const who = kind === '입시'
+    ? [a['학생 학년'], a['신청하시는 분']]
+    : kind === '취업' ? [a['현재 상황'], '내일배움카드 ' + (a['국민내일배움카드가 있으신가요?'] || '-')] : [];
+  sendDiscord_([
+    '**[상담 신청] ' + [kind].concat(who).filter(String).join(' · ') + '**  (' + time + ')',
+    '관심: ' + (a['관심 있는 과정 (여러 개 선택 가능)'] || '-'),
+    '유입: ' + (a['저희 학원을 어떻게 알게 되셨나요?'] || '-'),
+    '연락: ' + (a['편한 연락 방법'] || '-') + ' / ' + maskPhone_(a['연락처 (휴대폰)']) +
+      (a['연락 가능한 시간대 (여러 개 선택 가능)'] ? ' / ' + a['연락 가능한 시간대 (여러 개 선택 가능)'] : ''),
+    '→ 응답 시트: ' + sheetUrl,
+  ].join('\n'));
+
+  if (SEND_EMAIL) {
+    MailApp.sendEmail(
+      NOTIFY_EMAIL,
+      '[상담 신청] ' + kind + ' — ' + time,
+      Object.keys(a).map(function (k) { return '■ ' + k + '\n' + a[k]; }).join('\n\n')
+    );
+  }
+}
+
+function sendDiscord_(text) {
+  const url = PropertiesService.getScriptProperties().getProperty('DISCORD_WEBHOOK_URL');
+  if (!url) return; // 아직 웹후크를 설정하지 않았으면 메일만 보낸다
+  UrlFetchApp.fetch(url, {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify({ username: '상담 신청 알림', content: text }),
+  });
+}
+
+function maskPhone_(phone) {
+  const d = String(phone || '').replace(/[^0-9]/g, '');
+  return d.length >= 10 ? d.slice(0, 3) + '-****-' + d.slice(-4) : '-';
+}
+
+// 디스코드 연결 확인용: 웹후크 주소를 넣은 뒤 이 함수를 한 번 실행하면 테스트 메시지가 온다
+// (처음 실행 시 '외부 서비스 연결' 권한을 허용해야 실제 신청 알림도 작동한다)
+function testDiscord() {
+  if (!PropertiesService.getScriptProperties().getProperty('DISCORD_WEBHOOK_URL')) {
+    throw new Error('스크립트 속성에 DISCORD_WEBHOOK_URL 을 먼저 넣어 주세요.');
+  }
+  sendDiscord_('✅ 상담 신청 알림 연결 테스트입니다. 이 메시지가 보이면 설정 완료입니다.');
 }
