@@ -47,7 +47,7 @@ SBS아카데미게임학원 대전점 🎮
      `https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8`
   2. `카톡 1:1 상담`: https://open.kakao.com/o/srqyuFLc
   3. `입시·취업 정보 블로그`: https://youknow-that.tistory.com
-  4. `네이버 블로그`: [확인 필요 — 네이버 블로그 주소]
+  4. `네이버 블로그`: https://blog.naver.com/youknowthat-
 - **연락처 버튼 주소**(NAP, 글자 하나까지 동일하게): 대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호)
 
 ## 4. 이미지 (`instagram/assets/`)
