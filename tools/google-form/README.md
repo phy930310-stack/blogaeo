@@ -56,7 +56,7 @@
 6. `testDiscord`를 다시 실행합니다.
 
 ## 폼 꾸미기 (약 5분)
-이미지는 `images/`에 있습니다. 원본 HTML은 `images/src/`에 있으며, 수정 후 `node .claude/skills/aeo-blog/scripts/render.mjs tools/google-form/images`로 다시 만들 수 있습니다.
+이미지는 `assets/`에 있습니다. 원본 HTML은 `assets/src/`에 있으며, 수정 후 `node .claude/skills/aeo-blog/scripts/render.mjs tools/google-form/assets`로 다시 만들 수 있습니다.
 
 | 파일 | 위치 | 크기 |
 |---|---|---|
