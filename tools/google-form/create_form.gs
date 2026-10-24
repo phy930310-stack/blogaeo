@@ -266,3 +266,29 @@ function testDiscord() {
   if (!result) throw new Error('스크립트 속성에 DISCORD_WEBHOOK_URL 을 먼저 넣어 주세요.');
   if (result !== '성공') throw new Error('디스코드 전송 ' + result + ' — README의 \'429 오류가 날 때\'를 확인하세요.');
 }
+
+// 섹션 이미지 넣기: 내 드라이브에 폼_입시.png · 폼_취업.png · 폼_연락처.png 를 올린 뒤 한 번 실행
+// (각 섹션 맨 위에 이미지를 넣는다. 다시 실행하면 같은 이미지가 또 들어가므로 한 번만)
+function decorateForm() {
+  const formId = PropertiesService.getScriptProperties().getProperty('FORM_ID');
+  if (!formId) throw new Error('먼저 createConsultForm 으로 폼을 만들어 주세요.');
+  const form = FormApp.openById(formId);
+  const plan = [
+    { section: '입시 상담', file: '폼_입시.png' },
+    { section: '취업 상담', file: '폼_취업.png' },
+    { section: '연락처', file: '폼_연락처.png' },
+  ];
+  plan.forEach(function (p) {
+    const files = DriveApp.getFilesByName(p.file);
+    if (!files.hasNext()) throw new Error('드라이브에서 ' + p.file + ' 을 찾지 못했습니다. 파일을 올렸는지 확인해 주세요.');
+    const blob = files.next().getBlob();
+    const breakItem = form.getItems(FormApp.ItemType.PAGE_BREAK).filter(function (it) {
+      return it.getTitle() === p.section;
+    })[0];
+    if (!breakItem) throw new Error('폼에서 "' + p.section + '" 섹션을 찾지 못했습니다.');
+    const img = form.addImageItem().setImage(blob).setTitle('')
+      .setAlignment(FormApp.Alignment.CENTER).setWidth(640);
+    form.moveItem(img.getIndex(), breakItem.getIndex() + 1);
+    Logger.log(p.section + ' 섹션에 ' + p.file + ' 추가');
+  });
+}
