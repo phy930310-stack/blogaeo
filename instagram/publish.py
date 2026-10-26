@@ -1,0 +1,133 @@
+"""인스타그램 공식 API(Instagram API with Instagram Login)로 게시물을 올린다.
+
+필요: 환경 변수 INSTAGRAM_ACCESS_TOKEN (게시 권한 instagram_business_content_publish 포함, 장기 토큰)
+      — 대화창에 붙여 넣지 말고 클라우드 환경 설정(Network secrets 또는 환경 변수)에 넣는다.
+
+사용:
+  python3 instagram/publish.py check                 # 토큰·계정·남은 게시 한도 확인
+  python3 instagram/publish.py post 03 --dry-run     # 올릴 이미지 주소·캡션만 출력
+  python3 instagram/publish.py post 03               # 실제 게시
+  python3 instagram/publish.py refresh               # 장기 토큰 갱신(60일 만료 전에)
+
+이미지는 공개 저장소의 고정 커밋 주소(raw.githubusercontent.com)로 넘긴다. 그래서 게시 전에
+instagram/assets/jpg/ 의 파일이 커밋·push되어 있어야 한다(커밋 해시를 --ref 로 지정, 기본 = 현재 HEAD).
+"""
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+API = "https://graph.instagram.com/v23.0"
+ROOT = Path(__file__).resolve().parent
+REPO_RAW = "https://raw.githubusercontent.com/phy930310-stack/blogaeo"
+
+
+def token():
+    t = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
+    if not t:
+        sys.exit("INSTAGRAM_ACCESS_TOKEN 이 없습니다. 클라우드 환경 설정에 넣고 새 세션에서 실행하세요.")
+    return t
+
+
+def call(method, path, **params):
+    params["access_token"] = token()
+    data = urllib.parse.urlencode(params).encode()
+    if method == "GET":
+        req = urllib.request.Request(f"{API}/{path}?{data.decode()}")
+    else:
+        req = urllib.request.Request(f"{API}/{path}", data=data, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors="replace")
+        body = re.sub(r"access_token=[^&\"]+", "access_token=***", body)
+        sys.exit(f"API 오류 {e.code}: {body}")
+
+
+def captions():
+    """README.md 의 '**NN 제목**' 다음 코드블록을 캡션으로 읽는다."""
+    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    out = {}
+    for m in re.finditer(r"\*\*(\d{2}) [^*]+\*\*\n```\n(.*?)\n```", text, re.S):
+        out[m.group(1)] = m.group(2)
+    return out
+
+
+def images(key, ref):
+    jpg = ROOT / "assets" / "jpg"
+    files = sorted(jpg.glob(f"게시물_{key}_*.jpg")) + sorted(jpg.glob(f"캐러셀_{key}_*.jpg"))
+    if not files:
+        sys.exit(f"{key} 이미지가 없습니다: instagram/assets/jpg/")
+    base = f"{REPO_RAW}/{ref}/instagram/assets/jpg/"
+    return [base + urllib.parse.quote(f.name) for f in files]
+
+
+def wait_ready(cid):
+    for _ in range(30):
+        st = call("GET", cid, fields="status_code").get("status_code")
+        if st == "FINISHED":
+            return
+        if st in ("ERROR", "EXPIRED"):
+            sys.exit(f"컨테이너 {cid} 상태: {st}")
+        time.sleep(3)
+    sys.exit(f"컨테이너 {cid} 준비 시간 초과")
+
+
+def post(key, ref, dry):
+    urls = images(key, ref)
+    cap = captions().get(key)
+    if not cap:
+        sys.exit(f"README.md 에 {key} 캡션이 없습니다.")
+    print(f"이미지 {len(urls)}장\n" + "\n".join(urls) + f"\n\n캡션:\n{cap}")
+    if dry:
+        return
+    for u in urls:  # 게시 전에 주소가 열리는지 확인
+        with urllib.request.urlopen(u, timeout=30) as r:
+            if r.status != 200:
+                sys.exit(f"이미지 주소 오류 {r.status}: {u}")
+    me = call("GET", "me", fields="user_id,username")
+    uid = me["user_id"]
+    if len(urls) == 1:
+        cid = call("POST", f"{uid}/media", image_url=urls[0], caption=cap)["id"]
+    else:
+        kids = [call("POST", f"{uid}/media", image_url=u, is_carousel_item="true")["id"] for u in urls]
+        for k in kids:
+            wait_ready(k)
+        cid = call("POST", f"{uid}/media", media_type="CAROUSEL", children=",".join(kids), caption=cap)["id"]
+    wait_ready(cid)
+    mid = call("POST", f"{uid}/media_publish", creation_id=cid)["id"]
+    link = call("GET", mid, fields="permalink").get("permalink")
+    print(f"\n게시 완료 @{me['username']}: {link}")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("cmd", choices=["check", "post", "refresh"])
+    ap.add_argument("key", nargs="?")
+    ap.add_argument("--ref", default=None, help="이미지를 가져올 커밋 해시(기본: 현재 HEAD)")
+    ap.add_argument("--dry-run", action="store_true")
+    a = ap.parse_args()
+    if a.cmd == "check":
+        me = call("GET", "me", fields="user_id,username,account_type,media_count")
+        lim = call("GET", f"{me['user_id']}/content_publishing_limit", fields="quota_usage,config")
+        print(json.dumps({"account": me, "publishing_limit": lim}, ensure_ascii=False, indent=2))
+    elif a.cmd == "post":
+        if not a.key:
+            sys.exit("게시물 번호를 지정하세요. 예: post 03")
+        ref = a.ref or subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        post(a.key, ref, a.dry_run)
+    else:
+        r = call("GET", "refresh_access_token", grant_type="ig_refresh_token")
+        days = int(r.get("expires_in", 0)) // 86400
+        print(f"갱신 완료: 약 {days}일 유효. 새 토큰 값이 바뀌었다면 환경 설정의 INSTAGRAM_ACCESS_TOKEN 을 교체해야 합니다(값은 출력하지 않음).")
+
+
+if __name__ == "__main__":
+    main()

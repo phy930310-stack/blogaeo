@@ -37,5 +37,7 @@
 - [x] 인스타그램 계정 @sbs_game_daejeon 설정 (2026-10-24, Kegone 세션 Chrome): 프로필 사진·소개·비즈니스 전환·게시물 01 업로드
 - [ ] (앱) 링크 4개, 연락처 전화·주소, 게시물 01 고정, 'AI로 생성한 프로필' 표시 끄기, 하이라이트
 - [x] 게시물 02·03 본문 장(각 7장) 제작 (2026-10-24, `instagram/build_carousels.py`)
+- [x] 인스타 공식 API 자동 업로드 준비 (2026-10-26): `instagram/publish.py`, JPEG 변환(`instagram/assets/jpg/`), 설정 안내 `instagram/API_설정.md`
+- [ ] (사용자) Meta 앱·토큰 발급 → 환경 변수 INSTAGRAM_ACCESS_TOKEN → 새 세션에서 check. 발급일: (기록)
 - [ ] 게시물 02·03 업로드·고정, 04~09 본문 장·캡션
 - [ ] 단계별 실행안, 콘텐츠 캘린더
