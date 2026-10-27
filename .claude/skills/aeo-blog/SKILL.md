@@ -28,6 +28,7 @@ description: 키워드 하나를 받아 AEO(답변 엔진 최적화) 기준의 �
 - 취업 글 서명은 "SBS아카데미게임학원 대전점 입시&취업상담팀", 입시 글은 "… 입시상담팀"
 
 ## 키워드 선정 (키워드 미지정 시)
+0. **`keywords/priority.md`(사용자 지정 우선 키워드)를 먼저 확인**한다. '대기' 묶음이 있으면 백로그보다 우선해 순서대로 추천·작성한다
 1. `pip install openpyxl` (없으면) → `python3 .claude/skills/aeo-blog/scripts/keywords.py`
    - `keywords/raw/*.xlsx` 병합 → 관련 키워드만 질문군별 정리(`backlog.md/csv`) → 주제 묶음별 합산 검색량(`clusters.md`)
    - 관련성 규칙(질문군 패턴·제외어)은 스크립트 상단 `GROUPS`/`EXCLUDE`, 주제 묶음은 `keywords/clusters.csv`에서 관리. 새 엑셀에서 묶음에 없는 유망 키워드가 보이면 clusters.csv에 행을 추가한다
