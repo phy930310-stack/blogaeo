@@ -24,7 +24,7 @@
 - 네이버 블로그: https://blog.naver.com/youknowthat-
 - 인스타그램: https://www.instagram.com/sbs_game_daejeon/ (@sbs_game_daejeon, 2026-10-24 개설) (2026-10-24 사용자 확인)
 - 네이버 플레이스: https://map.naver.com/p/entry/place/1652785251
-- 인스타 프로필 링크 페이지(링크 모음): https://phy930310-stack.github.io/blogaeo/link/ — 저장소 `link/index.html`, GitHub Pages 활성화 후 동작(2026-10-28 제작). 버튼: 상담 신청(인스타 사전 입력 링크)·카톡 1:1·전화·오시는 길·티스토리·네이버 블로그
+- 인스타 프로필 링크 페이지(링크 모음): https://phy930310-stack.github.io/blogaeo/link/ — 저장소 `link/index.html`, GitHub Pages 활성화 후 동작(2026-10-28 제작). 버튼: 상담 신청(인스타 사전 입력 링크)·카톡 1:1·전화·오시는 길·학원 홈페이지·인스타 DM(https://ig.me/m/sbs_game_daejeon) (2026-10-28 사용자 변경: 블로그 2개 대신 홈페이지·DM)
 
 > 참고: 주소의 "5층"과 "501호"가 함께 표기되어 있습니다. 네이버 플레이스 표기와 동일한지 한 번 확인해 주십시오.
 
