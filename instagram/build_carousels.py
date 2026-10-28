@@ -3,6 +3,7 @@
 사용: python3 instagram/build_carousels.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
 - 수치·사실은 원본 블로그 글(출처 표기된 것)에서만 가져온다. 근거는 instagram/README.md 표 참고
 - 입시 글은 포트폴리오&면접 전형 중심으로 맺는다(brand/profile.md 입시 포지셔닝)
+- 디자인 원칙: .claude/skills/frontend-design/적용규칙.md (2026-10-28 추가 — 현재 결과물은 적용 전)
 """
 from build_assets import SRC, THEMES, page
 
