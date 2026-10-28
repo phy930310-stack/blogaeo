@@ -145,16 +145,16 @@ K1 = f"""
   <span style="font-size:124px;font-weight:800;letter-spacing:-4px;margin-left:10px">만원</span>
 </div>
 <h1 style="margin-top:110px;font-size:84px">국비로 게임·웹툰,<br>배울 수 있어요.</h1>
-<p class="lead" style="margin-top:34px;color:{MIST}">카드 신청부터 대전점 과정까지<br>7장으로 정리했어요.</p>
+<p class="lead" style="margin-top:34px;color:{MIST}">상담부터 카드 신청까지<br>7장으로 정리했어요.</p>
 """
 
-# 2 결론 — 순서는 카드 먼저
+# 2 결론 — 순서는 상담 먼저 (brand/profile.md 2026-10-28: 입과 테스트가 있어 카드부터 만들면 입과가 안 될 수 있음)
 K2 = f"""
-<h1 style="margin-top:60px;font-size:112px">카드 먼저,<br>과정은 그다음.</h1>
-<p class="lead" style="margin-top:48px"><u style="text-decoration-color:{ORANGE};text-decoration-thickness:8px;text-underline-offset:12px">국민내일배움카드</u>를 발급받고,<br>고용24에서 '대전'과 분야로 검색하면 돼요.</p>
+<h1 style="margin-top:60px;font-size:112px">상담 먼저,<br>카드는 그다음.</h1>
+<p class="lead" style="margin-top:48px">학원 상담에서 <u style="text-decoration-color:{ORANGE};text-decoration-thickness:8px;text-underline-offset:12px">과정과 입과 절차</u>를 확인한 뒤<br>내일배움카드를 신청하는 순서를 권해요.</p>
 <div class="body" style="margin-top:72px">
+<p>카드부터 만들면 과정에 따라<br>입과가 안 될 수 있어요.</p>
 <p>한도는 통장에 들어오는 현금이 아니라<br>훈련비를 결제할 때 쓰는 금액이에요.</p>
-<p>내 부담금(자부담)은 과정마다 달라요.</p>
 </div>
 """
 
@@ -183,10 +183,10 @@ def step(n, text, note="", hot=False):
 
 K4 = f"""
 <h1 style="margin-top:48px;font-size:88px">신청은<br>다섯 단계예요.</h1>
-{step(1, "고용24 가입", "work24.go.kr")}
-{step(2, "내일배움카드 신청")}
-{step(3, "과정 검색", "지역 '대전' + 게임·웹툰·유니티·그래픽", True)}
-{step(4, "훈련기관 상담·입과 절차", "과정마다 상담, 테스트가 있을 수 있어요")}
+{step(1, "학원 상담·과정 확인", "대상 여부와 입과 절차(간단한 실기)를 먼저 확인해요", True)}
+{step(2, "고용24 가입", "work24.go.kr")}
+{step(3, "내일배움카드 신청")}
+{step(4, "과정 검색·입과 절차", "지역 '대전' + 과정명")}
 {step(5, "수강 신청·결제", "자부담이 있으면 함께 내요")}
 """
 
@@ -221,7 +221,7 @@ K6 = f"""
 # 7 상담
 K7 = f"""
 <h1 style="margin-top:60px;font-size:92px">내가 대상인지,<br>자부담은 얼마인지</h1>
-<p class="lead" style="margin-top:44px">과정별 대상 여부와 입과 절차를<br>상담에서 정리해 드려요.</p>
+<p class="lead" style="margin-top:44px">과정별 대상 여부와 입과 절차를<br>상담에서 정리해 드려요. 카드 신청은 그다음에.</p>
 <div class="body" style="margin-top:80px;line-height:1.8">
 <p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
 <p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
