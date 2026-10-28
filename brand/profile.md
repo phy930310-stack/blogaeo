@@ -23,6 +23,7 @@
 - 인스타그램: 개설 예정
 - 네이버 블로그: https://blog.naver.com/youknowthat-
 - 인스타그램: https://www.instagram.com/sbs_game_daejeon/ (@sbs_game_daejeon, 2026-10-24 개설) (2026-10-24 사용자 확인)
+  - 프로필 사진: 흰 바탕 + 로고 원형 심벌(`instagram/assets/프로필_v2_D.png`, 2026-10-28 사용자 선택). 소개문 116자 확정본은 instagram/README.md
 - 네이버 플레이스: https://map.naver.com/p/entry/place/1652785251
 - 인스타 프로필 링크 페이지(링크 모음): https://phy930310-stack.github.io/blogaeo/link/ — 저장소 `link/index.html`, GitHub Pages 활성화 후 동작(2026-10-28 제작). 버튼 순서(2026-10-28 사용자 확정): 상담 신청서 쓰기(인스타 사전 입력 링크, 부제 '대화로 바로 안내드려요!') → 인스타 DM 문의(https://ig.me/m/sbs_game_daejeon) → 카카오톡 1:1 상담 → 전화 상담 → 학원 홈페이지 → 오시는 길
 
