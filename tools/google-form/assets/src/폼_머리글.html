@@ -1,102 +1,25 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
+<!-- 폼 머리글 1600×400 (2026-10-28 재디자인, frontend-design 적용규칙). 과감함 = 큰 제목 한 줄. 카드·아이콘·격자 없음. 흰 로고 원본은 어두운 배경에만. -->
 <style>
-@font-face{font-family:P;src:url(../../../../.claude/skills/aeo-blog/assets/fonts/Pretendard-Regular.otf);font-weight:400}
 @font-face{font-family:P;src:url(../../../../.claude/skills/aeo-blog/assets/fonts/Pretendard-SemiBold.otf);font-weight:600}
-@font-face{font-family:P;src:url(../../../../.claude/skills/aeo-blog/assets/fonts/Pretendard-Bold.otf);font-weight:700}
 @font-face{font-family:P;src:url(../../../../.claude/skills/aeo-blog/assets/fonts/Pretendard-ExtraBold.otf);font-weight:800}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#fff}
-.canvas{width:1600px;height:400px;position:relative;overflow:hidden;font-family:P;color:#fff;
-  background:radial-gradient(900px 500px at 82% 20%,#2f3fa6 0%,rgba(47,63,166,0) 70%),
-             radial-gradient(600px 400px at 100% 100%,rgba(255,90,54,.35) 0%,rgba(255,90,54,0) 70%),
-             linear-gradient(120deg,#141c58 0%,#1E2A78 55%,#24318c 100%)}
-.grid{position:absolute;inset:0;background-image:
-  linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-  background-size:40px 40px;mask-image:linear-gradient(90deg,transparent 0%,#000 45%,#000 100%)}
-.txt{position:absolute;left:96px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;width:820px}
-.brand{display:flex;align-items:center;gap:18px}
-.brand img{height:42px;width:auto;display:block}
-.tag{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:9px 18px;border-radius:999px;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);font-size:22px;font-weight:600;letter-spacing:.2px}
-.tag i{width:10px;height:10px;border-radius:50%;background:#FF5A36;box-shadow:0 0 12px #FF5A36}
-h1{margin-top:26px;font-size:76px;font-weight:800;letter-spacing:-2px;line-height:1.05}
-h1 b{color:#FF5A36}
-.sub{margin-top:20px;font-size:26px;font-weight:400;color:rgba(255,255,255,.82);letter-spacing:-.3px}
-.sub em{font-style:normal;font-weight:700;color:#fff}
-.art{position:absolute;right:70px;top:0;width:640px;height:400px}
-.card{position:absolute;border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.05));
-  border:1px solid rgba(255,255,255,.25);box-shadow:0 18px 40px rgba(8,12,48,.45);backdrop-filter:blur(4px);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
-.card span{font-size:17px;font-weight:600;color:rgba(255,255,255,.9)}
-.card.hot{background:linear-gradient(145deg,#FF7A5C,#FF5A36);border-color:rgba(255,255,255,.4);box-shadow:0 18px 40px rgba(255,90,54,.45)}
-.spark{position:absolute;width:8px;height:8px;background:#fff;opacity:.7}
-.spark.o{background:#FF5A36;opacity:1}
+.canvas{width:1600px;height:400px;position:relative;overflow:hidden;font-family:P;color:#fff;background:#1E2A78;word-break:keep-all}
+.in{position:absolute;left:96px;right:96px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center}
+.brand{display:flex;align-items:center;gap:18px;font-size:26px;font-weight:600;color:rgba(255,255,255,.8)}
+.brand img{height:40px;width:auto;display:block}
+h1{margin-top:30px;font-size:92px;font-weight:800;letter-spacing:-3px;line-height:1.05}
+.sub{margin-top:22px;font-size:30px;font-weight:600;color:rgba(255,255,255,.85);letter-spacing:-.4px}
+.bar{position:absolute;right:96px;top:0;bottom:0;width:18px;background:#FF5A36}
 </style></head><body>
 <div class="canvas">
-  <div class="grid"></div>
-  <div class="txt">
-    <div class="brand"><img src="logo/SBS아카데미게임학원_White.png" alt="SBS아카데미게임학원"><span class="tag"><i></i>대전점</span></div>
-    <h1>입시<b>·</b>취업 상담 신청</h1>
-    <p class="sub"><em>게임 · 웹툰 · 웹소설</em> — 포트폴리오&amp;면접 전형부터 국비 취업 과정까지</p>
-  </div>
-  <div class="art">
-    <!-- 게임 컨트롤러 (기획·프로그래밍) -->
-    <div class="card hot" style="left:210px;top:96px;width:210px;height:210px;transform:rotate(-4deg)">
-      <svg width="120" height="84" viewBox="0 0 120 84" fill="none">
-        <path d="M30 8h60c14 0 24 10 27 24l4 26c2 14-12 22-22 12l-10-10H31L21 70C11 80-3 72-1 58l4-26C6 18 16 8 30 8z" fill="#fff"/>
-        <rect x="24" y="30" width="22" height="7" rx="3.5" fill="#FF5A36"/><rect x="31.5" y="22.5" width="7" height="22" rx="3.5" fill="#FF5A36"/>
-        <circle cx="84" cy="27" r="5.5" fill="#1E2A78"/><circle cx="96" cy="38" r="5.5" fill="#1E2A78"/><circle cx="72" cy="38" r="5.5" fill="#1E2A78"/><circle cx="84" cy="49" r="5.5" fill="#1E2A78"/>
-      </svg>
-      <span style="color:#fff;font-size:20px;font-weight:700">GAME</span>
-    </div>
-    <!-- 펜 (원화·일러스트) -->
-    <div class="card" style="left:20px;top:40px;width:160px;height:150px;transform:rotate(-8deg)">
-      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
-        <path d="M44 8l12 12-30 30-16 4 4-16z"/><path d="M38 14l12 12"/><path d="M10 54c8-2 12 4 20 0" stroke="#FF5A36"/>
-      </svg><span>원화·일러스트</span>
-    </div>
-    <!-- 웹툰 컷 -->
-    <div class="card" style="left:40px;top:220px;width:150px;height:140px;transform:rotate(5deg)">
-      <svg width="64" height="60" viewBox="0 0 64 60" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round">
-        <rect x="4" y="4" width="56" height="52" rx="4"/><path d="M4 28h56M32 4v24"/><path d="M40 38h12M40 46h8" stroke="#FF5A36"/>
-      </svg><span>웹툰</span>
-    </div>
-    <!-- 3D 큐브 -->
-    <div class="card" style="left:450px;top:30px;width:160px;height:150px;transform:rotate(7deg)">
-      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round">
-        <path d="M32 4l24 13v30L32 60 8 47V17z"/><path d="M8 17l24 13 24-13M32 30v30"/><circle cx="32" cy="30" r="3.5" fill="#FF5A36" stroke="none"/>
-      </svg><span>3D 그래픽</span>
-    </div>
-    <!-- 코드 -->
-    <div class="card" style="left:450px;top:186px;width:170px;height:130px;transform:rotate(-5deg)">
-      <svg width="70" height="52" viewBox="0 0 70 52" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 10L6 26l14 16M50 10l14 16-14 16"/><path d="M40 6L30 46" stroke="#FF5A36"/>
-      </svg><span>프로그래밍</span>
-    </div>
-    <!-- 웹소설 책 -->
-    <div class="card" style="left:190px;top:322px;width:130px;height:64px;flex-direction:row;transform:rotate(-2deg)">
-      <svg width="34" height="28" viewBox="0 0 34 28" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"><path d="M17 5C12 1 6 1 2 3v22c4-2 10-2 15 2 5-4 11-4 15-2V3c-4-2-10-2-15 2zM17 5v22"/></svg>
-      <span>웹소설</span>
-    </div>
-    <!-- AI개발 -->
-    <div class="card" style="left:245px;top:14px;width:150px;height:64px;flex-direction:row;transform:rotate(-2deg)">
-      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="7" y="7" width="20" height="20" rx="4"/><path d="M12 2v5M22 2v5M12 27v5M22 27v5M2 12h5M2 22h5M27 12h5M27 22h5"/>
-        <path d="M13 21l2.5-8h3L21 21M14 18h6" stroke="#FF5A36" stroke-width="2.4"/>
-      </svg><span>AI개발</span>
-    </div>
-    <!-- 애니메이션 -->
-    <div class="card" style="left:332px;top:320px;width:160px;height:64px;flex-direction:row;transform:rotate(3deg)">
-      <svg width="34" height="30" viewBox="0 0 34 30" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-        <rect x="2" y="3" width="30" height="24" rx="4"/><path d="M8 3v24M26 3v24"/><path d="M14 10l7 5-7 5z" fill="#FF5A36" stroke="#FF5A36" stroke-width="2"/>
-      </svg><span>애니메이션</span>
-    </div>
-    <i class="spark o" style="left:196px;top:62px"></i>
-    <i class="spark" style="left:430px;top:190px"></i>
-    <i class="spark o" style="left:620px;top:200px;width:6px;height:6px"></i>
-    <i class="spark" style="left:10px;top:200px;width:6px;height:6px"></i>
-    <i class="spark" style="left:430px;top:40px;width:6px;height:6px"></i>
+  <i class="bar"></i>
+  <div class="in">
+    <div class="brand"><img src="logo/SBS아카데미게임학원_White.png" alt="SBS아카데미게임학원"><span>대전점</span></div>
+    <h1>상담 신청, 1~2분이면 돼요.</h1>
+    <p class="sub">입시(게임학과·웹툰학과)와 취업(국비 과정) 모두 이 신청서 하나로 시작해요.</p>
   </div>
 </div>
 </body></html>

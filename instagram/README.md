@@ -48,7 +48,7 @@ SBS아카데미게임학원 대전점 🎮
 📍 대전 둔산동 ☎ 042-716-7439
 👇 1:1 상담 신청
 ```
-- **링크**(프로필 편집 → 링크 추가, 최대 5개). 순서대로 넣는다.
+- **링크**(프로필 편집 → 링크 추가). 2026-10-28부터는 **링크 모음 페이지 하나만** 넣는다: https://phy930310-stack.github.io/blogaeo/link/ (GitHub Pages 활성화 필요, `link/index.html`). 아래 4개는 그 페이지 안의 버튼이다.
   1. `상담 신청(1~2분)`: 인스타그램용 폼 링크. 유입 경로에 '인스타그램'이 미리 선택된다.
      `https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8`
   2. `카톡 1:1 상담`: https://open.kakao.com/o/srqyuFLc

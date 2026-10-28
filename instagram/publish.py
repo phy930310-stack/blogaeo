@@ -4,13 +4,16 @@
       — 대화창에 붙여 넣지 말고 클라우드 환경 설정(Network secrets 또는 환경 변수)에 넣는다.
 
 사용:
-  python3 instagram/publish.py check                 # 토큰·계정·남은 게시 한도 확인
-  python3 instagram/publish.py post 03 --dry-run     # 올릴 이미지 주소·캡션만 출력
-  python3 instagram/publish.py post 03               # 실제 게시
-  python3 instagram/publish.py refresh               # 장기 토큰 갱신(60일 만료 전에)
+  python instagram/publish.py check                 # 토큰·계정·남은 게시 한도 확인
+  python instagram/publish.py jpg 02                # v2_02_*.png → assets/jpg/v2_02_*.jpg (API는 JPEG만 받는다)
+  python instagram/publish.py post 02 --dry-run     # 올릴 이미지 주소·캡션만 출력
+  python instagram/publish.py post 02               # 실제 게시
+  python instagram/publish.py refresh               # 장기 토큰 갱신(60일 만료 전에)
 
 이미지는 공개 저장소의 고정 커밋 주소(raw.githubusercontent.com)로 넘긴다. 그래서 게시 전에
 instagram/assets/jpg/ 의 파일이 커밋·push되어 있어야 한다(커밋 해시를 --ref 로 지정, 기본 = 현재 HEAD).
+2026-10-28부터 디자인 기준은 v2(frontend-design)다: assets/jpg/v2_NN_*.jpg 가 있으면 그것을, 없으면 예전 이름(게시물_NN/캐러셀_NN)을 쓴다.
+로컬 PC에서는 토큰을 사용자 환경 변수 INSTAGRAM_ACCESS_TOKEN 에 넣는다(API_설정.md 5-B).
 """
 import argparse
 import json
@@ -31,7 +34,7 @@ REPO_RAW = "https://raw.githubusercontent.com/phy930310-stack/blogaeo"
 def token():
     t = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
     if not t:
-        sys.exit("INSTAGRAM_ACCESS_TOKEN 이 없습니다. 클라우드 환경 설정에 넣고 새 세션에서 실행하세요.")
+        sys.exit("INSTAGRAM_ACCESS_TOKEN 이 없습니다. API_설정.md 5번(클라우드) 또는 5-B(로컬 PC)대로 넣고 새 세션에서 실행하세요.")
     return t
 
 
@@ -62,11 +65,26 @@ def captions():
 
 def images(key, ref):
     jpg = ROOT / "assets" / "jpg"
-    files = sorted(jpg.glob(f"게시물_{key}_*.jpg")) + sorted(jpg.glob(f"캐러셀_{key}_*.jpg"))
+    files = sorted(jpg.glob(f"v2_{key}_*.jpg"))
+    if not files:
+        files = sorted(jpg.glob(f"게시물_{key}_*.jpg")) + sorted(jpg.glob(f"캐러셀_{key}_*.jpg"))
     if not files:
         sys.exit(f"{key} 이미지가 없습니다: instagram/assets/jpg/")
     base = f"{REPO_RAW}/{ref}/instagram/assets/jpg/"
     return [base + urllib.parse.quote(f.name) for f in files]
+
+
+def to_jpg(key):
+    """v2_NN_MM.png → assets/jpg/v2_NN_MM.jpg (품질 92, sRGB). 바뀐 파일은 커밋·push해야 API가 받을 수 있다."""
+    from PIL import Image  # Pillow
+    src = sorted((ROOT / "assets").glob(f"v2_{key}_*.png"))
+    if not src:
+        sys.exit(f"instagram/assets/v2_{key}_*.png 이 없습니다. build_carousels_v2.py 와 render.mjs 를 먼저 실행하세요.")
+    out = ROOT / "assets" / "jpg"
+    out.mkdir(exist_ok=True)
+    for p in src:
+        Image.open(p).convert("RGB").save(out / (p.stem + ".jpg"), "JPEG", quality=92, optimize=True)
+        print("jpg", out / (p.stem + ".jpg"))
 
 
 def wait_ready(cid):
@@ -109,7 +127,7 @@ def post(key, ref, dry):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["check", "post", "refresh"])
+    ap.add_argument("cmd", choices=["check", "jpg", "post", "refresh"])
     ap.add_argument("key", nargs="?")
     ap.add_argument("--ref", default=None, help="이미지를 가져올 커밋 해시(기본: 현재 HEAD)")
     ap.add_argument("--dry-run", action="store_true")
@@ -118,6 +136,10 @@ def main():
         me = call("GET", "me", fields="user_id,username,account_type,media_count")
         lim = call("GET", f"{me['user_id']}/content_publishing_limit", fields="quota_usage,config")
         print(json.dumps({"account": me, "publishing_limit": lim}, ensure_ascii=False, indent=2))
+    elif a.cmd == "jpg":
+        if not a.key:
+            sys.exit("게시물 번호를 지정하세요. 예: jpg 02")
+        to_jpg(a.key)
     elif a.cmd == "post":
         if not a.key:
             sys.exit("게시물 번호를 지정하세요. 예: post 03")

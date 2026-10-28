@@ -214,11 +214,12 @@ function notifyOnSubmit(e) {
   }
 
   // 디스코드: 연락처 일부를 가린 요약만 보낸다(전체 정보는 응답 시트에서 확인)
+  // 축소 폼(2026-10-28)에는 아래 세부 문항이 없다. 있으면 쓰고 없으면 비운다.
   const who = kind === '입시'
     ? [a['학생 학년'], a['신청하시는 분']]
-    : kind === '취업' ? [a['현재 상황'], '내일배움카드 ' + (a['국민내일배움카드가 있으신가요?'] || '-')] : [];
+    : kind === '취업' ? [a['현재 상황'], a['국민내일배움카드가 있으신가요?'] ? '내일배움카드 ' + a['국민내일배움카드가 있으신가요?'] : ''] : [];
   sendDiscord_([
-    '[상담 신청] ' + [kind].concat(who).filter(String).join(' · ') + '  (' + time + ')',
+    '[상담 신청] ' + [kind].concat(who).filter(Boolean).join(' / ') + '  (' + time + ')',
     '관심: ' + (a[COURSE_TITLE] || '-'),
     '유입: ' + (a['저희 학원을 어떻게 알게 되셨나요?'] || '-'),
     '연락: ' + (a['편한 연락 방법'] || '-') + ' / ' + maskPhone_(a['연락처 (휴대폰)']) +
@@ -328,4 +329,67 @@ function replaceSectionImages() {
     form.moveItem(img.getIndex(), breakItem.getIndex() + 1);
     Logger.log(t.section + ' 섹션 이미지 교체: ' + t.file);
   });
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 2026-10-28 축소 폼: 인스타 방문자가 휴대폰에서 1~2분 안에 끝내도록 한 페이지 8문항으로 줄인다.
+// 남기는 문항: 어떤 상담 / 관심 과정 / 이름 / 연락처 / 편한 연락 방법 / 어떻게 알게 되셨나요(유입 경로, 사전 입력 주소 유지) / 궁금한 점 / 개인정보 동의
+// 지우는 것: 입시·취업·연락처 섹션(페이지 나눔)과 그 안의 세부 문항 8개, 기존 섹션 이미지 3장. 세부 내용은 상담 전화에서 묻는다.
+// 기존 응답과 응답 시트는 그대로 남는다. 한 번만 실행해도 되고, 다시 실행해도 지울 것이 없으면 그냥 끝난다.
+const REMOVE_TITLES = [
+  '신청하시는 분', '학생 학년', '학교 유형', '포트폴리오 준비 상황',
+  '현재 상황', '국민내일배움카드가 있으신가요?', '관련 경험',
+  '연락 가능한 시간대 (여러 개 선택 가능)',
+];
+
+function shortenForm() {
+  const form = FormApp.openById(PropertiesService.getScriptProperties().getProperty('FORM_ID'));
+
+  // 1) '어떤 상담' 선택지를 페이지 이동 없는 일반 선택지로 (페이지를 지우기 전에 먼저)
+  const purpose = form.getItems(FormApp.ItemType.MULTIPLE_CHOICE).filter(function (it) {
+    return it.getTitle() === '어떤 상담을 원하세요?';
+  })[0];
+  if (purpose) {
+    purpose.asMultipleChoiceItem().setChoiceValues([
+      '입시 (게임학과·웹툰학과 진학)',
+      '취업 (국비 과정·취업 포트폴리오)',
+      '아직 모르겠어요 / 둘 다 궁금해요',
+    ]);
+  }
+
+  // 2) 세부 문항·섹션·섹션 이미지 삭제
+  let removed = 0;
+  form.getItems().slice().reverse().forEach(function (it) {
+    const t = it.getType();
+    const title = it.getTitle();
+    if (REMOVE_TITLES.indexOf(title) >= 0 || t === FormApp.ItemType.PAGE_BREAK || t === FormApp.ItemType.IMAGE) {
+      form.deleteItem(it.getIndex());
+      removed++;
+    }
+  });
+
+  // 3) 안내 문구
+  form.setDescription(
+    '게임·웹툰·웹소설 분야 입시(게임학과·웹툰학과 진학)와 취업(국비 과정·취업 포트폴리오) 상담 신청서입니다.
+' +
+    '이름·연락처·관심 과정만 적으면 1~2분에 끝나요. 자세한 상황은 상담 연락에서 여쭤볼게요.
+' +
+    '급한 문의: ' + PHONE
+  );
+  form.setProgressBar(false);
+  Logger.log('삭제한 항목 ' + removed + '개. 남은 문항: ' + form.getItems().map(function (it) { return it.getTitle(); }).filter(String).join(' / '));
+}
+
+// 축소 폼 맨 위 안내 이미지 넣기(폼_안내.png). 다시 실행하면 기존 안내 이미지를 지우고 새로 넣는다.
+// 머리글 이미지(폼_머리글.png)와 테마 색(#1E2A78)은 폼 편집 화면의 팔레트에서 직접 올린다.
+const IMAGE_BASE_V2 = 'https://raw.githubusercontent.com/phy930310-stack/blogaeo/claude/nifty-lovelace-yjxg2n/tools/google-form/assets/';
+
+function decorateShortForm() {
+  const form = FormApp.openById(PropertiesService.getScriptProperties().getProperty('FORM_ID'));
+  form.getItems(FormApp.ItemType.IMAGE).forEach(function (it) { form.deleteItem(it.getIndex()); });
+  const blob = UrlFetchApp.fetch(IMAGE_BASE_V2 + encodeURIComponent('폼_안내.png')).getBlob().setName('폼_안내.png');
+  const img = form.addImageItem().setImage(blob).setTitle('').setAlignment(FormApp.Alignment.CENTER).setWidth(640);
+  form.moveItem(img.getIndex(), 0);
+  Logger.log('안내 이미지를 맨 위에 넣었습니다.');
 }
