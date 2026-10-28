@@ -1,12 +1,19 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_07.png (표지 포함 7장)
+파일: instagram/assets/v2_02_01.png ~ v2_02_07.png, v2_03_01.png ~ v2_03_07.png (표지 포함 각 7장)
+       특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
 - 바탕 종이(#F4F6FB) + 네이비 잉크. 오렌지는 장마다 한 곳.
 - 기억 요소 = 거대한 숫자 '5'와 등급 위치 눈금. 카드 상자 없음. 번호는 실제 순서(서류→면접)에만.
 - 수치·사실은 posts/2026-10-01_게임학과-내신-5등급 (ZDNet 2026.09.09 등) 에서만.
+
+디자인 계획(03 국비로 배우는 게임·웹툰, 2026-10-28 로컬 세션):
+- 같은 종이 바탕·네이비 잉크. 02와 짝을 이루도록 표지의 기억 요소 = 거대한 숫자 '300만원'(5년 한도).
+- 상자 없음. 번호는 실제 순서(신청 5단계)에만. 오렌지는 장마다 한 곳(가장 중요한 한 줄).
+- 수치·사실은 posts/2026-10-19_대전-국비지원-교육 (고용24 국민내일배움카드 제도 안내, 2026.10.19 확인)과
+  brand/profile.md(대전점 고용24 등록 과정 3개, 입과 전 상담+간단한 실기)에서만. 훈련비·자부담 금액은 쓰지 않는다.
 """
 from build_assets import SRC, page
 
@@ -29,9 +36,9 @@ h1{{font-weight:800;letter-spacing:-3px;line-height:1.08}}
 """
 
 
-def frame(n, body, chip="입시"):
-    top = f'<div class="top"><span><b>{chip}</b>&nbsp; 성적이 낮아도 게임학과</span><span>{n}/7</span></div>' if n > 1 else ""
-    foot = f'<div class="foot"><img src="logo/SBS아카데미게임학원_Color.png" alt="SBS아카데미게임학원"><span>{"대전점" if n < 7 else "@sbs_game_daejeon"}</span></div>'
+def frame(n, body, chip="입시", series="성적이 낮아도 게임학과", total=7):
+    top = f'<div class="top"><span><b>{chip}</b>&nbsp; {series}</span><span>{n}/{total}</span></div>' if n > 1 else ""
+    foot = f'<div class="foot"><img src="logo/SBS아카데미게임학원_Color.png" alt="SBS아카데미게임학원"><span>{"대전점" if n < total else "@sbs_game_daejeon"}</span></div>'
     return page(1080, 1350, f'<div class="in">{top}{body}{foot}</div>', CSS)
 
 
@@ -127,7 +134,110 @@ S7 = f"""
 </div>
 """
 
+# ───────────────────────── 03 국비로 배우는 게임·웹툰 ─────────────────────────
+K_CHIP, K_SERIES = "취업·국비", "국비로 배우는 게임·웹툰"
+
+# 1 표지 — 거대한 300만원 하나가 전부 (02의 '5등급'과 짝)
+K1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">내일배움카드, 5년간</div>
+<div style="margin-top:20px;display:flex;align-items:baseline;color:{NAVY};white-space:nowrap">
+  <span style="font-size:350px;line-height:.86;font-weight:800;letter-spacing:-20px;margin-left:-12px">300</span>
+  <span style="font-size:124px;font-weight:800;letter-spacing:-4px;margin-left:10px">만원</span>
+</div>
+<h1 style="margin-top:110px;font-size:84px">국비로 게임·웹툰,<br>배울 수 있어요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">카드 신청부터 대전점 과정까지<br>7장으로 정리했어요.</p>
+"""
+
+# 2 결론 — 순서는 카드 먼저
+K2 = f"""
+<h1 style="margin-top:60px;font-size:112px">카드 먼저,<br>과정은 그다음.</h1>
+<p class="lead" style="margin-top:48px"><u style="text-decoration-color:{ORANGE};text-decoration-thickness:8px;text-underline-offset:12px">국민내일배움카드</u>를 발급받고,<br>고용24에서 '대전'과 분야로 검색하면 돼요.</p>
+<div class="body" style="margin-top:72px">
+<p>한도는 통장에 들어오는 현금이 아니라<br>훈련비를 결제할 때 쓰는 금액이에요.</p>
+<p>내 부담금(자부담)은 과정마다 달라요.</p>
+</div>
+"""
+
+# 3 카드 한눈에 — 숫자를 왼쪽 큰 글자로, 상자 없이
+def fact(num, unit, label, note, hot=False):
+    col = ORANGE if hot else NAVY
+    return f"""
+<div style="display:flex;gap:34px;align-items:flex-start;margin-top:46px">
+<div style="flex:none;width:300px;line-height:1;color:{col}"><span style="font-size:112px;font-weight:800;letter-spacing:-5px">{num}</span><span style="font-size:48px;font-weight:800;letter-spacing:-1px;margin-left:6px">{unit}</span></div>
+<div style="padding-top:18px"><p class="body" style="font-weight:700">{label}</p><p class="small" style="margin-top:6px">{note}</p></div></div>"""
+
+K3 = f"""
+<h1 style="margin-top:48px;font-size:88px">내일배움카드,<br>숫자 세 개만 기억해요.</h1>
+{fact("300", "만원", "지원 한도, 5년간", "요건을 채우면 1회 200만원 추가<br>(총 500만원 이내)")}
+{fact("0~55", "%", "자부담", "정부승인 훈련비 기준.<br>직종·과정 유형에 따라 달라요", True)}
+{fact("5", "년", "유효기간", "남은 한도는 기간이 지나면 사라져요")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 고용24 「국민내일배움카드」 제도 안내 (2026.10.19 확인)<br>한도·자부담·절차는 바뀔 수 있어요. 고용24에서 최신 내용을 확인하세요.</p>
+"""
+
+# 4 신청 5단계 — 실제 순서이므로 번호 사용
+def step(n, text, note="", hot=False):
+    return f"""
+<div style="display:flex;gap:30px;align-items:flex-start;margin-top:34px">
+<div style="flex:none;width:92px;font-size:84px;font-weight:800;letter-spacing:-3px;line-height:1;color:{ORANGE if hot else NAVY}">{n}</div>
+<div style="padding-top:16px"><p class="body" style="font-weight:700">{text}</p>{f'<p class="small" style="margin-top:4px">{note}</p>' if note else ''}</div></div>"""
+
+K4 = f"""
+<h1 style="margin-top:48px;font-size:88px">신청은<br>다섯 단계예요.</h1>
+{step(1, "고용24 가입", "work24.go.kr")}
+{step(2, "내일배움카드 신청")}
+{step(3, "과정 검색", "지역 '대전' + 게임·웹툰·유니티·그래픽", True)}
+{step(4, "훈련기관 상담·입과 절차", "과정마다 상담, 테스트가 있을 수 있어요")}
+{step(5, "수강 신청·결제", "자부담이 있으면 함께 내요")}
+"""
+
+# 5 국가기간·전략산업직종훈련 — 핵심 한 줄만 오렌지 선으로
+K5 = f"""
+<h1 style="margin-top:48px;font-size:84px">'국가기간·전략산업<br>직종훈련'은 뭐가 달라요?</h1>
+<div class="body" style="margin-top:56px;line-height:1.7">
+<p>국가 경제에 중요한 기간산업이나<br>인력이 부족한 전략산업 분야 인재를<br>기르려고 정부가 지정한 훈련이에요.</p>
+</div>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:64px;font-weight:800;letter-spacing:-2px;line-height:1.15">같은 카드로 들어요.</div>
+<p class="body" style="margin-top:14px">다만 지원 조건과 자부담이<br>일반 과정과 다를 수 있어요.</p>
+</div>
+<p class="body" style="margin-top:52px">정확한 훈련비와 내 부담금은<br>고용24에서 과정명을 검색해 확인하세요.</p>
+"""
+
+# 6 대전점 등록 과정 3개 — 순서가 아니므로 번호 없음
+def course(name, kind, hot=False):
+    return f"""
+<div style="margin-top:46px">
+<div style="font-size:72px;font-weight:800;letter-spacing:-2.5px;line-height:1.1;color:{ORANGE if hot else NAVY}">{name}</div>
+<p class="small" style="margin-top:10px;font-size:30px">{kind}</p></div>"""
+
+K6 = f"""
+<h1 style="margin-top:48px;font-size:88px">고용24에 있는<br>대전점 과정, 셋.</h1>
+{course("게임그래픽", "국민내일배움카드 과정")}
+{course("게임프로그래밍(유니티)", "국가기간·전략산업직종훈련", True)}
+{course("웹툰", "국민내일배움카드 과정")}
+<p class="body" style="margin-top:auto;padding-bottom:40px">세 과정 모두 입과 전에<br>상담과 간단한 실기로 기초를 확인해요.</p>
+"""
+
+# 7 상담
+K7 = f"""
+<h1 style="margin-top:60px;font-size:92px">내가 대상인지,<br>자부담은 얼마인지</h1>
+<p class="lead" style="margin-top:44px">과정별 대상 여부와 입과 절차를<br>상담에서 정리해 드려요.</p>
+<div class="body" style="margin-top:80px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
+SETS = {
+    "02": ("입시", "성적이 낮아도 게임학과", [S1, S2, S3, S4, S5, S6, S7]),
+    "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
+}
+
 if __name__ == "__main__":
-    for i, s in enumerate([S1, S2, S3, S4, S5, S6, S7], start=1):
-        (SRC / f"v2_02_{i:02d}.html").write_text(frame(i, s), encoding="utf-8")
-    print("written 7")
+    n = 0
+    for key, (chip, series, slides) in SETS.items():
+        for i, body in enumerate(slides, start=1):
+            (SRC / f"v2_{key}_{i:02d}.html").write_text(frame(i, body, chip, series, len(slides)), encoding="utf-8")
+            n += 1
+    print("written", n)
