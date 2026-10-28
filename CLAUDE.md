@@ -6,6 +6,7 @@ SBS아카데미게임학원 대전점 블로그(네이버 + 티스토리)를 AEO
 - 글 작성: `/aeo-blog 키워드` 또는 `/aeo-blog 다음` → `.claude/skills/aeo-blog/SKILL.md`
 - 브랜드·연락처(NAP)·입시 포지셔닝(포트폴리오&면접 전형 중심): `brand/profile.md` / 티스토리 설정·카테고리·열린 항목: `brand/tistory.md`
 - 이미지 디자인 원칙(카드뉴스·썸네일·인포그래픽): `.claude/skills/frontend-design/` (적용규칙.md 먼저)
+- 마케팅 채널(상담 폼·인스타) 인수인계: `docs/인수인계_마케팅채널.md` (로컬 세션은 이 파일부터)
 - 인스타그램 운영: `instagram/` (README.md, build_*.py, publish.py) / 채널 계획: `brand/channels.md`
 - 키워드 데이터·주제 계획: `keywords/` (clusters.md, used.csv)
 - 티스토리 업로드: 사용자 PC에서 `tools/tistory-uploader` (비공개 저장까지만)
