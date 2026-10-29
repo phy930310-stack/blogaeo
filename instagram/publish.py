@@ -14,6 +14,8 @@
   python instagram/publish.py post 02 --dry-run     # 올릴 이미지 주소·캡션만 출력
   python instagram/publish.py post 02               # 실제 게시
   python instagram/publish.py refresh               # (SUAT는 만료 없음 → 안내만 출력)
+  python instagram/publish.py reel 01 --dry-run     # 릴스: instagram/reels/r01_*.mp4 + reels/README.md 캡션
+  python instagram/publish.py reel 01               # 릴스 게시(REELS 컨테이너 → 처리 대기 → 발행)
 
 이미지는 공개 저장소의 고정 커밋 주소(raw.githubusercontent.com)로 넘긴다. 그래서 게시 전에
 instagram/assets/jpg/ 의 파일이 커밋·push되어 있어야 한다(커밋 해시를 --ref 로 지정, 기본 = 현재 HEAD).
@@ -60,11 +62,11 @@ def call(method, path, **params):
         sys.exit(f"API 오류 {e.code}: {body}")
 
 
-def captions():
-    """README.md 의 '**NN 제목**' 다음 코드블록을 캡션으로 읽는다."""
-    text = (ROOT / "README.md").read_text(encoding="utf-8")
+def captions(readme=None):
+    """README.md 의 '**NN 제목**' (릴스는 '**rNN 제목**') 다음 코드블록을 캡션으로 읽는다."""
+    text = (readme or ROOT / "README.md").read_text(encoding="utf-8")
     out = {}
-    for m in re.finditer(r"\*\*(\d{2}) [^*]+\*\*\n```\n(.*?)\n```", text, re.S):
+    for m in re.finditer(r"\*\*(r?\d{2}) [^*]+\*\*\n```\n(.*?)\n```", text, re.S):
         out[m.group(1)] = m.group(2)
     return out
 
@@ -131,9 +133,45 @@ def post(key, ref, dry):
     print(f"\n게시 완료 @{me['username']}: {link}")
 
 
+def wait_ready_long(cid, minutes=10):
+    """릴스는 영상 처리에 몇 분 걸린다. IN_PROGRESS 동안 기다린다."""
+    for _ in range(minutes * 6):
+        st = call("GET", cid, fields="status_code,status").get("status_code")
+        if st == "FINISHED":
+            return
+        if st in ("ERROR", "EXPIRED"):
+            sys.exit(f"릴스 컨테이너 {cid} 상태: {st}")
+        time.sleep(10)
+    sys.exit(f"릴스 컨테이너 {cid} 처리 시간 초과({minutes}분)")
+
+
+def reel(key, ref, dry):
+    """instagram/reels/rNN_*.mp4 를 공개 raw 주소로 넘겨 릴스로 올린다 (media_type=REELS)."""
+    files = sorted((ROOT / "reels").glob(f"r{key}_*.mp4"))
+    if len(files) != 1:
+        sys.exit(f"instagram/reels/r{key}_*.mp4 가 {len(files)}개입니다(1개여야 함).")
+    cap = captions(ROOT / "reels" / "README.md").get(f"r{key}")
+    if not cap:
+        sys.exit(f"instagram/reels/README.md 에 r{key} 캡션이 없습니다.")
+    url = f"{REPO_RAW}/{ref}/instagram/reels/" + urllib.parse.quote(files[0].name)
+    print(f"영상: {url}\n\n캡션:\n{cap}")
+    if dry:
+        return
+    with urllib.request.urlopen(url, timeout=60) as r:  # 게시 전에 주소가 열리는지 확인
+        if r.status != 200:
+            sys.exit(f"영상 주소 오류 {r.status}: {url}")
+    me = call("GET", IG_USER_ID, fields="id,username")
+    cid = call("POST", f"{me['id']}/media", media_type="REELS", video_url=url, caption=cap, share_to_feed="true")["id"]
+    print(f"컨테이너 {cid} 생성, 영상 처리 대기 …")
+    wait_ready_long(cid)
+    mid = call("POST", f"{me['id']}/media_publish", creation_id=cid)["id"]
+    link = call("GET", mid, fields="permalink").get("permalink")
+    print(f"\n릴스 게시 완료 @{me['username']}: {link}")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["check", "jpg", "post", "refresh"])
+    ap.add_argument("cmd", choices=["check", "jpg", "post", "refresh", "reel"])
     ap.add_argument("key", nargs="?")
     ap.add_argument("--ref", default=None, help="이미지를 가져올 커밋 해시(기본: 현재 HEAD)")
     ap.add_argument("--dry-run", action="store_true")
@@ -151,6 +189,11 @@ def main():
             sys.exit("게시물 번호를 지정하세요. 예: post 03")
         ref = a.ref or subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
         post(a.key, ref, a.dry_run)
+    elif a.cmd == "reel":
+        if not a.key:
+            sys.exit("릴스 번호를 지정하세요. 예: reel 01")
+        ref = a.ref or subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        reel(a.key, ref, a.dry_run)
     else:
         print("현재 토큰은 시스템 사용자 액세스 토큰(SUAT)으로 만료되지 않습니다. 갱신이 필요 없습니다. "
               "권한 오류(#190)가 나면 API_설정.md 4번대로 Meta 앱 대시보드에서 '토큰 생성'을 다시 눌러 환경 변수를 교체하세요.")
