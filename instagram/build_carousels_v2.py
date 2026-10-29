@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_07.png, v2_03_01.png ~ v2_03_07.png (표지 포함 각 7장)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -42,92 +42,82 @@ def frame(n, body, chip="입시", series="성적이 낮아도 게임학과", tot
     return page(1080, 1350, f'<div class="in">{top}{body}{foot}</div>', CSS)
 
 
-# 1 표지 — 거대한 5 하나가 전부
-S1 = f"""
-<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">내신</div>
-<div style="font-size:620px;line-height:.86;font-weight:800;letter-spacing:-30px;margin-left:-18px;color:{NAVY}">5<span style="font-size:150px;letter-spacing:-4px;margin-left:10px;vertical-align:baseline">등급</span></div>
-<h1 style="margin-top:56px;font-size:84px">게임학과,<br>갈 수 있을까요?</h1>
-<p class="lead" style="margin-top:34px;color:{MIST}">포트폴리오와 면접으로 가는 길을<br>7장으로 정리했어요.</p>
-"""
+# ───────────────────────── 02 성적 0%, 포트폴리오 100% (2026-10-29 개정, 6장) ─────────────────────────
+# 목표는 상담 유입. 청강대를 앞세워 "내신을 안 보는 전형"을 알리고, 내 성적으로 되는지는 상담에서 보게 한다.
+# 문구는 humanize-korean 윤문본 그대로. 수치: ZDNet 2026.09.09(청강대 88·50명), 계원예대 2026 요강(면접 100%),
+# 전문대학 2027 수시 2차 접수 11.11~25. 오렌지는 장마다 한 곳.
 
-# 2 결론
-S2 = f"""
-<h1 style="margin-top:60px;font-size:112px">포기할<br>필요 없어요.</h1>
-<p class="lead" style="margin-top:48px">게임학과에는 내신보다 <u style="text-decoration-color:{ORANGE};text-decoration-thickness:8px;text-underline-offset:12px">포트폴리오와 면접</u>을<br>더 크게 보는 전형이 있어요.</p>
-<div class="body" style="margin-top:72px">
-<p>먼저 확인할 것은 두 가지예요.</p>
-<p>내 5등급이 <b>어느 등급제</b>의 5등급인지,<br>가고 싶은 대학이 <b>어떤 전형</b>으로 뽑는지.</p>
-</div>
-"""
-
-# 3 같은 5등급, 다른 위치 — 눈금 막대 (정보 구조)
-def scale(label, lo, hi, note, hot):
+def pct(label, num, hot=False, size=300):
     col = ORANGE if hot else NAVY
     return f"""
-<div style="margin-top:54px">
-<div style="display:flex;justify-content:space-between;align-items:baseline"><span class="body" style="font-weight:700">{label}</span><span class="small">{note}</span></div>
-<div style="position:relative;height:44px;margin-top:18px;background:#fff;border:3px solid {NAVY};border-radius:4px">
-  <div style="position:absolute;top:0;bottom:0;left:{lo}%;width:{hi-lo}%;background:{col}"></div>
-  <div style="position:absolute;top:-34px;left:{(lo+hi)/2}%;transform:translateX(-50%);font-size:30px;font-weight:800;color:{col}">5</div>
-</div>
-<div class="small" style="display:flex;justify-content:space-between;margin-top:10px"><span>상위 0%</span><span>100%</span></div>
-</div>"""
+<div style="margin-top:26px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">{label}</div>
+<div style="font-size:{size}px;line-height:.9;font-weight:800;letter-spacing:-16px;margin-left:-10px;color:{col}">{num}<span style="font-size:{size//2}px;letter-spacing:-3px;margin-left:8px">%</span></div>"""
 
+# 1 표지 — 0%와 100%, 숫자 둘이 전부
+S1 = f"""
+{pct("성적", "0")}
+{pct("포트폴리오", "100", True)}
+<h1 style="margin-top:64px;font-size:66px;letter-spacing:-2px">청강대 게임과부터 미대까지,<br>내신 없이 들어가는 전형이 있어요.</h1>
+"""
+
+# 2 청강대 면접전형 — 100%와 모집 인원
+S2 = f"""
+<h1 style="margin-top:44px;font-size:84px">청강대는 면접전형으로<br>제일 많이 뽑아요.</h1>
+<p class="small" style="margin-top:22px">게임콘텐츠스쿨 면접전형</p>
+<div style="margin-top:10px;display:flex;align-items:flex-end;gap:28px">
+  <div style="font-size:210px;line-height:.85;font-weight:800;letter-spacing:-10px;color:{NAVY}">100<span style="font-size:100px;letter-spacing:-2px">%</span></div>
+  <p class="body" style="padding-bottom:12px">면접</p>
+</div>
+<p class="body" style="margin-top:28px">포트폴리오로 평가해요. <b style="color:{ORANGE}">내신은 안 봐요.</b></p>
+<div style="margin-top:44px;display:flex;gap:72px">
+  <div><div style="font-size:120px;line-height:.9;font-weight:800;letter-spacing:-5px">88<span style="font-size:48px;letter-spacing:-1px;margin-left:6px">명</span></div><p class="small" style="margin-top:10px">수시 1차</p></div>
+  <div><div style="font-size:120px;line-height:.9;font-weight:800;letter-spacing:-5px">50<span style="font-size:48px;letter-spacing:-1px;margin-left:6px">명</span></div><p class="small" style="margin-top:10px">수시 2차</p></div>
+</div>
+<p class="body" style="margin-top:40px">애니메이션 스쿨, 웹툰 스쿨도<br>면접전형은 똑같아요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: ZDNet Korea 2026.09.09, 청강대 2027학년도 모집요강</p>
+"""
+
+# 3 청강대 말고도
 S3 = f"""
-<h1 style="margin-top:48px;font-size:88px">같은 5등급,<br>다른 위치예요.</h1>
-{scale("9등급제 — 지금 고3", 40, 60, "2027 대입", False)}
-{scale("5등급제 — 지금 고1·고2", 90, 100, "2028 대입부터", True)}
-<p class="body" style="margin-top:60px">'5등급 합격 후기'를 볼 때는<br>어느 등급제 이야기인지 먼저 확인하세요.</p>
+<h1 style="margin-top:48px;font-size:88px">청강대 말고도<br>그런 데가 있어요.</h1>
+<div class="body" style="margin-top:64px;line-height:1.6">
+<p>계원예대 게임미디어과도<br><span style="font-size:64px;font-weight:800;letter-spacing:-2px">면접 100%</span>예요.</p>
+<p style="margin-top:40px">미대 쪽에도 손그림 실기 없이<br>포트폴리오랑 면접으로 뽑는 전형이 있어요.</p>
+</div>
+<p class="lead" style="margin-top:72px">그림으로 대학 가는 길이<br><u style="text-decoration-color:{ORANGE};text-decoration-thickness:8px;text-underline-offset:12px">실기 하나만은 아니거든요.</u></p>
 """
 
-# 4 전형 4가지 — 나열이므로 상자·번호 없이, 포트폴리오·면접만 크게
+# 4 내 성적으로 되나요?
 S4 = f"""
-<h1 style="margin-top:48px;font-size:88px">게임학과 전형은<br>네 갈래예요.</h1>
-<div class="body" style="margin-top:56px;line-height:1.7">
-<p>학생부교과 &nbsp;<span class="small">내신이 핵심</span></p>
-<p>학생부종합 &nbsp;<span class="small">성적과 활동, 면접을 함께</span></p>
-<p>실기위주 &nbsp;<span class="small">시험장에서 그리는 실기가 당락을 좌우</span></p>
+<h1 style="margin-top:48px;font-size:72px;letter-spacing:-2px">그럼 다들 물어요.</h1>
+<h1 style="margin-top:14px;font-size:100px">“내 성적으로<br>되나요?”</h1>
+<div class="body" style="margin-top:56px;line-height:1.6">
+<p>우리 학교가 5등급제인지 9등급제인지에 따라<br>내 위치가 다르게 보여요.</p>
+<p>대학마다 비교과 요건이 따로 있고<br>게임·웹툰·애니·디자인은 내는 포트폴리오가 다 달라요.</p>
 </div>
-<div style="margin-top:44px;padding-left:28px;border-left:14px solid {ORANGE}">
-<div style="font-size:70px;font-weight:800;letter-spacing:-2.5px;line-height:1.1">포트폴리오·면접</div>
-<p class="body" style="margin-top:14px">준비해 온 작품과 면접으로 평가해요.<br>내신이 낮을 때 주력으로 잡는 전형이에요.</p>
-</div>
+<p class="lead" style="margin-top:auto;padding-bottom:40px">성적표랑 학생부 들고 오시면<br><b style="color:{ORANGE}">전형별로 같이 봐 드려요.</b></p>
 """
 
-# 5 이렇게 뽑아요 — 실제 순서이므로 번호 사용
-S5 = f"""
-<h1 style="margin-top:48px;font-size:84px">포트폴리오·면접 전형,<br>이렇게 뽑아요.</h1>
-<p class="small" style="margin-top:20px">예: 청강문화산업대 게임콘텐츠스쿨 면접전형 (2027학년도)</p>
-<div style="margin-top:64px;display:flex;align-items:flex-end;gap:36px">
-  <div style="font-size:230px;line-height:.8;font-weight:800;letter-spacing:-10px;color:{ORANGE}">88</div>
-  <div class="body" style="padding-bottom:14px">명 모집</div>
-</div>
-<div class="body" style="margin-top:64px;line-height:1.7">
-<p><b>1</b>&nbsp; 서류로 2배수를 먼저 뽑고</p>
-<p><b>2</b>&nbsp; 심층면접으로 최종 선발</p>
-</div>
-<p class="small" style="margin-top:auto;padding-bottom:40px">출처: ZDNet Korea, 청강문화산업대 게임콘텐츠스쿨 (2026.09.09)<br>전형은 해마다 바뀌어요. 지원 전에 대학 모집요강을 확인하세요.</p>
-"""
-
-# 6 학년별 할 일 — 순서가 아니므로 번호 없음, 학년을 큰 글자로
+# 5 수시 2차 일정 — 학년은 큰 글자, 번호 없음
 def grade(g, text, hot=False):
     return f"""
-<div style="display:flex;gap:30px;align-items:flex-start;margin-top:40px">
-<div style="flex:none;width:170px;font-size:92px;font-weight:800;letter-spacing:-4px;line-height:1;color:{ORANGE if hot else NAVY}">{g}</div>
-<p class="body" style="padding-top:14px">{text}</p></div>"""
+<div style="display:flex;gap:30px;align-items:flex-start;margin-top:44px">
+<div style="flex:none;width:250px;font-size:84px;font-weight:800;letter-spacing:-4px;line-height:1;color:{ORANGE if hot else NAVY}">{g}</div>
+<p class="body" style="padding-top:12px">{text}</p></div>"""
 
-S6 = f"""
-<h1 style="margin-top:48px;font-size:88px">지금 10월,<br>학년별로 할 일</h1>
-{grade("고2", "2028 모집요강 확인, 포트폴리오 첫 작품 시작.<br>겨울방학에 작품에 집중해요.", True)}
-{grade("고1", "내신을 챙기면서 게임 관련 진로 활동을<br>학생부에 남겨요. 2학년 전에 전공 방향 정하기.")}
-{grade("고3", "지원한 대학의 면접 준비 마무리.<br>정시 일정은 대학별로 꼭 확인해요.")}
+S5 = f"""
+<h1 style="margin-top:48px;font-size:84px">수시 2차 원서접수</h1>
+<div style="margin-top:30px;font-size:118px;line-height:1;font-weight:800;letter-spacing:-5px;color:{ORANGE}">11월 11일 ~ 25일</div>
+{grade("고3", "지금 있는 작품으로 어디까지 되는지<br>바로 확인해야 하고요.")}
+{grade("고1·고2", "겨울방학 전에 포트폴리오<br>방향부터 잡아야 해요.")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 전문대학 2027학년도 수시 2차 일정 안내</p>
 """
 
-# 7 상담 — 버튼 흉내 대신 문장으로
-S7 = f"""
-<h1 style="margin-top:60px;font-size:92px">우리 학교, 우리 학년이면<br>어떤 전형일까요?</h1>
-<p class="lead" style="margin-top:44px">모집요강을 같이 펼쳐 놓고<br>전형별 준비 순서를 정리해 드려요.</p>
-<div class="body" style="margin-top:80px;line-height:1.8">
+# 6 상담 — 버튼 흉내 대신 문장으로
+S6 = f"""
+<h1 style="margin-top:60px;font-size:92px">내 성적으로<br>어느 전형까지 되는지</h1>
+<p class="lead" style="margin-top:44px">성적표 한 장 들고 오세요.<br>게임·웹툰·애니·디자인, 그림으로 가는 학과라면<br>전형별 가능성이랑 준비 순서를 정리해 드려요.</p>
+<div class="body" style="margin-top:72px;line-height:1.8">
 <p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
 <p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
 <p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
@@ -230,7 +220,7 @@ K7 = f"""
 """
 
 SETS = {
-    "02": ("입시", "성적이 낮아도 게임학과", [S1, S2, S3, S4, S5, S6, S7]),
+    "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
 }
 
