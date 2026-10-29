@@ -6,6 +6,7 @@
 //   node upload.mjs upload  [폴더]     이미지 업로드 → 본문·FAQ 코드·카테고리·태그 입력 → 비공개 저장
 //   node upload.mjs cta <글번호> <배너.html>   이미 올린 글의 맨 아래 연락처 문단을 상담 배너로 교체(공개 상태 유지)
 //   node upload.mjs clean <글번호>             이미 올린 글에 남은 [실제 사진 …] 안내 줄 삭제(공개 상태 유지)
+//   node upload.mjs replace <글번호> [폴더]     원고를 고친 뒤 이미 올린 글의 제목·본문을 통째로 교체(이미지 주소는 기존 글에서 순서대로 재사용, 공개 상태 유지)
 //
 // 원칙
 // - 로그인은 사람이 직접 한다. 비밀번호를 저장하지 않는다(로그인 세션은 이 PC의 브라우저 프로필에만 저장).
@@ -67,6 +68,7 @@ function readPost(dir) {
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 function figure(src, alt) {
+  if (/^\[##_Image/.test(src)) return src; // 티스토리 편집기의 이미지 토큰은 그대로 사용(replace 명령)
   return `<figure data-ke-type="image" data-ke-style="alignCenter" style="margin:24px auto;text-align:center;"><img src="${esc(src)}" alt="${esc(alt)}" style="display:block;max-width:100%;height:auto;margin:0 auto;"></figure>`;
 }
 function compose(post, urls) {
@@ -265,7 +267,7 @@ async function ensureLogin(ctx, page, cfg, url) {
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
   }
 }
-async function editPost(cfg, postId, label, transform) {
+async function editPost(cfg, postId, label, transform, newTitle) {
   if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요.");
   console.log(`\n업로더 v0.1.7 · ${label} — ${cfg.blogUrl}/${postId}`);
   const ctx = await browser(false);
@@ -290,6 +292,12 @@ async function editPost(cfg, postId, label, transform) {
     if (!t.verify(r)) throw new Error("변경 내용이 편집기에 반영되지 않았습니다 — 저장하지 않고 중단");
     if (ld(r) < ld(before)) throw new Error(`FAQ 코드가 사라졌습니다(${ld(r)}/${ld(before)}) — 저장하지 않고 중단`);
     console.log(`      ${t.how}`);
+    if (newTitle) {
+      const title = page.locator('textarea[placeholder*="제목"], input[placeholder*="제목"], #post-title-inp').first();
+      if (!await title.count()) throw new Error("제목 입력칸을 찾지 못했습니다 — 저장하지 않고 중단");
+      await title.fill(newTitle);
+      console.log(`      제목 교체: ${newTitle}`);
+    }
     console.log("[3/4] 저장(공개 상태는 그대로 유지) …");
     await page.locator("#publish-layer-btn:visible").first().click();
     await page.waitForTimeout(800);
@@ -336,6 +344,23 @@ async function cleanMarkers(cfg, postId) {
   });
 }
 
+// 원고를 고친 뒤 이미 올린 글의 제목·본문을 통째로 교체. 이미지는 다시 올리지 않고 기존 글의 이미지 주소를 원고의 이미지 자리 순서대로 다시 끼운다.
+async function replacePost(cfg, postId, dir) {
+  const post = readPost(dir);
+  const gen = post.slots.filter((s) => s.kind === "생성 이미지");
+  const firstH2 = (post.html.match(/<h2>([^<]+)<\/h2>/) || [])[1] || "";
+  await editPost(cfg, postId, "제목·본문 교체", (before) => {
+    // 티스토리 편집기는 본문 이미지를 [##_Image|kage@…|…_##] 토큰으로 돌려준다. 없으면 <img src>로 찾는다.
+    let existing = before.match(/\[##_Image\|[\s\S]*?_##\]/g) || [];
+    if (!existing.length) existing = [...before.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1]).filter((u) => /daumcdn|kakaocdn|tistory/.test(u));
+    if (existing.length < gen.length) throw new Error(`기존 글의 이미지(${existing.length}장)가 원고의 이미지 자리(${gen.length}개)보다 적습니다 — 저장하지 않고 중단`);
+    const urls = new Map(gen.map((s, i) => [s.marker, existing[i]]));
+    for (const s of post.slots) if (s.kind !== "생성 이미지") urls.set(s.marker, ""); // 실제 사진 자리는 지움
+    const { html } = compose(post, urls);
+    return { html, how: `본문 교체 (이미지 ${gen.length}장 주소 재사용, FAQ 코드 ${post.faq ? "포함" : "없음"})`, verify: (x) => !firstH2 || x.includes(firstH2) };
+  }, post.meta.tistory_title);
+}
+
 function preview(dir) {
   const post = readPost(dir);
   const urls = new Map(post.slots.filter((s) => s.file).map((s) => [s.marker, "file:///" + s.file.replace(/\\/g, "/")]));
@@ -354,4 +379,5 @@ else if (cmd === "preview") preview(await pickPost(arg));
 else if (cmd === "upload") await upload(cfg, await pickPost(arg));
 else if (cmd === "cta") await addCta(cfg, arg, process.argv[4]);
 else if (cmd === "clean") await cleanMarkers(cfg, arg);
-else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호>");
+else if (cmd === "replace") await replacePost(cfg, arg, await pickPost(process.argv[4]));
+else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호> | replace <글번호> [폴더]");

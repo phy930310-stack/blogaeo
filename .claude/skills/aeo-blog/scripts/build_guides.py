@@ -211,6 +211,37 @@ if HAS_NAVER and (len(_near) > 5 or _jac > 0.20):
     for a in _near[:8]:
         problems.append(f"  ≈ {a[:60]}")
 
+# ---------- 가독성 점검 (2026-10-29 사용자 요청: 모바일에서 읽히는 글) ----------
+# 기준: 제목 티스토리 45자·네이버 40자 / 문단 300자 / 문장 80자 / 표 셀 25자 / 네이버 인용구 항목 50자
+def _rd_sents(x):
+    return [y.strip() for y in re.split(r"(?<=[.?!요다죠])\s+", x) if len(y.strip()) >= 5]
+_rd = []
+if len(meta.get("tistory_title", "")) > 45: _rd.append(f"티스토리 제목 {len(meta['tistory_title'])}자 (45자 이내)")
+if HAS_NAVER and len(meta.get("naver_title", "")) > 40: _rd.append(f"네이버 제목 {len(meta['naver_title'])}자 (40자 이내)")
+_tp = [re.sub(r"<[^>]+>", "", m) for m in re.findall(r"<p(?![^>]*style)>(.*?)</p>", tist, flags=re.S)]
+_tp = [x for x in _tp if not x.startswith("[")]
+for x in _tp:
+    if len(x) > 300: _rd.append(f"티스토리 문단 {len(x)}자: {x[:40]}…")
+for x in _tp:
+    for y in _rd_sents(x):
+        if len(y) > 80 and "참고" not in y: _rd.append(f"티스토리 문장 {len(y)}자: {y[:40]}…")
+for c in re.findall(r"<td[^>]*>(.*?)</td>", tist, flags=re.S):
+    c = re.sub(r"<[^>]+>", "", c).strip()
+    if len(c) > 25: _rd.append(f"티스토리 표 셀 {len(c)}자 (25자 이내, 문장 금지): {c[:30]}…")
+if HAS_NAVER:
+    _np = [x.strip() for x in re.split(r"\n\s*\n", naver.split("참고 자료")[0]) if x.strip()]
+    for x in _np:
+        body = "\n".join(l for l in x.split("\n") if not l.startswith(("[", "·", "▶", "Q.", "A.")))
+        if len(body) > 300: _rd.append(f"네이버 문단 {len(body)}자: {body[:40]}…")
+        if x.startswith("[인용구]"):
+            for l in x.split("\n")[1:]:
+                if len(l) > 50: _rd.append(f"네이버 인용구 항목 {len(l)}자 (50자 이내): {l[:30]}…")
+        for y in _rd_sents(body):
+            if len(y) > 80: _rd.append(f"네이버 문장 {len(y)}자: {y[:40]}…")
+if _rd:
+    problems.append("가독성 기준 초과 (제목 45/40자, 문단 300자, 문장 80자, 표 셀 25자, 인용구 항목 50자)")
+    for x in _rd[:12]: problems.append(f"  · {x}")
+
 open(P("티스토리_붙여넣기안내.txt"), "w", encoding="utf-8").write(tg)
 # 업로더(tools/tistory-uploader)가 본문 끝에 붙일 FAQ 코드
 if script:
