@@ -41,6 +41,6 @@
 - [x] 게시물 02·03 본문 장(각 7장) 제작 (2026-10-24, `instagram/build_carousels.py`)
 - [x] frontend-design 원칙 적용한 02 v2 제작 (2026-10-28, `instagram/build_carousels_v2.py`, 비교: `assets/비교_02_before_after.png`) — 사용자 선택 대기
 - [x] 인스타 공식 API 자동 업로드 준비 (2026-10-26): `instagram/publish.py`, JPEG 변환(`instagram/assets/jpg/`), 설정 안내 `instagram/API_설정.md`
-- [ ] (사용자) Meta 앱·토큰 발급 → 환경 변수 INSTAGRAM_ACCESS_TOKEN → 새 세션에서 check. 발급일: (기록)
+- [x] Meta 앱·토큰 발급 → 사용자 환경 변수 INSTAGRAM_ACCESS_TOKEN → check 정상. 발급일 2026-10-29, Unified Login SUAT(만료 없음). 절차·재발급: `instagram/API_설정.md`
 - [ ] 게시물 02·03 업로드·고정, 04~09 본문 장·캡션
 - [ ] 단계별 실행안, 콘텐츠 캘린더

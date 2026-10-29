@@ -1,98 +1,104 @@
-# 인스타그램 공식 API 설정 (자동 업로드용, 처음 한 번)
+# 인스타그램 공식 API 설정 (자동 업로드용)
 
-이 설정을 마치면 클라우드 세션이 `instagram/publish.py`로 @sbs_game_daejeon에 카드뉴스를 직접 올린다. 회사 PC가 꺼져 있어도 된다.
+> **2026-10-29 완료.** 아래는 실제로 성공한 경로를 기준으로 다시 쓴 것이다. 토큰은 회사 PC의 사용자 환경 변수 `INSTAGRAM_ACCESS_TOKEN`에 들어 있고, `python instagram/publish.py check`가 @sbs_game_daejeon(IG 사용자 ID 17841441907625937)을 정상 반환했다. 다시 발급할 일이 생기면 **4번**만 하면 된다.
 
-- 방식: **Instagram API with Instagram Login** (Business Login for Instagram). 페이스북 페이지 연결은 필요 없다.
-- 필요 권한: `instagram_business_basic`, `instagram_business_content_publish`
-- 한도: 24시간 동안 API로 100건까지 올릴 수 있다. 카드뉴스 1개는 1건으로 센다(공식 문서).
+이 설정이 되어 있으면 Claude 세션이 `instagram/publish.py`로 @sbs_game_daejeon에 카드뉴스를 직접 올린다.
+
+- 방식: **Instagram API — Unified Login(통합 로그인)**, 토큰 종류는 **시스템 사용자 액세스 토큰(SUAT), 만료 없음**. 호스트는 `graph.facebook.com`.
+  - 2026-10-29 기준 새로 만든 Meta 앱에는 "Instagram 로그인이 포함된 API 설정"(Instagram Login 방식)이 **없다**. 대시보드 공지: "최신 앱에서는 Instagram 로그인이 포함된 API 설정을 사용할 수 없습니다. 대신 앱이 통합된 로그인이 포함된 API 설정을 사용합니다." 그래서 `graph.instagram.com` 기준으로 쓴 예전 안내는 폐기했다.
+  - Unified Login은 **앱이 비즈니스 포트폴리오 소유**여야 탭이 생긴다. 페이스북 페이지는 필요 없다.
+- 권한(구성에 포함): `instagram_basic`, `instagram_content_publish`, `instagram_manage_comments`, `instagram_manage_messages`, `ads_management`, `ads_read`
+- 한도: 24시간 동안 API로 100건(카드뉴스 1개 = 1건). `check`가 `quota_usage`로 보여 준다.
 - 못 하는 것: 게시물 고정, 하이라이트, 프로필 링크 편집 → 휴대폰 앱에서 한다.
 - Meta 화면의 메뉴 이름은 자주 바뀐다. 아래와 다르면 화면을 캡처해서 보여 주면 Claude가 다시 안내한다.
+
+## 만들어 둔 것 (2026-10-29)
+| 항목 | 값 |
+|---|---|
+| Meta 앱 | `sbs-daejeon-sns` (앱 ID 28650853597918421). 이름에 insta/gram/FB/face/book 금지 → `sbs-daejeon-insta`는 거부됨 |
+| 이용 사례 | Instagram에서 메시지 및 콘텐츠 관리 |
+| 비즈니스 포트폴리오 | `SBS Game Academy Daejeon` (business_id 4428357544080766). 한글 이름은 거부됨 |
+| Unified Login 구성 | `Instagram API (Unified Login)` 구성 ID 1921541615878493, 템플릿으로 생성 |
+| Instagram 테스터 | sbs_game_daejeon, 2026-10-29 초대 수락(앱 표시명 sbs-daejeon-sns-IG) |
+| 포트폴리오의 Instagram 계정 | @sbs_game_daejeon (IG 사용자 ID 17841441907625937) |
+| 광고 계정 | 토큰 팝업에서 만들었다면 KRW · Asia/Seoul. 유료 광고는 하지 않으므로 사용하지 않음 |
+| 앱 연락처 이메일 | 사용자 지메일 |
 
 ---
 
 ## 0. 준비물
-- PC 브라우저 (휴대폰보다 PC가 편하다)
-- **페이스북 계정**(개인 계정이어도 된다). Meta 개발자 등록에 필요하다. 이 계정이 앱 관리자가 된다.
-- 인스타그램 @sbs_game_daejeon 로그인 정보
-- @sbs_game_daejeon이 **비즈니스(프로페셔널) 계정**일 것 → 2026-10-24에 전환 완료
+- PC 브라우저(Chrome). Claude in Chrome이 대부분 대신 누를 수 있지만 **로그인·비밀번호 재입력·SMS 인증 코드는 사용자가 직접** 입력한다.
+- **페이스북 계정**(개인 계정). Meta 개발자 등록과 앱 관리자용.
+- @sbs_game_daejeon 로그인 정보. **비즈니스(프로페셔널) 계정**이어야 한다(2026-10-24 전환 완료).
 
-## 1. Meta 개발자 등록 (약 5분, 처음 한 번)
-개발자 사이트에서 휴대폰 인증 문자가 안 오는 일이 잦다(2026-10-27 실제로 막힘). **페이스북 본계정에 번호를 먼저 등록**하면 개발자 등록 때 인증을 건너뛰는 경우가 많다.
+## 1. Meta 개발자 등록 (처음 한 번) — 완료
+- https://developers.facebook.com → 시작하기 → 약관 동의 → **SMS 인증 필수**(이메일 인증 없음, 번호 변경만 가능).
+- 2026-10-27·28에는 문자가 오지 않아 두 번 실패했고, 2026-10-29에 문자가 와서 통과했다. 계정 센터에 번호가 등록돼 있어도 이 단계는 별도 SMS를 요구한다. 안 오면 하루 뒤 다른 시간대에 1회만 재전송한다(추정: 해외 발신 문자 차단 영향).
 
-> **2026-10-28 재시도 결과(로컬 세션, Chrome으로 직접 진행)**: 계정 센터에는 010 번호가 이미 등록·인증돼 있었다. 그런데도 `developers.facebook.com/async/registration/dialog/`의 "Verify account" 단계는 **SMS 인증만** 요구하고(이메일 인증 없음, 번호 변경만 가능), 재전송을 포함해 문자가 끝내 오지 않았다. 다른 번호는 쓸 수 없어 **API 경로는 보류**. 아래 3번의 '이메일 인증' 안내는 2026-10-28 기준 등록 대화상자에 없으므로 기대하지 말 것.
-> **다시 시도할 때**: ① 휴대폰의 스팸 차단 앱·통신사 '국제 문자 차단'을 잠시 끈다(Meta 인증 문자는 해외 발신인 경우가 많다. 추정) ② 며칠 뒤 다른 시간대에 1회만 재전송 ③ 그래도 안 오면 API는 접고 Chrome 직접 업로드(`docs/인수인계_마케팅채널.md` 2번) 또는 Playwright 스크립트 방식으로 간다.
-1. facebook.com 로그인 → 프로필 사진 → **설정 및 개인정보** → **설정** → **계정 센터** → **개인정보** → **연락처 정보** → **휴대폰 번호 추가**
-   - 국가 `대한민국(+82)`, 번호는 0 포함·하이픈 없이(`010…`)
-   - 문자가 안 오면: 스팸 문자함 확인 → 2분 뒤 재전송 1회 → 그래도 안 오면 **이메일 인증**으로 바꿔 진행(이메일만으로도 등록된다) → 다른 번호 → 다음 날 재시도
-2. https://developers.facebook.com → **시작하기** → 약관 동의 → (인증을 다시 물으면 등록한 번호 선택) → 직업은 아무거나
-3. 상단 **내 앱**(My Apps)이 보이면 등록 완료
+## 2. 앱 만들기 — 완료
+1. **내 앱** → **앱 만들기**
+2. 앱 이름: `sbs-daejeon-sns`. **insta / gram / FB / face / book 이 들어가면 거부**된다.
+3. 앱 연락처 이메일: 사용자 지메일(칸에 전화번호가 미리 들어가 있으면 '다음'이 비활성이므로 지우고 입력)
+4. **사용 사례**: **Instagram에서 메시지 및 콘텐츠 관리**
+5. 비즈니스 포트폴리오: 이 단계에서는 건너뛰어도 되지만, 결국 **3번에서 연결해야** 한다.
+6. **앱 만들기** → 비밀번호 재입력(사용자) → 대시보드.
 
-## 2. 앱 만들기 (약 3분)
-1. **내 앱** → **앱 만들기**(Create App)
-2. 앱 이름: `sbs-daejeon-insta` (아무 이름이나 된다. 단 'Instagram', 'IG' 같은 단어는 넣을 수 없다)
-3. 앱 연락처 이메일: 대표님 이메일
-4. **사용 사례**(Use case): **Instagram에서 메시지 및 콘텐츠 관리**(Manage messaging & content on Instagram)를 고른다.
-5. 비즈니스 포트폴리오 연결을 물으면 **나중에** 또는 **연결 안 함**을 고른다.
-6. **앱 만들기** → 비밀번호를 다시 확인하면 앱 대시보드가 열린다.
+## 3. 비즈니스 포트폴리오 만들고 앱·인스타 계정 연결 — 완료
+Unified Login 탭("API setup with Unified login")은 앱이 비즈니스 포트폴리오에 속해야 나타난다.
+1. https://business.facebook.com → 포트폴리오 만들기. 이름은 **영문**(`SBS Game Academy Daejeon`). 한글 이름은 거부됐다. 웹사이트를 물으면 `http://sbsdaejeon-game.co.kr/`.
+2. Business Suite **설정 → 계정 → 앱 → 추가 → 앱 ID 연결**(28650853597918421). 운영자이므로 자동 승인.
+3. **설정 → 계정 → Instagram 계정 → 추가 → Instagram 계정 추가** → 팝업에서 @sbs_game_daejeon 로그인(사용자) → 완료. "사람 리스트에 추가" 제안은 건너뛴다.
+   - 이걸 안 하면 토큰 팝업에서 "Instagram Pro 계정이 필요합니다"가 뜨고 계정이 목록에 없다.
+4. 기존 페이스북 페이지(학원과 무관한 것)는 포트폴리오에 넣지 않는다.
 
-## 3. 학원 인스타 계정을 앱에 연결 (약 5분)
-> 왼쪽 메뉴에 **Instagram** 항목이 바로 보이면 그 안의 'API 설정(Instagram 로그인 포함)' 화면에 **테스터 추가 / 계정 추가** 버튼이 있다. 그 버튼으로 바로 추가해도 된다(아래 1번 대신).
-> 초대 수락·계정 추가 때는 반드시 **@sbs_game_daejeon으로 로그인된 상태**여야 한다. 개인 계정과 연결돼 있어 개인 계정이 먼저 뜰 수 있다.
-앱은 지금 **개발 모드**다. 개발 모드에서는 앱에 '역할'이 있는 계정에만 글을 올릴 수 있다. 우리는 학원 계정 하나에만 올리면 되므로 이 상태로 충분하고, 앱 심사도 필요 없다.
+## 4. 액세스 토큰 발급 — 완료, 재발급 시 여기부터
+앱 대시보드 → 왼쪽 **이용 사례** → Instagram의 **맞춤 설정** → 탭 **API setup with Unified login**.
+1. **1. 앱 구성**: 구성이 없으면 **새로운 구성 만들기 → Create from template** → `Instagram API (Unified Login)`이 생긴다(SUAT, 만료 없음, 권한 6개). 구성이 선택돼 있어야 다음 단계가 된다("먼저 1단계에서 구성을 선택하세요" 오류의 원인).
+   - 별도로 **권한 및 기능** 탭에 `instagram_business_basic`, `instagram_business_content_publish`를 추가해 두었다(테스트 준비 완료 상태). 실제 토큰에 들어간 권한은 구성 쪽 목록이다.
+2. **앱 역할 → 역할 → 사람 추가 → Instagram 테스터 → `sbs_game_daejeon`** → 인스타그램 https://www.instagram.com/accounts/manage_access/ → **테스터 초대** 탭 → 수락(@sbs_game_daejeon으로 로그인된 상태).
+3. **2. 액세스 토큰 생성** 표에서 `sbs_game_daejeon` 행의 **토큰 생성**.
+   - **팝업 창이 따로 뜬다.** 비즈니스 포트폴리오 `SBS Game Academy Daejeon`, Instagram 계정 `@sbs_game_daejeon`, 광고 계정은 가능하면 선택 안 함(만들어야 하면 이름 `SBS Game Academy Daejeon`, 통화 KRW, 시간대 Asia/Seoul. 통화·시간대는 나중에 못 바꾼다) → 다음 → 허용.
+   - **팝업이 닫히면 토큰 창은 원래 대시보드 탭에 뜬다.** 그 사이에 대시보드 탭을 다른 페이지로 옮기면 토큰 창이 사라진다(2026-10-29 한 번 놓쳤다). 탭을 그대로 둔다.
+4. 토큰 창의 **복사** 버튼만 누른다. 화면에 띄우거나 대화·카톡·메일·파일에 붙여 넣지 않는다. 바로 5-B로 간다.
 
-1. 왼쪽 메뉴 **앱 역할**(App roles) → **역할**(Roles) → **사람 추가**(Add People) → **Instagram 테스터**(Instagram Tester) → `sbs_game_daejeon` 입력 → 추가
-2. 인스타그램에서 초대를 수락한다.
-   - PC: https://www.instagram.com/accounts/manage_access/ → **테스터 초대**(Tester Invites) 탭 → **수락**
-   - 메뉴가 안 보이면 인스타그램 앱 → 설정 → 웹사이트 권한 → 앱 및 웹사이트 → 테스터 초대
-   - 이 메뉴가 아예 없으면 3번은 건너뛰고 4번으로 간다. 4번의 '계정 추가'에서 바로 연결될 수 있다.
+## 5. 클라우드 환경에 토큰 넣기 (클라우드 세션을 쓸 때만)
+1. Claude 앱에서 세션 상단의 **환경 이름**(클라우드 환경 메뉴) → **Edit**
+2. **Network secrets**(없으면 **환경 변수**)에 `INSTAGRAM_ACCESS_TOKEN` 추가 → 저장
+3. **새 세션**에서 "인스타 API 확인해줘" → `python3 instagram/publish.py check`
 
-## 4. 액세스 토큰 발급 (약 3분)
-1. 왼쪽 메뉴 **사용 사례**(Use cases) → Instagram 사용 사례의 **맞춤 설정**(Customize)
-2. **Instagram 로그인을 통한 API 설정**(API setup with Instagram login)
-3. **권한**(Permissions) 항목에서 `instagram_business_basic`, `instagram_business_content_publish`가 있는지 확인한다. 없으면 **추가**한다.
-4. **액세스 토큰 생성**(Generate access tokens) → **계정 추가**(Add account) → @sbs_game_daejeon으로 로그인 → 권한 허용
-5. 계정 옆 **토큰 생성**(Generate token) → 나온 긴 문자열을 **복사**한다.
-   - 이것이 **장기 토큰**이다. 약 60일 동안 유효하다.
-   - **절대 대화창, 카톡, 메일에 붙여 넣지 마십시오.** 바로 아래 5번 위치에만 넣는다.
-
-## 5. 클라우드 환경에 토큰 넣기 (약 2분)
-1. Claude 앱에서 이 세션 상단 제목 표시줄의 **환경 이름**(클라우드 환경 메뉴) → **Edit**
-2. **Network secrets**(앱 버전에 따라 'API credentials')가 있으면 그곳에, 없으면 **환경 변수**(Environment variables)에 추가한다.
-   - 이름: `INSTAGRAM_ACCESS_TOKEN`
-   - 값: 4-5에서 복사한 토큰
-3. **저장**한다.
-4. **새 세션**을 열고 "인스타 API 확인해줘"라고 말하면 Claude가 `python3 instagram/publish.py check`로 연결을 확인한다. 토큰은 새 세션부터 적용된다.
-
-## 5-B. 로컬 PC(회사 PC 세션)에 토큰 넣기 (약 2분) — 2026-10-28부터 이쪽이 기본
-1. 시작 메뉴에서 **환경 변수**를 검색 → **계정의 환경 변수 편집** → **사용자 변수** → **새로 만들기**
-   - 변수 이름: `INSTAGRAM_ACCESS_TOKEN`
-   - 변수 값: 4-5에서 복사한 토큰
-2. **확인**으로 닫는다. Claude 앱을 완전히 종료했다가 다시 연다(새로 연 세션부터 변수가 보인다).
-3. 새 세션에서 "인스타 API 확인해줘" → `python instagram/publish.py check`
-   - 토큰 값은 대화·파일·커밋에 쓰지 않는다. 저장소는 공개다.
+## 5-B. 로컬 PC(회사 PC 세션)에 토큰 넣기 — 2026-10-29 이 방식으로 저장 완료
+Claude 세션이 있으면 **값을 보지 않고** 클립보드에서 바로 넣는다(토큰 창에서 복사 → "복사했어"):
+```powershell
+[Environment]::SetEnvironmentVariable('INSTAGRAM_ACCESS_TOKEN', (Get-Clipboard -Raw).Trim(), 'User'); Set-Clipboard -Value ' '
+```
+수동으로 할 때: 시작 메뉴 **환경 변수** 검색 → **계정의 환경 변수 편집** → 사용자 변수 **새로 만들기** → 이름 `INSTAGRAM_ACCESS_TOKEN`, 값 붙여넣기 → 확인.
+- 새로 넣은 변수는 **Claude 앱을 완전히 종료했다가 다시 연 뒤의 새 세션**부터 보인다. 같은 세션에서 바로 쓰려면 PowerShell에서 `$env:INSTAGRAM_ACCESS_TOKEN = [Environment]::GetEnvironmentVariable('INSTAGRAM_ACCESS_TOKEN','User')` 뒤에 실행한다.
+- 확인: `python instagram/publish.py check` → `username: sbs_game_daejeon`, `quota_total: 100`이 나오면 정상.
+- 토큰 값은 대화·파일·커밋에 쓰지 않는다. 저장소는 공개다.
 
 ## 6. 이후 사용
 - 올리기: "인스타에 02 올려줘" → Claude가 `publish.py jpg 02`(JPEG 변환) → 커밋·push → `publish.py post 02 --dry-run`으로 이미지·캡션 확인 → 사용자 확인 후 `post 02`.
   - 캡션 문구는 올리기 전에 텍스트로 먼저 합의한다(2026-10-28 사용자 규칙).
-  - 먼저 `--dry-run`으로 이미지와 캡션을 보여 드린 뒤 실제로 올린다.
+  - 이미지는 공개 저장소의 고정 커밋 주소로 넘기므로 push가 먼저다.
 - 고정, 하이라이트, 링크 편집은 계속 휴대폰 앱에서 한다.
 
-## 7. 토큰 만료 관리 (60일)
-- 만료되기 전에 "인스타 토큰 갱신해줘"라고 하면 `publish.py refresh`로 연장한다.
-- 갱신 결과 새 토큰 값이 나오면 5번 위치의 값을 교체해야 할 수 있다. 이 부분은 확인하지 못했다(추정).
-- 이미 만료됐다면 4번부터 다시 하면 된다(약 5분).
-- 첫 발급일을 `brand/channels.md`에 기록해 두고, 50일쯤 지나면 갱신한다.
+## 7. 토큰 만료 관리
+- 지금 토큰은 **SUAT라 만료되지 않는다.** `publish.py refresh`는 안내만 출력한다.
+- 권한 오류(#190, "Invalid OAuth access token")가 나면 4번 3·4 → 5-B로 다시 발급한다(약 3분). 앱 대시보드에서 토큰을 **해제**하거나 포트폴리오에서 앱·계정을 떼면 토큰이 죽는다.
+- 앱은 **개발 모드**다. 역할이 있는 계정(@sbs_game_daejeon)에만 올릴 수 있고, 그게 전부이므로 앱 검수는 하지 않는다.
 
 ## 문제 해결
 | 증상 | 해결 |
 |---|---|
-| 4번에 '계정 추가'가 안 보임 | 2-4의 사용 사례가 Instagram인지 확인. 다르면 앱을 새로 만든다 |
-| 계정 추가 시 "비즈니스 계정이 아님" | 인스타그램 앱 → 설정 → 계정 유형 → 프로페셔널(비즈니스)인지 확인 |
-| 게시할 때 권한 오류(#10, #200) | 4-3 권한에 `instagram_business_content_publish`가 있는지 확인 → 토큰을 다시 발급 |
-| 이미지 오류 | Claude가 처리한다(이미지는 JPEG, 공개 주소로 넘김) |
+| "Instagram 로그인이 포함된 API 설정" 탭이 없음 | 정상(신규 앱). Unified Login 탭을 쓴다. 탭이 없으면 3번(포트폴리오 연결) |
+| 토큰 팝업에 "Instagram Pro 계정이 필요합니다" | 3-3(포트폴리오에 Instagram 계정 추가)이 안 된 것 |
+| "먼저 1단계에서 구성을 선택하세요" | 4-1 구성 생성·선택 |
+| 팝업은 끝났는데 토큰 창이 없음 | 대시보드 탭이 이동됐음. 탭을 Unified Login 페이지에 둔 채 토큰 생성 재클릭 |
+| `check`에서 "Cannot parse access token" | `graph.instagram.com`으로 보낸 것. publish.py는 `graph.facebook.com`을 써야 한다 |
+| 게시할 때 권한 오류(#10, #200) | 구성 권한에 `instagram_content_publish`가 있는지 확인 → 토큰 재발급 |
+| 이미지 오류 | Claude가 처리한다(JPEG, 공개 주소, push 여부) |
 
 ## 참고 (Meta 공식 문서)
-- [Instagram API with Instagram Login](https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/)
+- [Instagram Platform 개요 · Unified Login](https://developers.facebook.com/docs/instagram-platform/)
 - [Create an App](https://developers.facebook.com/docs/instagram-platform/create-an-instagram-app/)
 - [Publish Content (게시·카드뉴스·한도)](https://developers.facebook.com/docs/instagram-platform/content-publishing/)
-- [Access Token](https://developers.facebook.com/docs/instagram-platform/reference/access_token/)

@@ -1,14 +1,19 @@
-"""인스타그램 공식 API(Instagram API with Instagram Login)로 게시물을 올린다.
+"""인스타그램 공식 API로 게시물을 올린다.
 
-필요: 환경 변수 INSTAGRAM_ACCESS_TOKEN (게시 권한 instagram_business_content_publish 포함, 장기 토큰)
-      — 대화창에 붙여 넣지 말고 클라우드 환경 설정(Network secrets 또는 환경 변수)에 넣는다.
+2026-10-29부터: Meta 앱 sbs-daejeon-sns의 **Unified Login(통합 로그인) 시스템 사용자 액세스 토큰(SUAT)** 을 쓴다.
+  - 호스트는 graph.facebook.com, 대상은 Instagram 사용자 ID(IG_USER_ID = 17841441907625937, @sbs_game_daejeon).
+  - SUAT는 만료되지 않으므로 refresh가 필요 없다(만료 시에는 API_설정.md 4번대로 '토큰 생성'을 다시 누른다).
+  - 토큰에 포함된 권한: instagram_basic, instagram_content_publish, instagram_manage_comments, instagram_manage_messages, ads_*
+  - graph.instagram.com(Instagram Login 방식)에는 이 토큰이 통하지 않는다("Cannot parse access token").
+
+필요: 환경 변수 INSTAGRAM_ACCESS_TOKEN — 대화창·파일·커밋에 쓰지 않고 사용자 환경 변수(API_설정.md 5-B)에만 넣는다.
 
 사용:
   python instagram/publish.py check                 # 토큰·계정·남은 게시 한도 확인
   python instagram/publish.py jpg 02                # v2_02_*.png → assets/jpg/v2_02_*.jpg (API는 JPEG만 받는다)
   python instagram/publish.py post 02 --dry-run     # 올릴 이미지 주소·캡션만 출력
   python instagram/publish.py post 02               # 실제 게시
-  python instagram/publish.py refresh               # 장기 토큰 갱신(60일 만료 전에)
+  python instagram/publish.py refresh               # (SUAT는 만료 없음 → 안내만 출력)
 
 이미지는 공개 저장소의 고정 커밋 주소(raw.githubusercontent.com)로 넘긴다. 그래서 게시 전에
 instagram/assets/jpg/ 의 파일이 커밋·push되어 있어야 한다(커밋 해시를 --ref 로 지정, 기본 = 현재 HEAD).
@@ -26,7 +31,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-API = "https://graph.instagram.com/v23.0"
+API = "https://graph.facebook.com/v23.0"
+IG_USER_ID = os.environ.get("INSTAGRAM_USER_ID", "17841441907625937")  # @sbs_game_daejeon
 ROOT = Path(__file__).resolve().parent
 REPO_RAW = "https://raw.githubusercontent.com/phy930310-stack/blogaeo"
 
@@ -110,8 +116,8 @@ def post(key, ref, dry):
         with urllib.request.urlopen(u, timeout=30) as r:
             if r.status != 200:
                 sys.exit(f"이미지 주소 오류 {r.status}: {u}")
-    me = call("GET", "me", fields="user_id,username")
-    uid = me["user_id"]
+    me = call("GET", IG_USER_ID, fields="id,username")
+    uid = me["id"]
     if len(urls) == 1:
         cid = call("POST", f"{uid}/media", image_url=urls[0], caption=cap)["id"]
     else:
@@ -133,8 +139,8 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
     if a.cmd == "check":
-        me = call("GET", "me", fields="user_id,username,account_type,media_count")
-        lim = call("GET", f"{me['user_id']}/content_publishing_limit", fields="quota_usage,config")
+        me = call("GET", IG_USER_ID, fields="id,username,media_count,followers_count")
+        lim = call("GET", f"{me['id']}/content_publishing_limit", fields="quota_usage,config")
         print(json.dumps({"account": me, "publishing_limit": lim}, ensure_ascii=False, indent=2))
     elif a.cmd == "jpg":
         if not a.key:
@@ -146,9 +152,8 @@ def main():
         ref = a.ref or subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
         post(a.key, ref, a.dry_run)
     else:
-        r = call("GET", "refresh_access_token", grant_type="ig_refresh_token")
-        days = int(r.get("expires_in", 0)) // 86400
-        print(f"갱신 완료: 약 {days}일 유효. 새 토큰 값이 바뀌었다면 환경 설정의 INSTAGRAM_ACCESS_TOKEN 을 교체해야 합니다(값은 출력하지 않음).")
+        print("현재 토큰은 시스템 사용자 액세스 토큰(SUAT)으로 만료되지 않습니다. 갱신이 필요 없습니다. "
+              "권한 오류(#190)가 나면 API_설정.md 4번대로 Meta 앱 대시보드에서 '토큰 생성'을 다시 눌러 환경 변수를 교체하세요.")
 
 
 if __name__ == "__main__":
