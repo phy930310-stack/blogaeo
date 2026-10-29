@@ -4,12 +4,12 @@
 
 - 내려받기: `python -m yt_dlp --ffmpeg-location <imageio-ffmpeg 경로> -f "bv*[ext=mp4]+ba[ext=m4a]/b" --merge-output-format mp4 "https://www.youtube.com/shorts/<id>"` (이 PC: yt-dlp·imageio-ffmpeg pip 설치됨, 2026-10-29)
 - 내용 확인: `--write-auto-subs --sub-langs "ko.*"`로 자동 자막을 받아 캡션 근거로 쓴다. 영상에 없는 수치는 캡션에 넣지 않는다.
-- 게시: `python instagram/publish.py reel 01 --dry-run` → 확인 → `python instagram/publish.py reel 01`. 영상은 커밋·push된 raw 주소로 넘기므로 먼저 push. 하루 1개, 카드뉴스와 번갈아.
+- 게시: `python instagram/publish.py reel 01 --dry-run`. 2026-10-29 r01로 API 게시 확인(raw.githubusercontent 주소, content-type octet-stream이어도 처리됨, 약 1분) → 확인 → `python instagram/publish.py reel 01`. 영상은 커밋·push된 raw 주소로 넘기므로 먼저 push. 하루 1개, 카드뉴스와 번갈아.
 - 캡션 규칙: 첫 줄 후킹, 영상 속 사실만, 마지막에 상담 신청(프로필 링크), 해시태그 5개. 문체는 humanize-korean 기준(사람 말투). 올리기 전 텍스트로 합의(2026-10-29 확정분 아래).
 
 | 번호 | 파일 | 원본 쇼츠 | 길이 | 해상도 | 게시 |
 |---|---|---|---|---|---|
-| r01 | r01_구미대-내신0.mp4 | https://www.youtube.com/shorts/SXK1wGKnPf8 | 17초 | 720×1280 | |
+| r01 | r01_구미대-내신0.mp4 | https://www.youtube.com/shorts/SXK1wGKnPf8 | 17초 | 720×1280 | 2026-10-29 https://www.instagram.com/reel/DfEcqzyjTx-/ |
 | r02 | r02_한국영상대-성적산출.mp4 | https://www.youtube.com/shorts/2V21aoPOSFU | 40초 | 1080×1920 | |
 | r03 | r03_청강대-면접질문.mp4 | https://www.youtube.com/shorts/no4lrJFhthM | 32초 | 720×1280 | |
 | r04 | r04_청강대-배치꿀팁.mp4 | https://www.youtube.com/shorts/6g9Uc7nHU9s | 33초 | 720×1280 | |
