@@ -58,6 +58,7 @@ SBS아카데미게임학원 대전점 🎮
 👇 1:1 상담 신청
 ```
 - **링크**(프로필 편집 → 링크 추가). 2026-10-28부터는 **링크 모음 페이지 하나만** 넣는다: https://phy930310-stack.github.io/blogaeo/link/ (GitHub Pages 활성화 필요, `link/index.html`). 페이지 안 버튼: 상담 신청·카톡 1:1·전화·오시는 길·학원 홈페이지·인스타 DM(ig.me/m/sbs_game_daejeon). 아래 4개 목록은 축소 전 기록이다.
+  - 링크 **제목**(프로필 편집 → 링크 → 제목)에 "상담 신청·문의"를 넣는다. 제목이 있으면 프로필에 긴 github.io 주소 대신 제목이 보인다(2026-10-30 사용자 결정: 주소 이전·조직 생성은 하지 않고 제목만 변경).
   1. `상담 신청(1~2분)`: 인스타그램용 폼 링크. 유입 경로에 '인스타그램'이 미리 선택된다.
      `https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8`
   2. `카톡 1:1 상담`: https://open.kakao.com/o/srqyuFLc
