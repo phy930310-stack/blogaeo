@@ -1,4 +1,4 @@
-// 티스토리 비공개 업로더 v0.1.7 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
+// 티스토리 비공개 업로더 v0.1.8 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
 //
 //   node upload.mjs login              티스토리 로그인 창 열기(최초 1회·세션 만료 시). 로그인 후 창을 닫으면 끝
 //   node upload.mjs check              로그인 상태 확인
@@ -95,26 +95,81 @@ async function browser(headless) {
   const { chromium } = await import("playwright");
   fs.mkdirSync(PROFILE, { recursive: true });
   const opts = { headless, viewport: { width: 1400, height: 950 } };
-  try { return await chromium.launchPersistentContext(PROFILE, { ...opts, channel: "chrome" }); }
-  catch { try { return await chromium.launchPersistentContext(PROFILE, { ...opts, channel: "msedge" }); }
+  keepSessionCookies();
+  let ctx;
+  try { ctx = await chromium.launchPersistentContext(PROFILE, { ...opts, channel: "chrome" }); }
+  catch { try { ctx = await chromium.launchPersistentContext(PROFILE, { ...opts, channel: "msedge" }); }
   catch (e) { fail(`Chrome 또는 Edge를 실행할 수 없습니다: ${e.message}`); } }
+  await restoreCookies(ctx);
+  return ctx;
 }
 async function isLoggedIn(ctx, blogUrl) {
   const r = await ctx.request.get(`${blogUrl}/manage`, { failOnStatusCode: false, timeout: 30000 });
   return r.status() < 400 && !/auth\/login|accounts\.kakao\.com/.test(r.url()) && /\/manage/.test(r.url());
 }
 
+// ---------- 로그인 유지 (v0.1.8) ----------
+// 원인: 카카오의 '로그인 상태 유지' 토큰은 프로필에 남지만, 티스토리 로그인 쿠키는 전부 세션 쿠키라
+// 크롬이 창을 닫을 때 지운다('이전 세션 이어서 열기'가 아닐 때). 그래서 매번 로그인 화면이 떴다.
+const COOKIE_FILE = path.join(path.dirname(PROFILE), "tistory-cookies.json");
+
+// 1) 크롬 프로필 설정을 '이전 세션 이어서 열기'로 바꿔 세션 쿠키를 지우지 않게 한다 (실행 전에 써야 적용됨)
+function keepSessionCookies() {
+  const pref = path.join(PROFILE, "Default", "Preferences");
+  try {
+    fs.mkdirSync(path.dirname(pref), { recursive: true });
+    const d = fs.existsSync(pref) ? JSON.parse(fs.readFileSync(pref, "utf8")) : {};
+    if (!d.session || d.session.restore_on_startup !== 1) {
+      d.session = { ...(d.session || {}), restore_on_startup: 1 };
+      fs.writeFileSync(pref, JSON.stringify(d));
+    }
+  } catch {}
+}
+// 2) 로그인 쿠키를 따로 저장해 두고, 다음 실행 때 없어진 것만 되살린다
+async function saveCookies(ctx) {
+  try { fs.writeFileSync(COOKIE_FILE, JSON.stringify(await ctx.cookies())); } catch {}
+}
+async function restoreCookies(ctx) {
+  try {
+    if (!fs.existsSync(COOKIE_FILE)) return;
+    const saved = JSON.parse(fs.readFileSync(COOKIE_FILE, "utf8"));
+    const have = new Set((await ctx.cookies()).map((c) => `${c.domain}|${c.name}`));
+    const add = saved.filter((c) => !have.has(`${c.domain}|${c.name}`) && (!c.expires || c.expires < 0 || c.expires * 1000 > Date.now()));
+    if (add.length) await ctx.addCookies(add);
+  } catch {}
+}
+// 3) 그래도 로그인 화면이 뜨면 카카오 버튼을 대신 눌러 준다(카카오 토큰이 살아 있으면 사람 손 없이 통과).
+//    안 되면 사람이 로그인할 때까지 기다린다(최대 10분). 로그인되면 쿠키를 저장한다.
+async function waitLogin(ctx, page, cfg, manualMsg) {
+  const end = Date.now() + 10 * 60_000;
+  let clicked = 0, told = false;
+  while (Date.now() < end) {
+    if (await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) { await saveCookies(ctx); return true; }
+    const url = page.url();
+    try {
+      if (/tistory\.com\/auth\/login/.test(url) && clicked < 3) {
+        const k = page.locator('a[href*="kauth.kakao.com"], a.link_kakao_id, a:has-text("카카오계정으로 로그인")').first();
+        if (await k.count()) { console.log("      카카오 로그인 버튼을 대신 누릅니다 …"); await k.click({ timeout: 5000 }); clicked++; await page.waitForTimeout(4000); continue; }
+      }
+      if (/accounts\.kakao\.com/.test(url) && clicked < 6) {
+        const b = page.locator('button:has-text("계속하기"), button.btn_g.highlight.submit, a:has-text("계속하기")').first();
+        if (await b.count()) { await b.click({ timeout: 5000 }); clicked++; await page.waitForTimeout(4000); continue; }
+      }
+    } catch {}
+    if (!told) { console.log(manualMsg); told = true; }
+    await page.waitForTimeout(3000);
+  }
+  const ok = await isLoggedIn(ctx, cfg.blogUrl).catch(() => false);
+  if (ok) await saveCookies(ctx);
+  return ok;
+}
+
 async function login(cfg) {
   const ctx = await browser(false);
   const page = ctx.pages()[0] || await ctx.newPage();
   await page.goto("https://www.tistory.com/auth/login");
-  console.log("\n열린 창에서 카카오 계정으로 로그인하세요. 반드시 '로그인 상태 유지'에 체크하세요(체크하지 않으면 창을 닫을 때 로그인이 사라집니다). 로그인이 확인되면 자동으로 창이 닫힙니다. (최대 10분)");
-  const end = Date.now() + 10 * 60_000;
-  while (Date.now() < end) {
-    await page.waitForTimeout(3000).catch(() => {});
-    if (ctx.pages().length === 0) break;
-    if (await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) { console.log("로그인 완료 · 세션이 이 PC에 저장되었습니다."); break; }
-  }
+  const ok = await waitLogin(ctx, page, cfg, "\n열린 창에서 카카오 계정으로 로그인하세요('로그인 상태 유지' 체크). 로그인이 확인되면 자동으로 창이 닫힙니다. (최대 10분)");
+  console.log(ok ? "로그인 완료 · 세션이 이 PC에 저장되었습니다(다음부터는 로그인 화면이 떠도 카카오 버튼을 대신 누릅니다)." : "로그인이 확인되지 않았습니다.");
   await ctx.close();
 }
 
@@ -147,7 +202,7 @@ async function cdnImages(page) {
 async function upload(cfg, dir) {
   const post = readPost(dir);
   for (const s of post.slots) if (s.kind === "생성 이미지" && !fs.existsSync(s.file)) fail(`이미지 파일이 없습니다: ${s.file}`);
-  console.log(`\n업로더 v0.1.7\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
+  console.log(`\n업로더 v0.1.8\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
   const ctx = await browser(false); // 진행 과정을 눈으로 볼 수 있게 창을 띄운다
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -159,13 +214,7 @@ async function upload(cfg, dir) {
     await page.goto(newpost, { waitUntil: "domcontentloaded", timeout: 60000 });
     if (onLogin()) {
       // 세션이 없거나 만료됨 → 같은 창에서 로그인하면 이어서 진행
-      console.log("      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인을 해 주세요. '로그인 상태 유지'에 체크하면 다음부터는 이 단계가 생략됩니다. (최대 10분 대기)");
-      const end = Date.now() + 10 * 60_000;
-      while (Date.now() < end) {
-        await page.waitForTimeout(3000);
-        if (await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) break;
-      }
-      if (!await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) throw new Error("10분 안에 로그인이 확인되지 않았습니다");
+      if (!await waitLogin(ctx, page, cfg, "      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인('로그인 상태 유지' 체크)을 해 주세요. (최대 10분 대기)")) throw new Error("10분 안에 로그인이 확인되지 않았습니다");
       console.log("      로그인 확인 — 계속 진행합니다");
       await page.goto(newpost, { waitUntil: "domcontentloaded", timeout: 60000 });
     }
@@ -260,16 +309,13 @@ async function upload(cfg, dir) {
 async function ensureLogin(ctx, page, cfg, url) {
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
   if (/auth\/login|accounts\.kakao\.com|\/login/i.test(page.url())) {
-    console.log("      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인('로그인 상태 유지' 체크)을 해 주세요. (최대 10분)");
-    const end = Date.now() + 10 * 60_000;
-    while (Date.now() < end) { await page.waitForTimeout(3000); if (await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) break; }
-    if (!await isLoggedIn(ctx, cfg.blogUrl).catch(() => false)) throw new Error("10분 안에 로그인이 확인되지 않았습니다");
+    if (!await waitLogin(ctx, page, cfg, "      로그인이 필요합니다. 열린 크롬 창에서 카카오 로그인('로그인 상태 유지' 체크)을 해 주세요. (최대 10분)")) throw new Error("10분 안에 로그인이 확인되지 않았습니다");
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
   }
 }
 async function editPost(cfg, postId, label, transform, newTitle) {
   if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요.");
-  console.log(`\n업로더 v0.1.7 · ${label} — ${cfg.blogUrl}/${postId}`);
+  console.log(`\n업로더 v0.1.8 · ${label} — ${cfg.blogUrl}/${postId}`);
   const ctx = await browser(false);
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -374,7 +420,7 @@ function preview(dir) {
 const [cmd, arg] = process.argv.slice(2);
 const cfg = cmd === "preview" ? null : loadConfig();
 if (cmd === "login") await login(cfg);
-else if (cmd === "check") { const ctx = await browser(true); console.log((await isLoggedIn(ctx, cfg.blogUrl)) ? "로그인 상태: 정상" : "로그인 필요: login.cmd 실행"); await ctx.close(); }
+else if (cmd === "check") { const ctx = await browser(true); const ok = await isLoggedIn(ctx, cfg.blogUrl); if (ok) await saveCookies(ctx); console.log(ok ? "로그인 상태: 정상" : "로그인 필요: login.cmd 실행(또는 upload 실행 시 자동으로 카카오 버튼을 누릅니다)"); await ctx.close(); }
 else if (cmd === "preview") preview(await pickPost(arg));
 else if (cmd === "upload") await upload(cfg, await pickPost(arg));
 else if (cmd === "cta") await addCta(cfg, arg, process.argv[4]);
