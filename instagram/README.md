@@ -5,6 +5,7 @@
 > 2026-10-29 로컬 세션이 공식 API(`publish.py post 02`)로 게시물 02 업로드: https://www.instagram.com/p/DfETYfqkvLD/
 > - 소개에 '✔'는 쓸 수 없다(인스타그램 거부) → '•'로 대체.
 > - 게시물 03(국비 과정) 업로드 완료(2026-10-28, 로컬 세션 Chrome): https://www.instagram.com/p/DfBWDc6E-rW/
+> - 2026-10-30 공식 API: 게시물 04(게임학과 갈래 셋, 6장) https://www.instagram.com/p/DfG46jKkvqb/ · 릴스 r02 https://www.instagram.com/reel/DfG4iEuCm3P/ — 이날부터 매일 릴스 1 + 게시물 1(사용자 요청 "매일 자동 발행").
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
