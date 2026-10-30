@@ -10,7 +10,7 @@
 | 번호 | 파일 | 원본 쇼츠 | 길이 | 해상도 | 게시 |
 |---|---|---|---|---|---|
 | r01 | r01_구미대-내신0.mp4 | https://www.youtube.com/shorts/SXK1wGKnPf8 | 17초 | 720×1280 | 2026-10-29 https://www.instagram.com/reel/DfEcqzyjTx-/ |
-| r02 | r02_한국영상대-성적산출.mp4 | https://www.youtube.com/shorts/2V21aoPOSFU | 40초 | 1080×1920 | |
+| r02 | r02_한국영상대-성적산출.mp4 | https://www.youtube.com/shorts/2V21aoPOSFU | 40초 | 1080×1920 | 2026-10-30 https://www.instagram.com/reel/DfG4iEuCm3P/ |
 | r03 | r03_청강대-면접질문.mp4 | https://www.youtube.com/shorts/no4lrJFhthM | 32초 | 720×1280 | |
 | r04 | r04_청강대-배치꿀팁.mp4 | https://www.youtube.com/shorts/6g9Uc7nHU9s | 33초 | 720×1280 | |
 | r05 | r05_청강대-그림체.mp4 | https://www.youtube.com/shorts/lNdk-je2-k0 | 24초 | 720×1280 | |

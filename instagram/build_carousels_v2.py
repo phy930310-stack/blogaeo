@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -14,6 +14,11 @@
 - 상자 없음. 번호는 실제 순서(신청 5단계)에만. 오렌지는 장마다 한 곳(가장 중요한 한 줄).
 - 수치·사실은 posts/2026-10-19_대전-국비지원-교육 (고용24 국민내일배움카드 제도 안내, 2026.10.19 확인)과
   brand/profile.md(대전점 고용24 등록 과정 3개, 입과 전 상담+간단한 실기)에서만. 훈련비·자부담 금액은 쓰지 않는다.
+
+디자인 계획(04 게임학과, 이름은 수십 개·갈래는 셋, 2026-10-30 로컬 세션):
+- 같은 종이 바탕·네이비 잉크. 표지의 기억 요소 = 거대한 숫자 '3'(갈래 셋). 상자 없음. 번호는 실제 순서(고르는 3단계)에만.
+- 수치·사실은 posts/2026-10-03_게임학과-종류 (홍익대 세종 게임학부 전공 계열, 공주대 게임디자인학과, 목원대 두 학과·실기 90%,
+  청강대 게임콘텐츠스쿨 면접전형 88명 — ZDNet 2026.09.09) 에서만. 문구는 humanize-korean 윤문본.
 """
 from build_assets import SRC, page
 
@@ -219,9 +224,90 @@ K7 = f"""
 </div>
 """
 
+# ───────────────────────── 04 게임학과, 이름은 수십 개·갈래는 셋 (2026-10-30, 6장) ─────────────────────────
+G_CHIP, G_SERIES = "입시", "게임학과, 갈래는 셋"
+
+# 1 표지 — 거대한 '3' 하나
+G1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임학과 이름은 수십 개, 갈래는</div>
+<div style="margin-top:8px;display:flex;align-items:baseline;color:{NAVY};white-space:nowrap">
+  <span style="font-size:420px;line-height:.86;font-weight:800;letter-spacing:-20px;margin-left:-14px">3</span>
+  <span style="font-size:124px;font-weight:800;letter-spacing:-4px;margin-left:14px">갈래</span>
+</div>
+<h1 style="margin-top:96px;font-size:84px">이름만 보고 원서 쓰면<br><span class="mark">엉뚱한 과</span>에 가요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">게임디자인학과인데 그림을 안 배우기도 해요.</p>
+"""
+
+# 2 세 갈래 — 순서가 아니므로 번호 없음
+def track(name, learn, job, hot=False):
+    return f"""
+<div style="margin-top:44px">
+<div style="font-size:72px;font-weight:800;letter-spacing:-2.5px;line-height:1.1;color:{ORANGE if hot else NAVY}">{name}</div>
+<p class="body" style="margin-top:12px">{learn}</p>
+<p class="small" style="margin-top:6px">{job}</p></div>"""
+
+G2 = f"""
+<h1 style="margin-top:48px;font-size:88px">세 갈래,<br>배우는 게 달라요.</h1>
+{track("공학계", "C++·C#, 언리얼·유니티 같은 엔진", "프로그래머로 이어져요")}
+{track("미술계", "드로잉·원화, 3D 모델링, UI", "원화가·3D 아티스트로 이어져요", True)}
+{track("콘텐츠·융합", "게임 기획·시나리오에<br>그래픽·프로그래밍 기초를 얹어요", "기획자·레벨 디자이너로 이어져요")}
+"""
+
+# 3 같은 이름, 다른 과
+def school(name, text):
+    return f"""
+<div style="margin-top:40px;padding-left:28px;border-left:6px solid rgba(30,42,120,.18)">
+<div style="font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2">{name}</div>
+<p class="body" style="margin-top:10px">{text}</p></div>"""
+
+G3 = f"""
+<h1 style="margin-top:48px;font-size:88px">같은 이름인데<br>다른 과예요.</h1>
+{school("홍익대(세종) 게임학부", "한 학부 안에서 게임소프트웨어전공은 공학계,<br>게임그래픽디자인전공은 미술계로 따로 뽑아요.")}
+{school("공주대 게임디자인학과", "이름에 '디자인'이 있지만<br>기획·그래픽·프로그래밍을 같이 배워요.")}
+{school("목원대", "코드 중심의 게임소프트웨어공학과와<br>그림 실기로 뽑는 게임콘텐츠학과가 따로 있어요.")}
+<p class="lead" style="margin-top:auto;padding-bottom:40px">원서 전에 모집요강의 <b style="color:{ORANGE}">계열 표기</b>와<br>학과 교과목을 꼭 같이 봐야 해요.</p>
+"""
+
+# 4 갈래 따라 입시가 달라요 — 숫자는 왼쪽 큰 글자
+def adm(num, unit, label, note, hot=False):
+    col = ORANGE if hot else NAVY
+    return f"""
+<div style="display:flex;gap:34px;align-items:flex-start;margin-top:40px">
+<div style="flex:none;width:300px;line-height:1;color:{col}"><span style="font-size:104px;font-weight:800;letter-spacing:-5px">{num}</span><span style="font-size:48px;font-weight:800;letter-spacing:-1px;margin-left:6px">{unit}</span></div>
+<div style="padding-top:14px"><p class="body" style="font-weight:700">{label}</p><p class="small" style="margin-top:6px">{note}</p></div></div>"""
+
+G4 = f"""
+<h1 style="margin-top:48px;font-size:88px">갈래가 다르면<br>입시도 달라요.</h1>
+<p class="body" style="margin-top:30px">공학계는 교과 성적과 학생부를 보는 전형이 중심이에요.</p>
+{adm("90", "%", "실기 — 미술계", "목원대 게임콘텐츠학과 실기전형<br>학생부 10% + 실기 90%")}
+{adm("88", "명", "면접전형 — 콘텐츠·융합계", "청강대 게임콘텐츠스쿨, 포트폴리오로 평가", True)}
+<p class="lead" style="margin-top:auto;padding-bottom:40px">성적이 걱정이면 볼 곳은<br><b style="color:{ORANGE}">미술계·콘텐츠계의 포트폴리오·면접 전형</b>이에요.</p>
+<p class="small" style="padding-bottom:40px">출처: 목원대 2027학년도 수시 모집요강, ZDNet Korea 2026.09.09</p>
+"""
+
+# 5 고르는 순서 — 실제 순서이므로 번호 사용
+G5 = f"""
+<h1 style="margin-top:48px;font-size:88px">고르는 순서는<br>거꾸로예요.</h1>
+{step(1, "하고 싶은 일부터 정해요", "코드가 좋으면 프로그래머, 그리는 게 좋으면 아티스트,<br>규칙과 이야기를 짜는 게 좋으면 기획자", True)}
+{step(2, "그 직군이 어느 갈래인지 확인해요")}
+{step(3, "학교별로 세 가지를 비교해요", "모집요강의 계열 표기, 학과 교과목, 지원할 전형의 반영 비율")}
+"""
+
+# 6 상담
+G6 = f"""
+<h1 style="margin-top:60px;font-size:92px">어느 갈래가 맞는지,<br>거기서 내 성적으로<br>되는 전형은 뭔지</h1>
+<p class="lead" style="margin-top:44px">관심 학교 모집요강을 같이 놓고 봐 드려요.<br>게임과든 미대든 그림으로 가는 학과라면요.</p>
+<div class="body" style="margin-top:72px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
+    "04": (G_CHIP, G_SERIES, [G1, G2, G3, G4, G5, G6]),
 }
 
 if __name__ == "__main__":
