@@ -1,4 +1,4 @@
-// 티스토리 비공개 업로더 v0.1.8 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
+// 티스토리 비공개 업로더 v0.1.9 — aeo-blog 원고 폴더(posts/<날짜_슬러그>)를 티스토리에 '비공개 저장'한다.
 //
 //   node upload.mjs login              티스토리 로그인 창 열기(최초 1회·세션 만료 시). 로그인 후 창을 닫으면 끝
 //   node upload.mjs check              로그인 상태 확인
@@ -108,7 +108,7 @@ async function isLoggedIn(ctx, blogUrl) {
   return r.status() < 400 && !/auth\/login|accounts\.kakao\.com/.test(r.url()) && /\/manage/.test(r.url());
 }
 
-// ---------- 로그인 유지 (v0.1.8) ----------
+// ---------- 로그인 유지 (v0.1.8, 계정 선택 자동 클릭 v0.1.9) ----------
 // 원인: 카카오의 '로그인 상태 유지' 토큰은 프로필에 남지만, 티스토리 로그인 쿠키는 전부 세션 쿠키라
 // 크롬이 창을 닫을 때 지운다('이전 세션 이어서 열기'가 아닐 때). 그래서 매번 로그인 화면이 떴다.
 const COOKIE_FILE = path.join(path.dirname(PROFILE), "tistory-cookies.json");
@@ -150,6 +150,11 @@ async function waitLogin(ctx, page, cfg, manualMsg) {
       if (/tistory\.com\/auth\/login/.test(url) && clicked < 3) {
         const k = page.locator('a[href*="kauth.kakao.com"], a.link_kakao_id, a:has-text("카카오계정으로 로그인")').first();
         if (await k.count()) { console.log("      카카오 로그인 버튼을 대신 누릅니다 …"); await k.click({ timeout: 5000 }); clicked++; await page.waitForTimeout(4000); continue; }
+      }
+      if (/accounts\.kakao\.com\/login\/simple/.test(url) && clicked < 6) {
+        // '로그인할 카카오계정 선택' 화면: 저장된 계정(이메일 글자)을 대신 누른다 (v0.1.9)
+        const acc = page.getByText(/\S+@\S+\.\w+/).first();
+        if (await acc.count()) { console.log("      저장된 카카오 계정을 대신 선택합니다 …"); await acc.click({ timeout: 5000 }); clicked++; await page.waitForTimeout(4000); continue; }
       }
       if (/accounts\.kakao\.com/.test(url) && clicked < 6) {
         const b = page.locator('button:has-text("계속하기"), button.btn_g.highlight.submit, a:has-text("계속하기")').first();
@@ -202,7 +207,7 @@ async function cdnImages(page) {
 async function upload(cfg, dir) {
   const post = readPost(dir);
   for (const s of post.slots) if (s.kind === "생성 이미지" && !fs.existsSync(s.file)) fail(`이미지 파일이 없습니다: ${s.file}`);
-  console.log(`\n업로더 v0.1.8\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
+  console.log(`\n업로더 v0.1.9\n[1/6] 크롬 실행 · 원고: ${path.basename(dir)}`);
   const ctx = await browser(false); // 진행 과정을 눈으로 볼 수 있게 창을 띄운다
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
@@ -315,7 +320,7 @@ async function ensureLogin(ctx, page, cfg, url) {
 }
 async function editPost(cfg, postId, label, transform, newTitle) {
   if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요.");
-  console.log(`\n업로더 v0.1.8 · ${label} — ${cfg.blogUrl}/${postId}`);
+  console.log(`\n업로더 v0.1.9 · ${label} — ${cfg.blogUrl}/${postId}`);
   const ctx = await browser(false);
   try {
     const page = ctx.pages()[0] || await ctx.newPage();
