@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -304,10 +304,86 @@ G6 = f"""
 </div>
 """
 
+# ───────────────────────── 05 청강대 면접전형, 준비 순서 (2026-10-31, 6장) ─────────────────────────
+# 근거: posts/2026-10-06_청강대-게임과-포트폴리오 (ZDNet Korea 2026.09.09 — 2027학년도 정원 238명, 면접전형 수시 1차 88·2차 50명,
+# 실기전형 60명·4절지 4시간, 서류 2배수→심층 면접 15분 이내, 원본 지참, 분야별 제출물; 전문대 수시 2차 접수 11.11~25).
+# 기억 요소 = 거대한 '15분'. 상자 없음. 번호는 실제 순서(면접 진행 3단계·준비 순서 4단계)에만. 오렌지는 장마다 한 곳. 문구는 humanize-korean light 윤문본.
+C_CHIP, C_SERIES = "입시", "청강대 면접전형, 준비 순서"
+
+# 1 표지 — 거대한 '15분'
+C1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">청강대 게임콘텐츠스쿨 면접, 1인당</div>
+<div style="margin-top:8px;display:flex;align-items:baseline;color:{NAVY};white-space:nowrap">
+  <span style="font-size:420px;line-height:.86;font-weight:800;letter-spacing:-20px;margin-left:-14px">15</span>
+  <span style="font-size:124px;font-weight:800;letter-spacing:-4px;margin-left:14px">분</span>
+</div>
+<h1 style="margin-top:96px;font-size:84px">내 작품을 <span class="mark">말로</span><br>설명해야 해요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">그림만 잘 그리면 될 줄 알았다면<br>준비 순서를 다시 잡아야 해요.</p>
+"""
+
+# 2 면접전형으로 138명 — 숫자는 왼쪽 큰 글자
+C2 = f"""
+<h1 style="margin-top:48px;font-size:88px">면접전형으로<br>138명을 뽑아요.</h1>
+<p class="small" style="margin-top:18px;font-size:30px">2027학년도 게임콘텐츠스쿨 정원 238명 중에서요.</p>
+{adm("88", "명", "수시 1차 면접전형", "포트폴리오를 포함한 서류 + 심층 면접")}
+{adm("50", "명", "수시 2차 면접전형", "11월 접수, 아직 남아 있는 길", True)}
+<p class="body" style="margin-top:40px">실기전형(60명)은 시험장에서 4절지에<br>4시간 동안 그려요. 면접전형은 미리 만든<br>작품으로 평가받아서 그림 말고<br>기획·프로그래밍으로도 지원할 수 있어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: ZDNet Korea 2026.09.09 (2027학년도 모집 내용)</p>
+"""
+
+# 3 진행 — 실제 순서이므로 번호 사용
+C3 = f"""
+<h1 style="margin-top:48px;font-size:88px">면접은<br>이렇게 진행돼요.</h1>
+{step(1, "서류 심사로 2배수를 골라요", "포트폴리오는 필수예요")}
+{step(2, "심층 면접, 1인당 15분 이내", "제출한 작품을 놓고 물어봐요", True)}
+{step(3, "면접 당일 원본을 가져가요", "제출한 포트폴리오의 원본을 꼭 챙겨요")}
+<p class="lead" style="margin-top:auto;padding-bottom:40px">15분은 생각보다 짧아요. 작품마다<br>왜 만들었는지, 어떻게 만들었는지, 다시 만든다면<br>뭘 바꿀지를 <b style="color:{ORANGE}">1분 안에</b> 말할 수 있어야 해요.</p>
+"""
+
+# 4 분야별 제출물 — 순서가 아니므로 번호 없음
+def submit(name, text, hot=False):
+    return f"""
+<div style="margin-top:30px;display:flex;gap:30px;align-items:baseline">
+<div style="flex:none;width:300px;font-size:56px;font-weight:800;letter-spacing:-2px;line-height:1.1;color:{ORANGE if hot else NAVY}">{name}</div>
+<p class="body" style="font-weight:600">{text}</p></div>"""
+
+C4 = f"""
+<h1 style="margin-top:48px;font-size:88px">분야마다<br>내는 게 달라요.</h1>
+{submit("기획", "창작기획서, A4 50매 이내")}
+{submit("그래픽", "창작물 이미지와 제작 과정", True)}
+{submit("프로그래밍", "핵심 소스 코드와 기술명세서")}
+{submit("QA&amp;비즈니스", "역기획서와 테스트 케이스")}
+<p class="body" style="margin-top:52px">완성작만 모아 두면 그래픽은 빈칸이 생겨요.<br>스케치와 중간 과정까지 같이 내야 하거든요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">2027학년도 기준. 세부 형식은 해당 연도 모집요강과 가이드북에서 확인하세요.</p>
+"""
+
+# 5 준비 순서 — 접수일에서 거꾸로, 실제 순서이므로 번호 사용
+C5 = f"""
+<h1 style="margin-top:48px;font-size:88px">접수일에서<br>거꾸로 잡아요.</h1>
+<p class="lead" style="margin-top:18px;color:{MIST}">수시 2차 원서접수 <b style="color:{ORANGE}">11월 11일~25일</b></p>
+{step(1, "이번 주", "지원 분야를 하나로 정하고 모집요강의 제출 형식을 확인해요")}
+{step(2, "접수 전까지", "기존 작품 중 분야에 맞는 것을 고르고<br>제작 과정·설명 문서를 채워요")}
+{step(3, "접수 후 면접까지", "작품마다 1분 설명을 만들고 예상 질문으로 모의 면접을 해요")}
+{step(4, "면접 당일", "제출본과 같은 원본을 따로 챙겨요")}
+"""
+
+# 6 상담
+C6 = f"""
+<h1 style="margin-top:60px;font-size:92px">내 작품으로<br>면접전형, 될까요?</h1>
+<p class="lead" style="margin-top:44px">지금 가진 작품을 같이 보고<br>지원 분야와 접수까지의 순서를 정리해 드려요.</p>
+<div class="body" style="margin-top:80px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
     "04": (G_CHIP, G_SERIES, [G1, G2, G3, G4, G5, G6]),
+    "05": (C_CHIP, C_SERIES, [C1, C2, C3, C4, C5, C6]),
 }
 
 if __name__ == "__main__":
