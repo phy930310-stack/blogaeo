@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -379,11 +379,82 @@ C6 = f"""
 """
 
 
+# ───────────────────────── 06 게임회사 신입, 뭘 준비할까? (2026-11-01 로컬 세션, 6장) ─────────────────────────
+# 대상은 취업(비전공·직장인·졸업반). 기억 요소 = 거대한 숫자 '5'(직군 다섯). 상자 없음. 번호는 실제 순서(채용 3단계)에만.
+# 수치·사실은 posts/2026-10-03_게임회사-취업-준비 (2025 대한민국 게임백서 2024년 실적 보도, 넥슨 2026 넥토리얼 보도 2026.08.25,
+# 게임사 공개 채용 자료)에서만. 학력·연봉·합격률처럼 글에 없는 수치는 쓰지 않는다. 문구는 humanize-korean 검수본.
+J_CHIP, J_SERIES = "취업", "게임회사 신입, 뭘 준비할까?"
+
+# 1 표지 — 거대한 '5'
+J1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임회사 신입 채용, 직군은</div>
+<div style="margin-top:8px;display:flex;align-items:baseline;color:{NAVY};white-space:nowrap">
+  <span style="font-size:420px;line-height:.86;font-weight:800;letter-spacing:-20px;margin-left:-14px">5</span>
+  <span style="font-size:124px;font-weight:800;letter-spacing:-4px;margin-left:14px">갈래</span>
+</div>
+<h1 style="margin-top:96px;font-size:84px">포트폴리오보다<br><span class="mark">직군</span>을 먼저 정해요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">학력보다 직군에 맞는 결과물로<br>뽑는 회사가 많아요.</p>
+"""
+
+# 2 다섯 직군과 준비물 — 순서가 아니므로 번호 없음
+J2 = f"""
+<h1 style="margin-top:48px;font-size:88px">다섯 직군,<br>준비물이 달라요.</h1>
+{submit("기획", "기획서, 기존 게임 분석서")}
+{submit("프로그래밍", "직접 만든 게임과 코드(GitHub)", True)}
+{submit("아트", "지원 직군에 맞춘 작품집")}
+{submit("QA", "테스트 케이스, 버그 리포트 예시")}
+{submit("사업·운영", "게임 운영·지표 분석 자료")}
+<p class="body" style="margin-top:52px">기획·프로그래밍·아트가 게임을 만들고<br>QA가 품질을 확인하고 사업·운영이 서비스해요.</p>
+"""
+
+# 3 업계 규모 — 숫자는 왼쪽 큰 글자
+J3 = f"""
+<h1 style="margin-top:48px;font-size:88px">일하는 사람은<br>8만 7천여 명.</h1>
+<p class="small" style="margin-top:18px;font-size:30px">2024년 8만 7,576명. 1년 사이 3.1% 늘었어요.</p>
+{fact("62", "%", "제작·배급업에서 일해요", "5만 4,285명. 게임을 개발하고<br>서비스하는 쪽이에요", True)}
+{fact("23.8", "조", "국내 게임산업 매출", "2024년, 23조 8천억 원 규모")}
+<p class="lead" style="margin-top:auto">성장이 예전보다 느려졌다는 분석도 있어요.<br>막연한 기대 대신 지원할 직군의 공고를<br>직접 보면서 준비해야 해요.</p>
+<p class="small" style="margin-top:22px;padding-bottom:40px">출처: 2025 대한민국 게임백서(2024년 실적) 보도 기준</p>
+"""
+
+# 4 채용 3단계 — 실제 순서이므로 번호 사용
+J4 = f"""
+<h1 style="margin-top:48px;font-size:88px">신입 채용은<br>세 단계예요.</h1>
+{step(1, "서류·포트폴리오", "지원서와 직군별 결과물을 함께 내요")}
+{step(2, "직무 테스트", "개발은 코딩, 아트는 실기, 기획은 과제", True)}
+{step(3, "면접", "포트폴리오 작업 과정을 설명하고<br>팀·인사 면접이 이어져요")}
+<p class="body" style="margin-top:52px">방식은 해마다 바뀌어요. 넥슨은 2026년 신입<br>프로그래머 인턴십에서 코딩 테스트를 AI 면접으로<br>바꾸고 AI 활용 역량 평가를 새로 넣었어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 넥슨 2026 넥토리얼 모집 보도 (2026.08.25)</p>
+"""
+
+# 5 직군별 포트폴리오 — 순서가 아니므로 번호 없음
+J5 = f"""
+<h1 style="margin-top:48px;font-size:88px">양보다<br>직군과의 적합도예요.</h1>
+{submit("프로그래머", "플레이할 수 있는 게임 1~2개와 코드,<br>내가 만든 부분을 짧게 설명")}
+{submit("아티스트", "스케치부터 완성까지의 과정,<br>3D는 여러 각도에서", True)}
+{submit("기획자", "시스템 기획서 1편과 게임 분석서,<br>숫자로 쓴 밸런스 표")}
+{submit("QA", "테스트 케이스와<br>재현 절차가 분명한 버그 리포트")}
+<p class="lead" style="margin-top:auto;padding-bottom:40px">결과물만 늘어놓지 말고 어떤 문제를<br>어떻게 풀었는지가 보여야 해요.</p>
+"""
+
+# 6 상담
+J6 = f"""
+<h1 style="margin-top:60px;font-size:92px">비전공인데<br>게임회사, 될까요?</h1>
+<p class="lead" style="margin-top:44px">가고 싶은 직군의 채용 공고를 같이 보며<br>포트폴리오 준비 순서를 잡아 드려요.</p>
+<div class="body" style="margin-top:80px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
     "04": (G_CHIP, G_SERIES, [G1, G2, G3, G4, G5, G6]),
     "05": (C_CHIP, C_SERIES, [C1, C2, C3, C4, C5, C6]),
+    "06": (J_CHIP, J_SERIES, [J1, J2, J3, J4, J5, J6]),
 }
 
 if __name__ == "__main__":
