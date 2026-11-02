@@ -13,7 +13,7 @@
 | r02 | r02_한국영상대-성적산출.mp4 | https://www.youtube.com/shorts/2V21aoPOSFU | 40초 | 1080×1920 | 2026-10-30 https://www.instagram.com/reel/DfG4iEuCm3P/ |
 | r03 | r03_청강대-면접질문.mp4 | https://www.youtube.com/shorts/no4lrJFhthM | 32초 | 720×1280 | 2026-10-31 https://www.instagram.com/reel/DfI8qWEk700/ |
 | r04 | r04_청강대-배치꿀팁.mp4 | https://www.youtube.com/shorts/6g9Uc7nHU9s | 33초 | 720×1280 | 2026-11-01 https://www.instagram.com/reel/DfLlVQfgPj6/ |
-| r05 | r05_청강대-그림체.mp4 | https://www.youtube.com/shorts/lNdk-je2-k0 | 24초 | 720×1280 | |
+| r05 | r05_청강대-그림체.mp4 | https://www.youtube.com/shorts/lNdk-je2-k0 | 24초 | 720×1280 | 2026-11-02 https://www.instagram.com/reel/DfOC1zFCIdu/ |
 
 후보(아직 안 고름): 입시 관련 쇼츠 80개 목록은 세션 스크래치에서 만들었음. 다음 묶음은 `yt-dlp --flat-playlist -J --extractor-args "youtube:lang=ko" <채널>/shorts`로 다시 뽑는다.
 

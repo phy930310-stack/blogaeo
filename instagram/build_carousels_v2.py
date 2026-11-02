@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -449,12 +449,81 @@ J6 = f"""
 """
 
 
+# ───────────────────────── 07 게임원화가, 뭘 그려야 할까? (2026-11-02 로컬 세션, 6장) ─────────────────────────
+# 대상은 취업·진로(그림 좋아하는 고등학생·취준생). 기억 요소 = 거대한 글자 '설계도'(원화는 감상용 그림이 아니라 설계도).
+# 상자 없음. 번호는 실제 순서(기획서→원화→3D, 연습 5단계)에만. 오렌지는 장마다 한 곳.
+# 수치·사실은 posts/2026-10-04_게임원화가-되는-법 (인벤 현직자 인터뷰, 한국콘텐츠진흥원 게임국가기술자격 안내)에서만.
+# 연봉·채용 인원·합격률처럼 글에 없는 수치는 쓰지 않는다. 문구는 humanize-korean 검수본.
+A_CHIP, A_SERIES = "취업", "게임원화가, 뭘 그려야 할까?"
+
+# 1 표지 — 거대한 '설계도'
+A1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임원화가가 그리는 건 그림이 아니라</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:280px;line-height:.9;font-weight:800;letter-spacing:-14px;margin-left:-10px">설계도</span>
+</div>
+<h1 style="margin-top:96px;font-size:84px">멋진 그림보다<br><span class="mark">분명한</span> 그림이 먼저예요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">3D·2D 담당자가 보고 그대로<br>만들 수 있어야 하거든요.</p>
+"""
+
+# 2 원화가 쓰이는 자리 — 기획서→원화→3D 실제 순서이므로 번호 사용
+A2 = f"""
+<h1 style="margin-top:48px;font-size:88px">글을 처음<br>그림으로 바꿔요.</h1>
+{step(1, "기획서", "'푸른 망토를 두른 견습 마법사'<br>같은 글만 있어요")}
+{step(2, "원화", "이 글을 처음 그림으로 바꾸는 사람이<br>원화가예요", True)}
+{step(3, "3D·애니메이션", "모델러가 그림을 보고 모델을 만들고<br>애니메이터가 움직임을 붙여요")}
+<p class="body" style="margin-top:52px">그래서 분위기만 멋진 것보다 모양·색·재질이<br>다른 사람이 헷갈리지 않을 만큼<br>분명한 게 더 중요해요.</p>
+"""
+
+# 3 캐릭터와 배경 — 순서가 아니므로 번호 없음
+A3 = f"""
+<h1 style="margin-top:48px;font-size:88px">캐릭터와 배경,<br>중심을 하나 둬요.</h1>
+{submit("캐릭터", "외형·의상·무기·표정.<br>인체 구조와 옷 주름, 실루엣 감각", True)}
+{submit("배경", "마을·던전·건물·소품.<br>원근법과 구도, 빛과 색")}
+<p class="body" style="margin-top:52px">처음부터 딱 정할 필요는 없지만<br>포트폴리오를 만들 땐 한쪽에 무게를 둬요.</p>
+<p class="lead" style="margin-top:auto">신입은 보통 정해진 콘셉트를 받아<br>아이템이나 소품처럼 구체적인 물건을<br>그리는 일부터 시작해요.</p>
+<p class="small" style="margin-top:22px;padding-bottom:40px">출처: 인벤 게임 원화가 현직자 인터뷰</p>
+"""
+
+# 4 연습 5단계 — 실제 순서이므로 번호 사용
+A4 = f"""
+<h1 style="margin-top:48px;font-size:88px">채색 욕심보다<br>형태가 먼저예요.</h1>
+{step(1, "인체·크로키", "1~2분 안에 사람 동작 잡기, 매일 조금씩")}
+{step(2, "원근·구도", "상자, 건물, 소품을 원근법으로")}
+{step(3, "명암·색", "빛 방향에 따라 어둡고 밝은 단계 나누기")}
+{step(4, "디지털 툴", "포토샵 같은 프로그램의 레이어·브러시")}
+{step(5, "설정 디자인", "같은 캐릭터를 여러 버전으로 그리고<br>검은 실루엣만 봐도 구분되는지 확인", True)}
+"""
+
+# 5 포트폴리오 네 가지 — 순서가 아니므로 번호 없음
+A5 = f"""
+<h1 style="margin-top:48px;font-size:88px">회사는 이걸 봐요.<br>"바로 제작에 쓸 수 있나?"</h1>
+{submit("설정 시트", "앞·옆·뒤, 의상 디테일, 색상표", True)}
+{submit("배경·소품", "공간 하나와 그 안의 소품까지")}
+{submit("작업 과정", "아이디어 스케치 여러 장과<br>최종안을 고른 이유")}
+{submit("장르 맞춤", "실사풍 RPG와 캐주얼 게임은<br>원하는 그림이 달라요")}
+<p class="lead" style="margin-top:auto;padding-bottom:40px">서류 다음엔 정해진 시간 안에 그리는<br>아트 테스트를 보는 곳이 많아요. 시간을 재고<br>설정화 한 장을 끝내는 연습을 해 두세요.</p>
+"""
+
+# 6 상담
+A6 = f"""
+<h1 style="margin-top:60px;font-size:92px">그림은 많은데<br>원화가, 될까요?</h1>
+<p class="lead" style="margin-top:44px">지금까지 그린 그림을 같이 보고<br>캐릭터·배경 방향과 연습 순서를 잡아 드려요.</p>
+<div class="body" style="margin-top:80px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
     "04": (G_CHIP, G_SERIES, [G1, G2, G3, G4, G5, G6]),
     "05": (C_CHIP, C_SERIES, [C1, C2, C3, C4, C5, C6]),
     "06": (J_CHIP, J_SERIES, [J1, J2, J3, J4, J5, J6]),
+    "07": (A_CHIP, A_SERIES, [A1, A2, A3, A4, A5, A6]),
 }
 
 if __name__ == "__main__":
