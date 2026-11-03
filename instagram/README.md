@@ -9,6 +9,7 @@
 > - 2026-10-31 공식 API: 릴스 r03 https://www.instagram.com/reel/DfI8qWEk700/ · 게시물 05(청강대 면접전형 준비 순서, 6장) https://www.instagram.com/p/DfI9MGRn-OV/
 > - 2026-11-01 공식 API: 릴스 r04 https://www.instagram.com/reel/DfLlVQfgPj6/ · 게시물 06(게임회사 신입, 뭘 준비할까?, 6장) https://www.instagram.com/p/DfLmROaEtwx/
 > - 2026-11-02 공식 API: 릴스 r05 https://www.instagram.com/reel/DfOC1zFCIdu/ · 게시물 07(게임원화가, 뭘 그려야 할까?, 6장) https://www.instagram.com/p/DfODk0bkr5M/
+> - 2026-11-03 공식 API: 릴스 r06 https://www.instagram.com/reel/DfQ7-hJlri8/ · 게시물 08(게임 3D 모델링, 툴 3개로 시작해요, 6장) https://www.instagram.com/p/DfQ8HxhEiIz/
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):

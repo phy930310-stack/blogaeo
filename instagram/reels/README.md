@@ -14,7 +14,7 @@
 | r03 | r03_청강대-면접질문.mp4 | https://www.youtube.com/shorts/no4lrJFhthM | 32초 | 720×1280 | 2026-10-31 https://www.instagram.com/reel/DfI8qWEk700/ |
 | r04 | r04_청강대-배치꿀팁.mp4 | https://www.youtube.com/shorts/6g9Uc7nHU9s | 33초 | 720×1280 | 2026-11-01 https://www.instagram.com/reel/DfLlVQfgPj6/ |
 | r05 | r05_청강대-그림체.mp4 | https://www.youtube.com/shorts/lNdk-je2-k0 | 24초 | 720×1280 | 2026-11-02 https://www.instagram.com/reel/DfOC1zFCIdu/ |
-| r06 | r06_청강대-사람을-뽑는다.mp4 | https://www.youtube.com/shorts/ek9Zj3Sbrfc | 30초 | 720×1280 | |
+| r06 | r06_청강대-사람을-뽑는다.mp4 | https://www.youtube.com/shorts/ek9Zj3Sbrfc | 30초 | 720×1280 |2026-11-03 https://www.instagram.com/reel/DfQ7-hJlri8/ |
 | r07 | r07_청강대-면접질문100개.mp4 | https://www.youtube.com/shorts/K_o704KKYYg | 34초 | 720×1280 | |
 | r08 | r08_청강대-입시상담-질문.mp4 | https://www.youtube.com/shorts/lhC3TIkEmPM | 36초 | 720×1280 | |
 | r09 | r09_청강대-원화-합격생.mp4 | https://www.youtube.com/shorts/k8BKQuphI1E | 60초 | 1080×1920 | |
