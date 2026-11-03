@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -517,6 +517,74 @@ A6 = f"""
 """
 
 
+# ───────────────────────── 08 게임 3D 모델링, 툴 3개로 시작해요 (2026-11-03, 6장) ─────────────────────────
+# 수치·사실은 posts/2026-10-13_게임-3D-모델링 (각 프로그램 공식 안내, 게임 에셋 제작 워크플로)에서만.
+# 교육용 라이선스는 조건이 바뀌므로 '공식 페이지 확인'으로만 쓴다. 문구는 humanize-korean 검수본.
+M_CHIP, M_SERIES = "진로", "게임 3D 모델링, 툴 3개로 시작해요"
+
+# 1 표지 — 거대한 '소품부터'
+M1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">3D 모델링 첫 작품은 캐릭터가 아니라</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:220px;line-height:.95;font-weight:800;letter-spacing:-12px;margin-left:-8px">소품부터</span>
+</div>
+<h1 style="margin-top:96px;font-size:84px">검 한 자루를<br><span class="mark">게임에 넣는</span> 데까지.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">맥스·지브러쉬·서브스턴스를<br>한 바퀴 돌려 보는 게 먼저예요.</p>
+"""
+
+# 2 게임용 3D가 다른 이유 — 순서가 아니므로 번호 없음
+M2 = f"""
+<h1 style="margin-top:48px;font-size:88px">게임은 1초에 수십 번<br>화면을 새로 그려요.</h1>
+<p class="body" style="margin-top:40px">영화 CG는 한 장면을 오래 계산해도 되지만<br>게임은 그럴 수 없어요. 그래서 모델을<br>무겁게 만들 수가 없어요.</p>
+{submit("하이폴리", "디테일을 마음껏 넣은<br>무거운 원본")}
+{submit("로우폴리", "면을 줄여 정리한,<br>게임에서 실제로 쓰는 모델", True)}
+{submit("베이킹", "원본의 울퉁불퉁한 디테일을<br>가벼운 모델용 그림으로 옮기기")}
+<p class="lead" style="margin-top:auto;padding-bottom:40px">이 셋만 알아도 게임 3D가<br>어떻게 돌아가는지 감이 와요.</p>
+"""
+
+# 3 프로그램 세 개의 역할 — 순서가 아니므로 번호 없음
+M3 = f"""
+<h1 style="margin-top:48px;font-size:88px">프로그램 셋이<br>역할을 나눠요.</h1>
+{submit("3ds Max", "모양 잡기, 면 정리, UV까지.<br>뼈대를 만드는 프로그램", True)}
+{submit("지브러쉬", "찰흙처럼 조각해서 근육,<br>옷 주름, 갑옷 흠집을 넣어요")}
+{submit("서브스턴스<br>페인터", "디테일을 굽고 녹슨 쇠·가죽·나무<br>같은 재질을 칠해요")}
+<p class="body" style="margin-top:52px">3ds Max는 자격이 되는 학생이면<br>교육용 라이선스를 받을 수 있어요.<br>조건은 공식 교육 페이지에서 확인하세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Autodesk·Maxon·Adobe 공식 안내 (2026.10.13 확인)</p>
+"""
+
+# 4 제작 6단계 — 실제 순서이므로 번호 사용
+M4 = f"""
+<h1 style="margin-top:36px;font-size:84px">만드는 순서, 여섯 단계.</h1>
+{step(1, "기본 형태 · 3ds Max", "비율과 큰 덩어리 잡기")}
+{step(2, "디테일 조각 · 지브러쉬", "주름, 근육, 흠집")}
+{step(3, "리토폴로지 · 3ds Max", "게임용 가벼운 모델로 면 다시 정리")}
+{step(4, "UV 펼치기 · 3ds Max", "3D 표면을 평면으로, 귤껍질 까듯이")}
+{step(5, "베이킹·텍스처 · 서브스턴스", "디테일 굽고 색·거칠기·금속감 칠하기")}
+{step(6, "엔진 확인 · 유니티·언리얼", "실제 게임 화면에서 점검", True)}
+"""
+
+# 5 첫 작품 3단계 — 실제 순서이므로 번호 사용
+M5 = f"""
+<h1 style="margin-top:48px;font-size:88px">캐릭터부터 하면<br>중간에 멈추기 쉬워요.</h1>
+<p class="body" style="margin-top:30px">인체 구조·면 정리·뼈대 넣기가 한꺼번에 몰리거든요.</p>
+{step(1, "소품 하나", "검, 상자, 랜턴을 맥스에서<br>서브스턴스까지 한 바퀴", True)}
+{step(2, "소품 세트", "대장간, 방 한 칸. 크기·스타일 맞추기")}
+{step(3, "캐릭터·생물", "지브러쉬 조각과 인체 구조")}
+<p class="body" style="margin-top:44px;font-weight:600">포트폴리오엔 완성 이미지 말고도 격자선 화면,<br>하이·로우폴리 비교, 텍스처 맵,<br>엔진 안 스크린샷까지 넣어요.</p>
+"""
+
+# 6 상담
+M6 = f"""
+<h1 style="margin-top:60px;font-size:92px">유튜브 보고 따라 하다<br>멈췄다면?</h1>
+<p class="lead" style="margin-top:44px">목표에 맞춰 첫 작품과<br>맥스·지브러쉬·서브스턴스 연습 순서를<br>같이 정해 드려요.</p>
+<div class="body" style="margin-top:80px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -524,6 +592,7 @@ SETS = {
     "05": (C_CHIP, C_SERIES, [C1, C2, C3, C4, C5, C6]),
     "06": (J_CHIP, J_SERIES, [J1, J2, J3, J4, J5, J6]),
     "07": (A_CHIP, A_SERIES, [A1, A2, A3, A4, A5, A6]),
+    "08": (M_CHIP, M_SERIES, [M1, M2, M3, M4, M5, M6]),
 }
 
 if __name__ == "__main__":
