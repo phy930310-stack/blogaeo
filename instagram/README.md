@@ -10,6 +10,7 @@
 > - 2026-11-01 공식 API: 릴스 r04 https://www.instagram.com/reel/DfLlVQfgPj6/ · 게시물 06(게임회사 신입, 뭘 준비할까?, 6장) https://www.instagram.com/p/DfLmROaEtwx/
 > - 2026-11-02 공식 API: 릴스 r05 https://www.instagram.com/reel/DfOC1zFCIdu/ · 게시물 07(게임원화가, 뭘 그려야 할까?, 6장) https://www.instagram.com/p/DfODk0bkr5M/
 > - 2026-11-03 공식 API: 릴스 r06 https://www.instagram.com/reel/DfQ7-hJlri8/ · 게시물 08(게임 3D 모델링, 툴 3개로 시작해요, 6장) https://www.instagram.com/p/DfQ8HxhEiIz/
+> - 2026-11-04 공식 API: 릴스 r07(면접 질문 100개) https://www.instagram.com/reel/DfTPVk2AQ_2/ (이날부터 SNS 2건은 데스크톱 앱 예약 작업 `sns-daily-0930`이 매일 09:30에 자동 진행)
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
