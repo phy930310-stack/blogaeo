@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -585,6 +585,76 @@ M6 = f"""
 """
 
 
+# ───────────────────────── 09 유니티 입문, 어디서부터? (2026-11-04 로컬 세션, 6장) ─────────────────────────
+# 목표는 상담 유입. 수치·사실은 posts/2026-10-19_유니티-입문 (Unity 공식 가격·플랜 안내 2026.10.19 확인, 시작 5단계, C# 기초, 독학 vs 과정)과
+# brand/profile.md(게임프로그래밍(유니티) 과정은 고용24 등록, 입과 전 상담+간단한 실기)에서만. 훈련비·자부담 금액은 쓰지 않는다.
+# 기억 요소 = 거대한 글자 '끝까지'(튜토리얼 따라 하기가 아니라 작은 게임 하나를 끝까지). 오렌지는 장마다 한 곳.
+
+U_CHIP, U_SERIES = "취업", "유니티 입문, 어디서부터?"
+
+# 1 표지 — 거대한 '끝까지'
+U1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">튜토리얼은 따라 할 때만 되고 혼자선 안 된다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:220px;line-height:.95;font-weight:800;letter-spacing:-12px;margin-left:-8px">끝까지</span>
+</div>
+<h1 style="margin-top:96px;font-size:84px">작은 게임 하나를<br><span class="mark">완성하는</span> 게 먼저예요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">유니티는 무료로 시작하고<br>C#은 다섯 가지만 알면 돼요.</p>
+"""
+
+# 2 무료 플랜 — 숫자 하나
+U2 = f"""
+<h1 style="margin-top:48px;font-size:88px">유니티,<br>돈 내야 하나요?</h1>
+{fact("20", "만 달러", "지난 12개월 매출·자금이 이 아래면", "Unity Personal 플랜 무료 (2026년 기준)", True)}
+<p class="body" style="margin-top:56px">개인이나 작은 팀은 여기에 다 들어가요.<br>Unity 6부터는 Personal도 시작 화면(스플래시)을<br>끌 수 있고, 한때 논란이던 '런타임 요금'은<br>취소됐어요.</p>
+<p class="body" style="margin-top:40px">유니티는 모바일·PC 게임에 두루 쓰이고<br>스크립트는 C#으로 써요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Unity 공식 가격·플랜 안내 (2026.10.19 확인)<br>조건은 바뀔 수 있어요. 공식 가격 페이지에서 확인하세요.</p>
+"""
+
+# 3 시작 5단계 — 실제 순서이므로 번호 사용
+U3 = f"""
+<h1 style="margin-top:36px;font-size:84px">시작은 다섯 단계예요.</h1>
+{step(1, "Unity Hub 설치", "에디터 버전 고르고 2D·3D 템플릿으로 새 프로젝트")}
+{step(2, "에디터 화면 익히기", "Scene·Game·Hierarchy·Inspector·Project 다섯 창")}
+{step(3, "오브젝트와 컴포넌트", "모든 건 오브젝트, 기능은 컴포넌트를 붙여서")}
+{step(4, "C# 스크립트로 움직이기", "키 입력으로 캐릭터 이동, 부딪히면 점수")}
+{step(5, "작은 게임 완성", "시작 화면부터 게임 오버까지, 빌드까지", True)}
+"""
+
+# 4 C# 다섯 가지 — 순서가 아니므로 번호 없음
+U4 = f"""
+<h1 style="margin-top:48px;font-size:88px">C#은 이만큼만<br>알면 시작돼요.</h1>
+{submit("변수", "점수·체력·속도 저장")}
+{submit("조건문<br>반복문", "충돌 판정, 적 여러 마리 처리")}
+{submit("함수<br>클래스", "기능 묶기, 스크립트 구조", True)}
+<p class="body" style="margin-top:52px">Start()는 시작할 때 한 번,<br>Update()는 매 프레임마다 실행돼요.<br>이것만 이해해도 입문 예제는 따라가요.</p>
+<p class="lead" style="margin-top:auto;padding-bottom:40px">나머지는 게임을 만들면서<br>필요할 때 익히면 돼요.</p>
+"""
+
+# 5 독학 vs 과정 — 핵심 한 줄만 오렌지 선
+U5 = f"""
+<h1 style="margin-top:48px;font-size:88px">독학으로<br>충분할까요?</h1>
+<p class="body" style="margin-top:40px">취미로 만들어 보는 정도면<br>Unity Learn 무료 튜토리얼로 충분해요.</p>
+<div style="margin-top:48px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">기한 안에 포트폴리오를<br>끝내야 한다면 달라요.</div>
+<p class="body" style="margin-top:14px">코드 리뷰와 진도 관리가 있는<br>환경이 도움이 돼요.</p>
+</div>
+<p class="body" style="margin-top:48px">대전점 게임프로그래밍(유니티) 과정은<br>고용24 등록 과정이라 내일배움카드로<br>들을 수 있어요. 입과 전에 상담과<br>간단한 실기로 기초를 확인해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">순서는 상담 → 과정 확인 → 카드 신청. 훈련비·자부담은 고용24에서 과정명으로 확인하세요.</p>
+"""
+
+# 6 상담
+U6 = f"""
+<h1 style="margin-top:60px;font-size:92px">따라 할 때만 되고<br>혼자선 안 된다면?</h1>
+<p class="lead" style="margin-top:44px">C# 기초 정리부터 첫 미니 게임,<br>국비 과정이 되는지까지<br>상담에서 같이 봐 드려요.</p>
+<div class="body" style="margin-top:80px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -593,6 +663,7 @@ SETS = {
     "06": (J_CHIP, J_SERIES, [J1, J2, J3, J4, J5, J6]),
     "07": (A_CHIP, A_SERIES, [A1, A2, A3, A4, A5, A6]),
     "08": (M_CHIP, M_SERIES, [M1, M2, M3, M4, M5, M6]),
+    "09": (U_CHIP, U_SERIES, [U1, U2, U3, U4, U5, U6]),
 }
 
 if __name__ == "__main__":
