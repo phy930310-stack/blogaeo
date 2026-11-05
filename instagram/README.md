@@ -12,6 +12,7 @@
 > - 2026-11-03 공식 API: 릴스 r06 https://www.instagram.com/reel/DfQ7-hJlri8/ · 게시물 08(게임 3D 모델링, 툴 3개로 시작해요, 6장) https://www.instagram.com/p/DfQ8HxhEiIz/
 > - 2026-11-04 공식 API: 릴스 r07(면접 질문 100개) https://www.instagram.com/reel/DfTPVk2AQ_2/ · 게시물 09(유니티 입문, 어디서부터?, 6장) https://www.instagram.com/p/DfTUTFOAf23/ (이날부터 SNS 2건(릴스 1·게시물 1)과 티스토리 1편은 데스크톱 앱 예약 작업 `sns-daily-0930`이 매일 09:30에 자동 진행)
 > - 2026-11-05 공식 API: 릴스 r08(입시 상담에서 물어본 것) https://www.instagram.com/reel/DfWoAAVFefF/ · 게시물 10(언리얼 입문, 블루프린트부터, 6장) https://www.instagram.com/p/DfWotvsEtvR/ (예약 작업 첫 실행이 09:38에 시작됐으나 도구 승인 대기로 멈춰 있어 본 세션이 17:40부터 수동 진행)
+> - 2026-11-05 사용자 결정으로 예약 작업 `sns-daily-0930` 비활성화. 이후 SNS·블로그 당일분은 사용자 지시 때 수동 진행.
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
