@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -655,6 +655,72 @@ U6 = f"""
 """
 
 
+# ───────────────────────── 10 언리얼 입문, 블루프린트부터 (2026-11-05, 6장) ─────────────────────────
+# 수치·사실은 posts/2026-11-01_언리얼-엔진-입문 (에픽게임즈 라이선스·FAQ, 언리얼 엔진 5.8 공식 문서, 게임잡·더팀스 공고, 2026.11.01 확인) 에서만.
+E_CHIP, E_SERIES = "취업", "언리얼 입문, 블루프린트부터"
+
+# 1 표지 — 거대한 '블루프린트'
+E1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">유니티 쓰다 넘어오든 처음이든, 첫 달은</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:168px;line-height:.95;font-weight:800;letter-spacing:-9px;margin-left:-6px">블루프린트</span>
+</div>
+<h1 style="margin-top:96px;font-size:84px">코드 없이 엔진 구조를<br><span class="mark">먼저</span> 익혀요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">언리얼은 무료로 시작하고<br>C++는 둘째 달부터 붙여요.</p>
+"""
+
+# 2 무료 조건 — 숫자 하나
+E2 = f"""
+<h1 style="margin-top:48px;font-size:88px">언리얼,<br>돈 내야 하나요?</h1>
+{fact("100", "만 달러", "제품 하나의 총매출이 이 아래면", "로열티 0 · 넘는 부분에만 5% (2026년 기준)", True)}
+<p class="body" style="margin-top:56px">배우는 단계에서는 돈 들 일이 없어요.<br>에픽게임즈 스토어에서 판 매출은<br>로열티가 면제되고요.</p>
+<p class="body" style="margin-top:40px">지금 최신은 5.8이에요. 언리얼 6은<br>2027년 말 얼리 액세스 예고라<br>기다릴 이유는 없어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 에픽게임즈 언리얼 엔진 라이선스·FAQ (2026.11.01 확인)<br>조건은 바뀔 수 있어요. 출시 전에 공식 라이선스 페이지를 확인하세요.</p>
+"""
+
+# 3 유니티와 차이 — 순서가 아니므로 번호 없음
+E3 = f"""
+<h1 style="margin-top:48px;font-size:88px">유니티와<br>뭐가 다른가요?</h1>
+{submit("규칙<br>쓰는 법", "유니티는 C# 한 가지<br>언리얼은 블루프린트 + C++", True)}
+{submit("무료<br>조건", "유니티 연매출 20만 달러 이하<br>언리얼 제품 매출 100만 달러까지")}
+{submit("PC<br>부담", "유니티는 보통 노트북<br>언리얼은 메모리 32GB 권장")}
+<p class="body" style="margin-top:48px">PC·콘솔 실사 그래픽이 목표면<br>언리얼을 먼저 켜는 게 자연스러워요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Unity 플랜 안내(2026.10)·언리얼 엔진 5.8 공식 문서(2026.11.01 확인). 언리얼 권장 사양은 메모리 32GB, 그래픽 메모리 8GB 이상.<br>어느 쪽이 더 좋다는 뜻은 아니에요.</p>
+"""
+
+# 4 배우는 순서 5단계 — 실제 순서이므로 번호 사용
+E4 = f"""
+<h1 style="margin-top:36px;font-size:84px">순서는 다섯 단계예요.</h1>
+{step(1, "템플릿 고치기 (2~4주)", "3인칭 템플릿을 블루프린트로, 액터·컴포넌트·이벤트")}
+{step(2, "작은 게임 완성 (1~2개월)", "시작 화면부터 게임 오버까지, 실행 파일로")}
+{step(3, "C++ 도입 (1~2개월)", "캐릭터·아이템 클래스를 C++로, 블루프린트에서 상속")}
+{step(4, "장르 다른 게임 하나 더", "액션 다음엔 퍼즐이나 레이싱")}
+{step(5, "포트폴리오 정리", "플레이 영상·실행 파일·깃허브·해결 과정 문서", True)}
+"""
+
+# 5 공고와 국비 — 핵심 한 줄만 오렌지 선
+E5 = f"""
+<h1 style="margin-top:48px;font-size:88px">신입 공고,<br>어디까지 요구하나요?</h1>
+<p class="body" style="margin-top:40px">확인한 신입·인턴 공고 두 건은<br>모두 C++와 포트폴리오를 적었어요.<br>1차 면접에 코딩 테스트를 넣은 곳도 있고요.</p>
+<div style="margin-top:48px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">블루프린트만으로는<br>프로그래머 지원이 어려워요.</div>
+<p class="body" style="margin-top:14px">둘째 달부터는 C++를 꼭 넣어야 해요.</p>
+</div>
+<p class="body" style="margin-top:48px">대전점 게임프로그래밍 과정은 유니티·언리얼을<br>모두 다뤄요. 고용24 등록 국비 과정은<br>유니티 기준이라 언리얼 중심이면<br>상담에서 과정 구성을 먼저 확인해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임잡 하이퍼센트 신입 공고(2026.09 등록)·더팀스 웹젠레드스타 공고. 순서는 상담 → 과정 확인 → 카드 신청.</p>
+"""
+
+# 6 상담
+E6 = f"""
+<h1 style="margin-top:60px;font-size:92px">유니티로 갈지<br>언리얼로 갈지 고민이라면?</h1>
+<p class="lead" style="margin-top:44px">가고 싶은 회사 공고를 같이 열어 보고<br>엔진 선택부터 C++ 비중,<br>국비 과정 여부까지 봐 드려요.</p>
+<div class="body" style="margin-top:80px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -664,6 +730,7 @@ SETS = {
     "07": (A_CHIP, A_SERIES, [A1, A2, A3, A4, A5, A6]),
     "08": (M_CHIP, M_SERIES, [M1, M2, M3, M4, M5, M6]),
     "09": (U_CHIP, U_SERIES, [U1, U2, U3, U4, U5, U6]),
+    "10": (E_CHIP, E_SERIES, [E1, E2, E3, E4, E5, E6]),
 }
 
 if __name__ == "__main__":
