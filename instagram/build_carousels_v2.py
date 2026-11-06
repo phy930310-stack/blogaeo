@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -721,6 +721,74 @@ E6 = f"""
 </div>
 """
 
+# ───────────────────────── 11 3D 애니메이터, 신입 문은 리깅부터 (2026-11-06) ─────────────────────────
+# 근거: posts/2026-11-02_게임-3D-애니메이터-되는-법 (게임잡 시프트업 2026.10.13·스마일게이트 2026.10.12 공고,
+# 크래프톤 채용 공고, Unity 6.6 매뉴얼·에픽 Control Rig 문서, Animworks 쇼릴 가이드 2026.03, brand/profile.md)
+# 기억 요소 = 거대한 글자 '리깅'. 상자 없음. 번호는 실제 순서(배우는 5단계)에만. 오렌지는 장마다 한 곳.
+R_CHIP, R_SERIES = "취업", "3D 애니메이터, 리깅부터"
+
+# 1 표지 — 거대한 '리깅'
+R1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">캐릭터를 움직이게 하고 싶다면, 첫 문은</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-10px;margin-left:-8px">리깅</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">애니메이터 자리는<br>경력을 <span class="mark">먼저</span> 봤어요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">2026년 10월 게임사 공고 세 건 기준,<br>경력 무관 자리는 리깅 담당이었어요.</p>
+"""
+
+# 2 세 직군 — 순서가 아니므로 번호 없음
+R2 = f"""
+<h1 style="margin-top:48px;font-size:88px">같은 팀인데<br>직군이 셋이에요.</h1>
+{submit("애니<br>메이터", "캐릭터 동작·전투 연출<br>시프트업 공고는 경력 3년 이상")}
+{submit("리거", "뼈대·스킨·컨트롤러 제작<br>스마일게이트 공고는 경력 무관", True)}
+{submit("테크니컬<br>애니메이터", "리깅 툴·엔진 애니메이션 시스템<br>크래프톤 공고는 경력 4년 이상")}
+<p class="body" style="margin-top:44px">리거 자리는 계약 1년이었지만 신입도 지원할 수 있었고<br>서류 뒤에 과제 테스트가 있을 수 있다고 적혀 있었어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임잡 시프트업(2026.10.13 등록)·스마일게이트(2026.10.12 등록) 공고, 크래프톤 채용 공고 (2026.11.02 확인)<br>세 건을 본 결과라 회사마다 달라요. 지원 전에 공고 원문을 확인하세요.</p>
+"""
+
+# 3 리깅과 애니메이션의 차이 — 핵심 한 줄만 오렌지 선
+R3 = f"""
+<h1 style="margin-top:48px;font-size:88px">리깅이랑 애니메이션,<br>뭐가 다른가요?</h1>
+{submit("리깅", "모델 안에 뼈대를 넣고 표면을 붙인 뒤<br>움직일 손잡이(컨트롤러)를 다는 일")}
+{submit("애니<br>메이션", "그 손잡이를 시간 축에서 움직여<br>동작의 타이밍과 무게감을 만드는 일")}
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">인형에 관절과 줄을 다는 일,<br>그 인형을 연기시키는 일.</div>
+</div>
+<p class="body" style="margin-top:48px">캐릭터 하나가 화면에서 움직이기까지는<br>모델링 → 리깅 → 애니메이션 → 엔진 구현<br>네 단계를 거쳐요. 작은 회사는 한 사람이<br>리깅과 애니메이션을 같이 맡기도 해요.</p>
+"""
+
+# 4 배우는 순서 5단계 — 실제 순서이므로 번호 사용
+R4 = f"""
+<h1 style="margin-top:36px;font-size:84px">툴보다 움직임의 원리가 먼저예요.</h1>
+{step(1, "움직임의 기본 원리", "타이밍·스페이싱·예비 동작, 튀는 공과 추로 시작")}
+{step(2, "툴 하나", "3ds Max 또는 Maya, 집에서는 블렌더로 연습해도 돼요")}
+{step(3, "리깅 기초", "뼈대·스키닝·간단한 컨트롤러, 처음엔 기성 리그로")}
+{step(4, "인게임 동작 세트", "아이들·걷기·달리기·공격·피격을 반복 사이클로", True)}
+{step(5, "엔진 구현", "유니티 Animator Controller·언리얼 애니메이션 블루프린트")}
+"""
+
+# 5 포트폴리오 — 숫자 하나
+R5 = f"""
+<h1 style="margin-top:48px;font-size:88px">포트폴리오는<br>영상 하나예요.</h1>
+{fact("60", "~90초", "릴 영상 한 편", "신입은 더 짧아도 돼요. 제일 잘 된 클립을 맨 앞에,<br>두 번째로 잘 된 클립을 맨 뒤에", True)}
+<p class="body" style="margin-top:48px">넣을 것은 아이들·걷기·달리기·공격·회피,<br>리액션 한두 컷, 엔진 안에서 찍은 화면이에요.<br>클립마다 내가 맡은 범위를 적어요.</p>
+<p class="body" style="margin-top:36px">수준이 평균인 클립, 과한 카메라 움직임,<br>눈에 띄는 배경음악은 빼요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Animworks 하비 뉴먼 「Game Animation Showreel」(2026.03)·시프트업 공고의 포트폴리오 안내 (2026.11.02 확인)<br>회사마다 보는 기준이 달라요. 지원 공고의 제출 안내를 먼저 확인하세요.</p>
+"""
+
+# 6 상담
+R6 = f"""
+<h1 style="margin-top:60px;font-size:92px">모델은 만들었는데<br>못 움직이겠다면?</h1>
+<p class="lead" style="margin-top:44px">지금 수준을 같이 보고 리깅과 애니메이션 중<br>무엇부터 할지, 첫 릴 영상까지<br>연습 순서를 정리해 드려요.</p>
+<p class="body" style="margin-top:40px">대전점 국비(고용24) 과정은<br>게임그래픽·게임프로그래밍·웹툰이에요.<br>순서는 상담 → 과정 확인 → 카드 신청.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -731,6 +799,7 @@ SETS = {
     "08": (M_CHIP, M_SERIES, [M1, M2, M3, M4, M5, M6]),
     "09": (U_CHIP, U_SERIES, [U1, U2, U3, U4, U5, U6]),
     "10": (E_CHIP, E_SERIES, [E1, E2, E3, E4, E5, E6]),
+    "11": (R_CHIP, R_SERIES, [R1, R2, R3, R4, R5, R6]),
 }
 
 if __name__ == "__main__":
