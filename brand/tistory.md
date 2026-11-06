@@ -28,7 +28,7 @@
 - 글 기본 저장 상태: 비공개 / 모바일웹 자동 연결: 사용 안 함 / 댓글: 로그인 사용자만
 - 사이트맵 /sitemap.xml, RSS /rss(전체 공개, 10개)
 - **구글 서치콘솔 연결 완료, 네이버 서치어드바이저 소유 확인·사이트맵·RSS 제출 완료**(사용자 직접)
-- 푸터·사이드바: 게임학원 http://sbsdaejeon-game.co.kr/ , 웹툰학원 http://webtoon-daejeon.com/ (**http만 접속됨**)
+- 푸터·사이드바: 게임학원 https://dj-001.sbsgameacademy.com/ , 웹툰학원 https://dj-001.sbswebtoon.com/ (2026-11-06 도메인 변경 — 스킨 설정의 링크는 사용자가 티스토리 관리 화면에서 직접 바꿔야 함 [확인 필요]; 이전 주소 http://sbsdaejeon-game.co.kr/ · http://webtoon-daejeon.com/)
 
 ## 기존 글
 | 주소 | 제목 | 카테고리 |

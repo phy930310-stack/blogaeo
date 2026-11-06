@@ -78,8 +78,8 @@ def cta(kind, slug, head, sub):
 <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#DCE1F5;">{sub}</p>
 <p style="margin:0 0 14px;">
 <a href="tel:042-716-7439" style="{btn}background:#FF5A36;color:#fff;">📞 전화 상담 042-716-7439</a>
-<a href="http://sbsdaejeon-game.co.kr/{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">게임학원 홈페이지 →</a>
-<a href="http://webtoon-daejeon.com/{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">웹툰학원 홈페이지 →</a>
+<a href="https://dj-001.sbsgameacademy.com/{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">게임학원 홈페이지 →</a>
+<a href="https://dj-001.sbswebtoon.com/{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">웹툰학원 홈페이지 →</a>
 </p>
 <p style="margin:0;font-size:13px;line-height:1.6;color:#C9D0EE;">대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호) · 운영시간 09:00~22:00</p>
 </div>'''
@@ -89,4 +89,4 @@ def naver_footer(kind, slug, line):
     utm = f"?utm_source=naver&utm_medium=blog&utm_campaign={slug}"
     return (f"─────────────\nSBS아카데미게임학원 대전점 {team}\n"
             "📍 대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호)\n📞 042-716-7439\n🕘 운영시간 09:00~22:00\n"
-            f"{line}\n\n▶ 게임학원 홈페이지: http://sbsdaejeon-game.co.kr/{utm}\n▶ 웹툰학원 홈페이지: http://webtoon-daejeon.com/{utm}\n\n[지도]\n")
+            f"{line}\n\n▶ 게임학원 홈페이지: https://dj-001.sbsgameacademy.com/{utm}\n▶ 웹툰학원 홈페이지: https://dj-001.sbswebtoon.com/{utm}\n\n[지도]\n")

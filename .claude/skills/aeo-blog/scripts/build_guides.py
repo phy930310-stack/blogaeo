@@ -126,9 +126,9 @@ if "|" in naver and re.search(r"^\|.*\|$", naver, re.M):
     problems.append("네이버: 표(| |) 사용 — 목록이나 이미지로 대체")
 n_imgs = re.findall(r"\[이미지: (\S+) / 사진 설명: ([^\]]+)\]", naver)
 n_real = re.findall(r"\[(실제 사진 \d): ([^/\]]+) / 사진 설명: ([^\]]+)\]", naver)
-if HAS_NAVER and "sbsdaejeon-game.co.kr" not in naver:
+if HAS_NAVER and "dj-001.sbsgameacademy.com" not in naver:
     problems.append("네이버: 글 끝 홈페이지 링크 없음")
-if "tel:042-716-7439" not in tist or "sbsdaejeon-game.co.kr" not in tist:
+if "tel:042-716-7439" not in tist or "dj-001.sbsgameacademy.com" not in tist:
     problems.append("티스토리: 글 끝 상담 배너(CTA: 전화·홈페이지 버튼) 없음 — templates/tistory-components.html [5]")
 if HAS_NAVER and "entry.607658700" not in naver:
     problems.append("네이버: 글 끝 온라인 상담 신청(구글 폼, 네이버 블로그용 링크) 없음 — brand/profile.md")
