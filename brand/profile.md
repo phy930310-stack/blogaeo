@@ -12,7 +12,7 @@
 - 운영시간: 09:00~22:00
 - 홈페이지: https://dj-001.sbsgameacademy.com/ (게임학원 공식, 2026-11-06 도메인 변경 — 이전 http://sbsdaejeon-game.co.kr/ 은 아직 열리지만 새 주소로 넘겨주지 않음)
 - 웹툰학원 홈페이지: https://dj-001.sbswebtoon.com/ (웹툰학원 공식, 2026-11-06 도메인 변경 — 이전 http://webtoon-daejeon.com/)
-- 웹툰입시 사이트: https://dj-001.koreagamewebtoon.com/ (2026-11-06 사용자 전달, 사이트 제목 "코리아게임웹툰입시학원 — 게임·웹툰·애니 입시 전문". 블로그·SNS 어디에 넣을지는 [확인 필요] — 확정 전까지 상담 배너·링크 페이지에는 넣지 않음)
+- 웹툰입시 사이트: https://dj-001.koreagamewebtoon.com/ (2026-11-06 사용자 전달, 사이트 제목 "코리아게임웹툰입시학원 — 게임·웹툰·애니 입시 전문". 2026-11-06 사용자 결정: **입시 글의 티스토리 상담 배너·네이버 글 끝 링크에 '게임·웹툰 입시 안내 →' 버튼/줄로 넣는다.** 취업 글·인스타 링크 페이지에는 넣지 않음)
 - 온라인 상담 신청 폼: **구글 폼(입시/취업 분기형)으로 일원화** — https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform (2026-10-24 공개 접속 확인). 짧은 주소: https://forms.gle/8CNmS6Nvh5BNBhZe7 네이버 폼은 종료 예정(brand/channels.md). 폼 **편집 주소는 관리자용이므로 외부에 쓰지 않는다**
 - 상담 폼 채널별 링크(유입 경로 문항이 미리 선택됨, 2026-10-24 동작 확인). 원고·프로필에는 채널에 맞는 링크를 쓴다
   - 네이버 블로그: https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&entry.607658700=%EB%84%A4%EC%9D%B4%EB%B2%84+%EB%B8%94%EB%A1%9C%EA%B7%B8

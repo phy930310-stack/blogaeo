@@ -68,18 +68,26 @@ def sources(date, items, tail="전형·채용 정보와 제도는 바뀔 수 있
     return (f'<hr>\n<p style="color:#5B6380;font-size:0.85em;"><b>참고 자료</b> ({date} 확인)<br>\n'
             + "<br>\n".join("· " + i for i in items) + f"<br>\n{tail}</p>")
 
+FORM = ("https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform"
+        "?usp=pp_url&amp;entry.607658700=%EA%B5%AC%EA%B8%80+%EA%B2%80%EC%83%89%C2%B7%ED%8B%B0%EC%8A%A4%ED%86%A0%EB%A6%AC")  # 티스토리용 사전 입력 폼 (brand/profile.md)
+ADMISSION = "https://dj-001.koreagamewebtoon.com/"  # 웹툰입시 사이트 — 입시 글 배너에만 (2026-11-06)
+
 def cta(kind, slug, head, sub):
+    """kind: "입시" | "취업". 입시 글은 '게임·웹툰 입시 안내' 버튼이 하나 더 붙는다(버튼 5개), 취업 글은 4개."""
     team = "입시상담팀" if kind == "입시" else "입시&취업상담팀"
     utm = f"?utm_source=tistory&amp;utm_medium=blog&amp;utm_campaign={slug}"
     btn = "display:inline-block;margin:4px 6px 4px 0;padding:12px 18px;border-radius:8px;font-weight:bold;text-decoration:none;font-size:15px;"
+    adm = (f'\n<a href="{ADMISSION}{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">게임·웹툰 입시 안내 →</a>'
+           if kind == "입시" else "")
     return f'''<div style="margin:40px 0 24px;padding:24px 22px;border-radius:14px;background:#1E2A78;color:#fff;text-align:left;word-break:keep-all;">
 <p style="margin:0 0 6px;font-size:13px;color:#FFB199;font-weight:bold;">SBS아카데미게임학원 대전점 {team}</p>
 <p style="margin:0 0 8px;font-size:20px;font-weight:bold;line-height:1.45;color:#fff;">{head}</p>
 <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#DCE1F5;">{sub}</p>
 <p style="margin:0 0 14px;">
-<a href="tel:042-716-7439" style="{btn}background:#FF5A36;color:#fff;">📞 전화 상담 042-716-7439</a>
+<a href="{FORM}" target="_blank" rel="noopener" style="{btn}background:#FF5A36;color:#fff;">📝 온라인 상담 신청 (1~2분)</a>
+<a href="tel:042-716-7439" style="{btn}background:#fff;color:#FF5A36;border:2px solid #FF5A36;">📞 전화 상담 042-716-7439</a>
 <a href="https://dj-001.sbsgameacademy.com/{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">게임학원 홈페이지 →</a>
-<a href="https://dj-001.sbswebtoon.com/{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">웹툰학원 홈페이지 →</a>
+<a href="https://dj-001.sbswebtoon.com/{utm}" target="_blank" rel="noopener" style="{btn}background:#fff;color:#1E2A78;">웹툰학원 홈페이지 →</a>{adm}
 </p>
 <p style="margin:0;font-size:13px;line-height:1.6;color:#C9D0EE;">대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호) · 운영시간 09:00~22:00</p>
 </div>'''
@@ -89,4 +97,5 @@ def naver_footer(kind, slug, line):
     utm = f"?utm_source=naver&utm_medium=blog&utm_campaign={slug}"
     return (f"─────────────\nSBS아카데미게임학원 대전점 {team}\n"
             "📍 대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호)\n📞 042-716-7439\n🕘 운영시간 09:00~22:00\n"
-            f"{line}\n\n▶ 게임학원 홈페이지: https://dj-001.sbsgameacademy.com/{utm}\n▶ 웹툰학원 홈페이지: https://dj-001.sbswebtoon.com/{utm}\n\n[지도]\n")
+            f"{line}\n\n▶ 게임학원 홈페이지: https://dj-001.sbsgameacademy.com/{utm}\n▶ 웹툰학원 홈페이지: https://dj-001.sbswebtoon.com/{utm}\n"
+            + (f"▶ 게임·웹툰 입시 안내: {ADMISSION}{utm}\n" if kind == "입시" else "") + "\n[지도]\n")
