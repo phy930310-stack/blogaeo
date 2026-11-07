@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -789,6 +789,71 @@ R6 = f"""
 </div>
 """
 
+# ───────────────────────── 세트 12: 게임 QA, 문서 세 개부터 (2026-11-07, 근거 posts/2026-11-04_게임-QA-되는-법) ─────────────────────────
+Q_CHIP, Q_SERIES = "취업", "게임 QA, 문서 세 개부터"
+
+# 1 표지 — 거대한 'QA'
+Q1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임 많이 한 게 전부라면, 첫 문은</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">QA</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">신입 공고는 학력·경력을<br><span class="mark">안</span> 봤어요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">넥슨네트웍스·NC소프트·엔씨큐에이 공고 기준,<br>대신 직접 쓴 문서를 봐요.</p>
+"""
+
+# 2 QA의 하루 4단계 — 실제 순서이므로 번호 사용
+Q2 = f"""
+<h1 style="margin-top:48px;font-size:88px">게임을 즐기는 일이 아니라<br>기록하는 일이에요.</h1>
+{step(1, "테스트 설계", "기획서를 읽고 어떤 기능을 어떤 조건에서<br>확인할지 테스트 케이스로 적어요")}
+{step(2, "테스트 실행", "기능·탐색·호환성 테스트를 적은 대로 돌려요")}
+{step(3, "버그 보고", "재현 절차와 기대·실제 결과를 써서<br>기획자·개발자에게 넘겨요", True)}
+{step(4, "회귀 확인", "수정된 빌드에서 같은 절차를 다시 돌려요")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 넥슨네트웍스 게임QA 인턴 공고(2026.08)·NC소프트 게임QA 신입 공고 (2026.11.04 확인)</p>
+"""
+
+# 3 공고가 보는 것 — 순서가 아니므로 번호 없음
+Q3 = f"""
+<h1 style="margin-top:48px;font-size:88px">공고는 학력 대신<br>이걸 봐요.</h1>
+{submit("필수", "학력·경력 무관이 많아요.<br>버그 기술서, 게임 플레이 경력 목록 제출", True)}
+{submit("우대", "프로그래밍(C#·Python 등),<br>ISTQB 자격증, 자동화·이슈 관리 도구")}
+{submit("형태", "계약직·채용연계형 인턴이 많아요.<br>넥슨네트웍스 인턴은 6개월 뒤 전환 평가")}
+<p class="body" style="margin-top:44px">엔씨큐에이는 자기소개서와 함께<br>플레이 경력 목록·버그 기술서를 필수로 받았어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 넥슨네트웍스(2026.01·08)·NC소프트·엔씨큐에이(2025.04 마감)·스마일게이트 Test Engineer(2026.10.23 등록) 공고 (2026.11.04 확인)<br>회사마다 달라요. 지원 전에 공고 원문을 확인하세요.</p>
+"""
+
+# 4 지원 전 문서 세 개 — 순서 아님
+Q4 = f"""
+<h1 style="margin-top:48px;font-size:88px">포트폴리오는<br>문서 세 개예요.</h1>
+{submit("버그<br>리포트", "하는 게임 하나로 3개.<br>다른 사람이 똑같이 재현할 수 있게", True)}
+{submit("테스트<br>케이스", "기능 하나, 조건별 기대 결과를 표로.<br>20~30개면 구조가 보여요")}
+{submit("플레이<br>목록", "어떤 게임을 얼마나 했는지.<br>실력보다 폭과 기록이에요")}
+<p class="body" style="margin-top:44px">셋 다 지금 하는 게임 하나로 만들 수 있고<br>공고가 요구하는 버그 기술서·테스트 케이스<br>작성 경험에 그대로 대응해요.</p>
+"""
+
+# 5 버그 리포트 — 핵심 한 줄만 오렌지 선
+Q5 = f"""
+<h1 style="margin-top:48px;font-size:88px">버그 리포트는<br>남이 재현할 수 있게.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">"가끔 멈춘다"는<br>버그 리포트가 아니에요.</div>
+</div>
+<p class="body" style="margin-top:48px">기본 순서는 일곱 칸이에요.<br>제목 → 환경(기기·OS·빌드 버전) → 재현 절차<br>→ 기대 결과 → 실제 결과 → 발생 빈도<br>→ 첨부(스크린샷·영상).</p>
+<p class="body" style="margin-top:36px">느낌으로 적으면 개발자가 원인을 못 찾아요.<br>번호 순서대로 따라 하면 똑같이 나와야 해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">ISTQB 기초 레벨(CTFL)은 응시 제한이 없어요. 일정·응시료는 KSTQB 공식 안내에서 확인하세요.</p>
+"""
+
+# 6 상담
+Q6 = f"""
+<h1 style="margin-top:60px;font-size:92px">게임 많이 한 것 말고<br>보여 줄 게 없다면?</h1>
+<p class="lead" style="margin-top:44px">하는 게임 하나로 버그 리포트와<br>테스트 케이스부터 같이 써 봐요.</p>
+<p class="body" style="margin-top:40px">대전점에 QA 전용 과정은 없어요.<br>게임프로그래밍(유니티)·게임기획 과정에서<br>기획서를 읽고 구조를 파악하는 힘을 길러요.<br>순서는 상담 → 과정 확인 → 카드 신청.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -800,6 +865,7 @@ SETS = {
     "09": (U_CHIP, U_SERIES, [U1, U2, U3, U4, U5, U6]),
     "10": (E_CHIP, E_SERIES, [E1, E2, E3, E4, E5, E6]),
     "11": (R_CHIP, R_SERIES, [R1, R2, R3, R4, R5, R6]),
+    "12": (Q_CHIP, Q_SERIES, [Q1, Q2, Q3, Q4, Q5, Q6]),
 }
 
 if __name__ == "__main__":
