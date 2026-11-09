@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07), v2_13_01.png ~ v2_13_06.png (6장, 2026-11-09)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -854,6 +854,73 @@ Q6 = f"""
 </div>
 """
 
+# ---------- 13 게임 C++, 책 말고 게임 하나 (2026-11-09, posts/2026-11-05_게임-개발-cpp-공부-순서) ----------
+P_CHIP, P_SERIES = "취업", "게임 C++, 책 말고 게임 하나"
+
+# 1 표지 — 거대한 'C++'
+P1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">책을 두 번 읽어도 게임이 안 만들어진다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">C++</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">문법책 끝내기가 아니라<br>게임 <span class="mark">하나</span> 끝내기예요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">언리얼 5.8 문서·게임잡 신입 공고 기준,<br>기초 5단계 뒤 과제 세 개로 확인해요.</p>
+"""
+
+# 2 왜 아직 C++인가 — 순서 아님
+P2 = f"""
+<h1 style="margin-top:48px;font-size:88px">엔진도 공고도<br>아직 C++예요.</h1>
+{submit("언리얼", "공식 문서가 C++ 섹션을<br>'C++ 경험이 있다'는 전제로 써요")}
+{submit("신입 공고", "하이퍼센트 언리얼 신입, 이스트게임즈<br>클라이언트·서버 공고 키워드에 C++", True)}
+{submit("예외", "모바일·유니티 공고(기어세컨드)는<br>C#·유니티 중심, C# 코드 제출")}
+<p class="body" style="margin-top:44px">목표가 언리얼·PC·콘솔·서버면 C++,<br>모바일·유니티면 C#부터예요.<br>넥슨 넥토리얼 2026은 "C++ 또는 C#"이었어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 언리얼 엔진 5.8 공식 문서, 게임잡 신입 공고(2026.08~09 등록), 넥슨 넥토리얼 2026 모집 안내 (2026.11.05 확인)</p>
+"""
+
+# 3 기초 5단계 — 실제 순서이므로 번호
+P3 = f"""
+<h1 style="margin-top:48px;font-size:88px">기초는 다섯 단계예요.</h1>
+{step(1, "변수·제어문·함수", "체력·점수를 담고 턴을 돌려요. 규칙의 뼈대")}
+{step(2, "포인터·참조·메모리", "캐릭터 하나를 여러 시스템이 복사 없이 가리켜요")}
+{step(3, "클래스·상속·가상함수", "몬스터 공통 클래스. 언리얼 액터·컴포넌트 구조", True)}
+{step(4, "STL 컨테이너·알고리즘", "vector·map으로 인벤토리·적 목록. 코딩 테스트 범위")}
+{step(5, "스마트 포인터·RAII", "자원을 객체 수명에 묶어 누수를 막아요")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">단계마다 책 한 권을 다 읽을 필요는 없어요. 그 단계 문법으로 작은 프로그램 하나가 돌아가면 다음으로.</p>
+"""
+
+# 4 확인 과제 세 개 — 순서
+P4 = f"""
+<h1 style="margin-top:48px;font-size:88px">끝났는지는<br>과제 세 개로 확인해요.</h1>
+{step(1, "콘솔 텍스트 게임", "턴제 전투나 텍스트 던전. 클래스로 캐릭터·몬스터,<br>vector로 인벤토리면 1~4단계 확인")}
+{step(2, "SFML·SDL 2D 게임", "창을 띄우고 키 입력으로 스프라이트를 움직이는<br>벽돌 깨기·슈팅. 게임 루프를 직접 짜요")}
+{step(3, "언리얼 C++ 클래스 한 개", "공식 퀵스타트대로 Actor를 상속해<br>Tick에서 떠서 도는 큐브 하나", True)}
+<p class="body" style="margin-top:36px">세 번째까지 되면 신입 공고가 요구하는<br>"C++로 만든 결과물"이 생겨요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 언리얼 5.8 C++ Quick Start·SFML 3.0 튜토리얼 (2026.11.05 확인)</p>
+"""
+
+# 5 공고가 보는 것 — 핵심 한 줄 오렌지 선
+P5 = f"""
+<h1 style="margin-top:48px;font-size:88px">공고는 완독을<br>안 봐요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">코딩 테스트는 있기도 없기도,<br>포트폴리오는 전부 요구했어요.</div>
+</div>
+<p class="body" style="margin-top:48px">하이퍼센트는 1차 면접에서 간단한 코딩 테스트,<br>넥슨 넥토리얼 2026은 코딩 테스트를 없앴고,<br>엔씨 2026 신입 공채는 프로그래밍 지원자에게<br>온라인 코딩 테스트를 추가했어요.</p>
+<p class="body" style="margin-top:36px">준비는 두 갈래예요. STL로 정렬·탐색 문제 풀기,<br>과제 세 개를 깃허브 코드와 플레이 영상으로 정리하기.<br>면접에선 내가 쓴 코드를 설명할 수 있어야 해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임잡 하이퍼센트 공고(2026.09), 넥슨 넥토리얼 2026 안내·데일리안(2026.08.26), 토요경제(2025.10.02) (2026.11.05 확인)<br>회사마다 달라요. 지원 전에 공고 원문을 확인하세요.</p>
+"""
+
+# 6 상담
+P6 = f"""
+<h1 style="margin-top:60px;font-size:92px">책은 읽었는데<br>게임이 안 만들어진다면?</h1>
+<p class="lead" style="margin-top:44px">지금 어느 단계인지 보고<br>다음 과제 하나를 같이 정해요.</p>
+<p class="body" style="margin-top:40px">대전점 게임프로그래밍 과정은 유니티·언리얼을 다뤄요.<br>국비 등록 과정은 유니티 기준이라<br>C++·언리얼 비중은 상담에서 과정 구성으로 확인해요.<br>순서는 상담 → 과정 확인 → 카드 신청.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -866,6 +933,7 @@ SETS = {
     "10": (E_CHIP, E_SERIES, [E1, E2, E3, E4, E5, E6]),
     "11": (R_CHIP, R_SERIES, [R1, R2, R3, R4, R5, R6]),
     "12": (Q_CHIP, Q_SERIES, [Q1, Q2, Q3, Q4, Q5, Q6]),
+    "13": (P_CHIP, P_SERIES, [P1, P2, P3, P4, P5, P6]),
 }
 
 if __name__ == "__main__":
