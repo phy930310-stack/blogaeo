@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07), v2_13_01.png ~ v2_13_06.png (6장, 2026-11-09)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07), v2_13_01.png ~ v2_13_06.png (6장, 2026-11-09), v2_14_01.png ~ v2_14_06.png (6장, 2026-11-09)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -921,6 +921,74 @@ P6 = f"""
 </div>
 """
 
+# ---------- 14 TV에 나온 게임 기획자 (2026-11-09, MBC 전지적 집착 시점 선공개 fOkis7RA8cw 자막 + posts/2026-10-06_게임기획자-되는-법) ----------
+# 영상 장면·캡처 사용 금지(MBC 무단 전재 금지). 자막에서 확인된 말만 글자로 인용한다.
+T_CHIP, T_SERIES = "취업", "TV에 나온 게임 기획자"
+
+# 1 표지 — 거대한 '9년'
+T1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">전지적 집착 시점에 나온 배그 개발팀 기획자</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">9년</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">게임 회사에서 9년,<br>기획자는 <span class="mark">무슨 일</span>을 할까요?</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">MBC 선공개 영상(11/7)에서 나온 말만 모았어요.<br>장면은 안 쓰고 글로만 정리했어요.</p>
+"""
+
+# 2 영상에서 확인된 사실 — 순서 아님
+T2 = f"""
+<h1 style="margin-top:48px;font-size:88px">배그 초창기 멤버,<br>기획과 분석을 맡고 있어요.</h1>
+{submit("소속", "크래프톤 PUBG 스튜디오<br>배틀그라운드 개발팀 9년 차, 내년 10주년")}
+{submit("맡은 일", "내부에서 기획과 분석 파트를<br>꾸준히 담당하고 있대요", True)}
+{submit("상사의 소개", "배그가 커질 때<br>손을 안 거친 게 없는 초창기 멤버")}
+<p class="body" style="margin-top:44px">한 게임을 9년 동안 기획하고 분석한 사람이<br>TV에 나온 거예요. 기획자가 무슨 일을 하는지<br>보여 주는 드문 장면이에요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: MBC 「전지적 집착 시점」 선공개 영상 자막 (유튜브 MBCentertainment, 2026.11.07 게시, 11.09 확인)<br>출연자·방송사·크래프톤은 저희 학원과 관계가 없어요.</p>
+"""
+
+# 3 기획과 분석 — 일반 직무 구분
+T3 = f"""
+<h1 style="margin-top:48px;font-size:88px">기획과 분석은<br>이렇게 나뉘어요.</h1>
+{step(1, "시스템·콘텐츠 기획", "전투·성장·보상 규칙과 퀘스트를 정하고<br>개발팀이 바로 만들 수 있게 문서로 써요")}
+{step(2, "밸런스", "능력치·확률·재화를 엑셀로 맞춰요")}
+{step(3, "분석", "플레이 데이터로 어디서 그만두는지,<br>무엇을 고칠지 찾아 기획에 되돌려요", True)}
+{step(4, "라이브 운영", "업데이트 뒤 반응을 보고 다시 기획해요")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">일반적인 기획 직무 기준(게임기획자 되는 법 글, 현직자 Q&amp;A). 회사마다 이름과 범위가 달라요.</p>
+"""
+
+# 4 플레이 2,314시간 — 핵심 한 줄 오렌지 선
+T4 = f"""
+<h1 style="margin-top:48px;font-size:88px">플레이 2,314시간,<br>그런데 상태창은 꺼요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">표시가 다 켜져 있으면 쉬워지고<br>반복하면 질린대요.</div>
+</div>
+<p class="body" style="margin-top:48px">기획자는 자기 게임을 '처음 하는 사람'처럼<br>다시 봐야 해요. 그래서 일부러 난이도를 올려요.<br>많이 하는 게 아니라 다르게 보는 게 일이에요.</p>
+<p class="body" style="margin-top:36px">주말에도 회사에 있는 장면은<br>방송의 재미 포인트예요.<br>직무의 조건이 아니니 따라 할 필요는 없어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 같은 영상 자막(플레이 타임 2,314시간, 상태창·데미지 표시 끄기). 해석은 저희 설명이에요.</p>
+"""
+
+# 5 신입 준비물 — 순서 아님
+T5 = f"""
+<h1 style="margin-top:48px;font-size:88px">신입은 플레이 시간 말고<br>문서 네 개로 보여 줘요.</h1>
+{submit("역기획서", "하는 게임의 시스템 하나를<br>거꾸로 분석해 문서로")}
+{submit("시스템 기획서", "새 규칙 하나를<br>예외 상황까지 설계")}
+{submit("밸런스 시트", "엑셀로 성장·보상 수치와 근거")}
+{submit("분석 1건", "내 플레이 기록이나 공개 지표로<br>'왜 그만두나' 한 장", True)}
+<p class="body" style="margin-top:44px">3,000시간을 했다는 말보다<br>그 3,000시간에서 무엇을 봤는지가 포트폴리오예요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">기준: 게임기획자 되는 법 글(현직자 Q&amp;A·채용 콘텐츠, 2026.10). 공고마다 요구 문서가 달라요.</p>
+"""
+
+# 6 상담
+T6 = f"""
+<h1 style="margin-top:60px;font-size:92px">게임은 3,000시간,<br>기획서는 0장이라면?</h1>
+<p class="lead" style="margin-top:44px">플레이 기록을 분석 노트로 바꾸는 것부터<br>같이 정해요.</p>
+<p class="body" style="margin-top:40px">대전점에 게임기획 과정이 있어요.<br>과정 구성은 상담에서 확인해요.<br>국비 등록 과정은 게임그래픽·게임프로그래밍(유니티)·웹툰이라<br>기획은 상담으로 먼저 확인하는 게 맞아요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -934,6 +1002,7 @@ SETS = {
     "11": (R_CHIP, R_SERIES, [R1, R2, R3, R4, R5, R6]),
     "12": (Q_CHIP, Q_SERIES, [Q1, Q2, Q3, Q4, Q5, Q6]),
     "13": (P_CHIP, P_SERIES, [P1, P2, P3, P4, P5, P6]),
+    "14": (T_CHIP, T_SERIES, [T1, T2, T3, T4, T5, T6]),
 }
 
 if __name__ == "__main__":
