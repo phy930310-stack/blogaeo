@@ -6,6 +6,7 @@
 //   node upload.mjs upload  [폴더]     이미지 업로드 → 본문·FAQ 코드·카테고리·태그 입력 → 비공개 저장
 //   node upload.mjs cta <글번호> <배너.html>   이미 올린 글의 맨 아래 연락처 문단을 상담 배너로 교체(공개 상태 유지)
 //   node upload.mjs clean <글번호>             이미 올린 글에 남은 [실제 사진 …] 안내 줄 삭제(공개 상태 유지)
+//   node upload.mjs links <글번호> <블록.html>   이미 올린 글의 참고 자료 앞에 '함께 읽으면 좋은 글' 내부 링크 블록 추가(본문 나머지는 그대로)
 //   node upload.mjs replace <글번호> [폴더]     원고를 고친 뒤 이미 올린 글의 제목·본문을 통째로 교체(이미지 주소는 기존 글에서 순서대로 재사용, 공개 상태 유지)
 //
 // 원칙
@@ -385,6 +386,27 @@ async function addCta(cfg, postId, ctaFile) {
   });
 }
 
+// 이미 올린 글에 '함께 읽으면 좋은 글' 내부 링크 블록 넣기(참고 자료 앞 <hr> 바로 위, 없으면 배너 앞) — 본문 나머지는 그대로 둔다
+async function addLinks(cfg, postId, blockFile) {
+  const bp = path.isAbsolute(blockFile || "") ? blockFile : path.join(ROOT, blockFile || "");
+  if (!blockFile || !fs.existsSync(bp)) fail(`링크 블록 파일이 없습니다: ${bp}`);
+  const block = fs.readFileSync(bp, "utf-8").trim();
+  const key = (block.match(/data-internal-links="([^"]+)"/) || [])[1] || "";
+  const firstHref = (block.match(/href="([^"]+)"/) || [])[1] || "";
+  await editPost(cfg, postId, "내부 링크 블록 넣기", (html) => {
+    if (key && html.includes(`data-internal-links="${key}"`)) return { skip: "이미 같은 링크 블록이 들어 있어 건너뜁니다." };
+    if (html.includes("함께 읽으면 좋은 글")) return { skip: "이미 '함께 읽으면 좋은 글' 블록이 있어 건너뜁니다." };
+    const hr = html.match(/<hr\s*\/?>/);
+    const banner = html.search(/<div[^>]+background:#1E2A78;color:#fff/);
+    let out, how;
+    if (hr) { out = html.slice(0, hr.index) + block + "\n" + html.slice(hr.index); how = "참고 자료 앞(<hr> 위)에 링크 블록 추가"; }
+    else if (banner >= 0) { out = html.slice(0, banner) + block + "\n" + html.slice(banner); how = "상담 배너 앞에 링크 블록 추가"; }
+    else if (html.includes('<script type="application/ld+json">')) { out = html.replace('<script type="application/ld+json">', block + '\n<script type="application/ld+json">'); how = "FAQ 코드 앞에 링크 블록 추가"; }
+    else { out = html + "\n" + block; how = "글 맨 끝에 링크 블록 추가"; }
+    return { html: out, how, verify: (x) => x.includes("함께 읽으면 좋은 글") && (!firstHref || x.includes(firstHref)) };
+  });
+}
+
 // 본문에 남은 [실제 사진 …] / [이미지 업로드 …] 안내 줄 지우기
 async function cleanMarkers(cfg, postId) {
   const re = /<p[^>]*>\s*\[(?:실제 사진 \d+|이미지 업로드)[^\]]*\]\s*<\/p>/g;
@@ -430,5 +452,6 @@ else if (cmd === "preview") preview(await pickPost(arg));
 else if (cmd === "upload") await upload(cfg, await pickPost(arg));
 else if (cmd === "cta") await addCta(cfg, arg, process.argv[4]);
 else if (cmd === "clean") await cleanMarkers(cfg, arg);
+else if (cmd === "links") await addLinks(cfg, arg, process.argv[4]);
 else if (cmd === "replace") await replacePost(cfg, arg, await pickPost(process.argv[4]));
-else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호> | replace <글번호> [폴더]");
+else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호> | replace <글번호> [폴더] | links <글번호> <블록.html>");
