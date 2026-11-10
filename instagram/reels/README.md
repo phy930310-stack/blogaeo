@@ -20,7 +20,7 @@
 | r09 | r09_청강대-원화-합격생.mp4 | https://www.youtube.com/shorts/k8BKQuphI1E | 60초 | 1080×1920 | 2026-11-06 https://www.instagram.com/reel/DfYUhzeCvqS/ |
 | r10 | r10_청강대-기획-합격생.mp4 | https://www.youtube.com/shorts/35mThaUTMKI | 49초 | 1080×1920 | 2026-11-07 https://www.instagram.com/reel/DfbQ3xHjII1/ |
 | r11 | r11_청강대-프로그래밍-합격생.mp4 | https://www.youtube.com/shorts/RMYkvGk2vEc | 49초 | 1080×1920 | 2026-11-09 https://www.instagram.com/reel/DfgCdtJjG1u/ |
-| r12 | r12_청강대-기획-합격생-인터뷰.mp4 | https://www.youtube.com/shorts/Qk7I9u6eJ7g | 45초 | 1080×1920 | (게시 전) |
+| r12 | r12_청강대-기획-합격생-인터뷰.mp4 | https://www.youtube.com/shorts/Qk7I9u6eJ7g | 45초 | 1080×1920 | 2026-11-10 https://www.instagram.com/reel/DfizLorHALK/ |
 
 2026-11-03 두 번째 묶음(r06~r09)을 `yt-dlp --flat-playlist -J --extractor-args "youtube:lang=ko" <채널>/shorts`(224개)에서 입시 관련 제목으로 골라 자동 자막과 함께 받음. '청강대 같이 가볼까?'(hMXQ1oowixI)는 음악만 있어 제외. 영상 코덱은 AV1이어도 r01~r05처럼 API 게시가 됐다. 다음 묶음 후보(미확보): 24학년도 청강대 간담회 [게임 기획편](35mThaUTMKI)·[게임 프로그래밍편](RMYkvGk2vEc), 게임 기획 합격생 인터뷰(Qk7I9u6eJ7g), 청강대 합격생 '안 늦었어요'(YJiVm0_X6MA).
 
