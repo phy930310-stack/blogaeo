@@ -47,3 +47,4 @@ aeo-blog가 만든 원고 폴더를 티스토리에 **비공개 저장**까지 �
 - 남은 안내 줄 지우기: `node upload.mjs clean <글번호>`
 - 원고를 고친 뒤 제목·본문 통째로 교체(이미지는 기존 글 주소 재사용, 공개 상태 유지): `node upload.mjs replace <글번호> <원고 폴더>`
 - 이미 올린 글에 '함께 읽으면 좋은 글' 내부 링크 블록 넣기(참고 자료 앞 `<hr>` 위, 없으면 배너·FAQ 코드 앞; 본문 나머지는 그대로, 같은 블록이 있으면 건너뜀): `node upload.mjs links <글번호> <블록.html>` — 블록 예시는 저장소 `docs/internal-links/`
+- 편집기가 HTML을 어떻게 바꾸는지 확인(새 글 화면에 넣었다가 읽어서 출력만, **저장 안 함**): `node upload.mjs probe <파일.html>` — 인라인 스타일·`!important`·iframe 등이 유지되는지 볼 때 사용

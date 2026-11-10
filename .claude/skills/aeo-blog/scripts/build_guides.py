@@ -218,8 +218,13 @@ def _rd_sents(x):
 _rd = []
 if len(meta.get("tistory_title", "")) > 45: _rd.append(f"티스토리 제목 {len(meta['tistory_title'])}자 (45자 이내)")
 if HAS_NAVER and len(meta.get("naver_title", "")) > 40: _rd.append(f"네이버 제목 {len(meta['naver_title'])}자 (40자 이내)")
-_tp = [re.sub(r"<[^>]+>", "", m) for m in re.findall(r"<p(?![^>]*style)>(.*?)</p>", tist, flags=re.S)]
+# 본문 문단 = 스타일 없는 <p> 또는 tcomp.P_STYLE(문단 간격)만 붙은 <p>. 2026-11-10부터 본문 문단은 간격 스타일이 있어야 한다
+_P_BODY = r'<p(?: style="margin:0 0 20px !important;")?>(.*?)</p>'
+_tp = [re.sub(r"<[^>]+>", "", m) for m in re.findall(_P_BODY, tist, flags=re.S)]
 _tp = [x for x in _tp if not x.startswith("[")]
+_bare = [re.sub(r"<[^>]+>", "", m) for m in re.findall(r"<p>(.*?)</p>", tist, flags=re.S)]
+_bare = [x for x in _bare if not x.startswith("[")]
+if _bare: _rd.append(f"티스토리 문단 간격 스타일 없는 <p> {len(_bare)}개 (tcomp.p()를 쓰거나 style=\"margin:0 0 20px !important;\" 추가): {_bare[0][:30]}…")
 for x in _tp:
     if len(x) > 300: _rd.append(f"티스토리 문단 {len(x)}자: {x[:40]}…")
 for x in _tp:

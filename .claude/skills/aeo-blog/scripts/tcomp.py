@@ -8,11 +8,16 @@ import html as _h
 def esc(s):  # 본문 텍스트 안의 <b> 등 태그를 쓰려면 raw=True
     return _h.escape(s, quote=False)
 
+# 티스토리 스킨(Odyssey)은 본문 영역(.tt_article_useless_p_margin)의 <p> 여백을 !important로 0으로 만든다.
+# 그래서 문단 간격은 인라인 스타일에 !important를 붙여야 적용된다(2026-11-10 확인: 편집기가 !important를 유지함).
+# build_guides.py가 이 문자열로 본문 문단을 찾으니 바꿀 때는 두 곳을 함께 고친다.
+P_STYLE = "margin:0 0 20px !important;"
+
 def p(text, raw=True):
-    return f"<p>{text if raw else esc(text)}</p>"
+    return f'<p style="{P_STYLE}">{text if raw else esc(text)}</p>'
 
 def note(text):
-    return f'<p style="color:#5B6380;font-size:0.9em;">{text}</p>'
+    return f'<p style="color:#5B6380;font-size:0.9em;margin:0 0 20px !important;">{text}</p>'
 
 def h2(text):
     return f"<h2>{text}</h2>"
@@ -26,7 +31,7 @@ def ol(items):
 def summary(items, title="핵심 요약"):
     li = "\n".join(f'<li style="margin:4px 0;">{i}</li>' for i in items)
     return (f'<div style="background:#F4F6FB;border-left:4px solid #1E2A78;border-radius:8px;padding:16px 20px;margin:20px 0;text-align:left;word-break:keep-all;">\n'
-            f'<p style="margin:0 0 8px;font-weight:bold;color:#1E2A78;">{title}</p>\n'
+            f'<p style="margin:0 0 8px !important;font-weight:bold;color:#1E2A78;">{title}</p>\n'
             f'<ul style="margin:0;padding-left:20px;text-align:left;">\n{li}\n</ul>\n</div>')
 
 _TH = "background:#1E2A78;color:#fff;padding:10px 12px;border:1px solid #1E2A78;text-align:left;white-space:nowrap;"
@@ -53,16 +58,16 @@ def photo(n, guide, alt):
     return f"<p>[실제 사진 {n}: (네이버용과 다른 각도로) {guide} / 대체텍스트: {alt}]</p>"
 
 def case(title, situation, worry, checked, plan):
-    rows = "\n".join(f'<p style="margin:6px 0;"><b>{k}</b> — {v}</p>' for k, v in
+    rows = "\n".join(f'<p style="margin:0 0 10px !important;"><b>{k}</b> — {v}</p>' for k, v in
                      [("상황", situation), ("고민", worry), ("확인한 것", checked), ("세운 계획", plan)])
     return (f"<h2>{title} (가상 사례)</h2>\n"
             f'<div style="border:1px solid #DCE1EE;border-radius:8px;padding:16px 20px;margin:16px 0;text-align:left;word-break:keep-all;">\n'
-            f'<p style="margin:0 0 10px;color:#5B6380;">아래는 상담에서 자주 나오는 고민을 재구성한 가상 사례입니다.</p>\n{rows}\n</div>')
+            f'<p style="margin:0 0 12px !important;color:#5B6380;">아래는 상담에서 자주 나오는 고민을 재구성한 가상 사례입니다.</p>\n{rows}\n</div>')
 
 def faq(pairs):
     if not pairs:
         return ""
-    return "<h2>자주 묻는 질문</h2>\n" + "\n".join(f"<h3>Q. {q}</h3>\n<p>{a}</p>" for q, a in pairs)
+    return "<h2>자주 묻는 질문</h2>\n" + "\n".join(f'<h3>Q. {q}</h3>\n<p style="{P_STYLE}">{a}</p>' for q, a in pairs)
 
 def sources(date, items, tail="전형·채용 정보와 제도는 바뀔 수 있으니 반드시 공식 공고·모집요강을 확인하세요."):
     return (f'<hr>\n<p style="color:#5B6380;font-size:0.85em;"><b>참고 자료</b> ({date} 확인)<br>\n'

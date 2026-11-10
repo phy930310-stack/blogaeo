@@ -434,6 +434,25 @@ async function replacePost(cfg, postId, dir) {
   }, post.meta.tistory_title);
 }
 
+// 편집기가 HTML을 어떻게 바꾸는지 확인(저장하지 않음). 새 글 화면에 넣었다가 다시 읽어 출력만 하고 닫는다.
+async function probe(cfg, htmlFile) {
+  const fp = path.isAbsolute(htmlFile || "") ? htmlFile : path.join(ROOT, htmlFile || "");
+  if (!htmlFile || !fs.existsSync(fp)) fail(`HTML 파일이 없습니다: ${fp}`);
+  const content = fs.readFileSync(fp, "utf-8");
+  const ctx = await browser(false);
+  try {
+    const page = ctx.pages()[0] || await ctx.newPage();
+    page.on("dialog", (d) => d.dismiss().catch(() => {}));
+    await ensureLogin(ctx, page, cfg, `${cfg.blogUrl}/manage/newpost`);
+    await page.waitForFunction(() => window.tinymce?.activeEditor?.initialized === true, null, { timeout: 30000 })
+      .catch(() => { throw new Error("편집기 초기화를 확인하지 못했습니다"); });
+    await page.waitForTimeout(1500);
+    const out = await page.evaluate((c) => { const ed = window.tinymce.activeEditor; ed.setContent(c); ed.fire("change"); ed.save(); return String(ed.getContent() || ""); }, content);
+    console.log("=== 편집기가 돌려준 HTML (저장 안 함) ===\n" + out + "\n=== 끝 ===");
+  } catch (e) { console.error(`[실패] ${e.message}`); process.exitCode = 1; }
+  finally { await ctx.close(); }
+}
+
 function preview(dir) {
   const post = readPost(dir);
   const urls = new Map(post.slots.filter((s) => s.file).map((s) => [s.marker, "file:///" + s.file.replace(/\\/g, "/")]));
@@ -453,5 +472,6 @@ else if (cmd === "upload") await upload(cfg, await pickPost(arg));
 else if (cmd === "cta") await addCta(cfg, arg, process.argv[4]);
 else if (cmd === "clean") await cleanMarkers(cfg, arg);
 else if (cmd === "links") await addLinks(cfg, arg, process.argv[4]);
+else if (cmd === "probe") await probe(cfg, arg);
 else if (cmd === "replace") await replacePost(cfg, arg, await pickPost(process.argv[4]));
-else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호> | replace <글번호> [폴더] | links <글번호> <블록.html>");
+else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호> | replace <글번호> [폴더] | links <글번호> <블록.html> | probe <파일.html>");
