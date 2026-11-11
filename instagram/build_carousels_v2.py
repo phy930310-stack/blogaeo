@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07), v2_13_01.png ~ v2_13_06.png (6장, 2026-11-09), v2_14_01.png ~ v2_14_06.png (6장, 2026-11-09)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07), v2_13_01.png ~ v2_13_06.png (6장, 2026-11-09), v2_14_01.png ~ v2_14_06.png (6장, 2026-11-09), v2_15_01.png ~ v2_15_06.png (6장, 2026-11-11)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -989,6 +989,73 @@ T6 = f"""
 </div>
 """
 
+# ---------- 15 배경 원화, 투시부터 (2026-11-11, posts/2026-11-10_게임-배경-원화가-되는-법) ----------
+B_CHIP, B_SERIES = "취업", "배경 원화, 투시부터"
+
+# 1 표지 — 거대한 '투시'
+B1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">캐릭터는 되는데 배경만 넣으면 무너진다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">투시</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">배경 원화의 기초는<br>인체가 아니라 <span class="mark">투시</span>예요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">게임잡 배경 원화 공고 세 건 기준,<br>하는 일과 연습 여섯 단계를 정리했어요.</p>
+"""
+
+# 2 하는 일 — 순서 아님
+B2 = f"""
+<h1 style="margin-top:48px;font-size:88px">배경 원화가는<br>공간을 설계해요.</h1>
+{submit("무드 컨셉", "씬 전체 분위기 설정.<br>레벨 제작에 쓰여요")}
+{submit("프랍 컨셉", "소품 디자인과 제작용 원화.<br>3D 배경 제작에 쓰여요", True)}
+{submit("일러스트", "그래픽 컨셉을 보여 주는 그림")}
+<p class="body" style="margin-top:44px">그림 한 장이 결과물이 아니에요.<br>3D 배경 모델러가 보고 만들 수 있게<br>넘기는 그림이에요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임잡 NC 「AION2」 배경 컨셉 아티스트 공고 담당 업무(2026.09.28 등록, 11.10 확인)</p>
+"""
+
+# 3 캐릭터 원화와 차이 — 순서 아님
+B3 = f"""
+<h1 style="margin-top:48px;font-size:88px">캐릭터 원화와<br>기초가 달라요.</h1>
+{submit("그리는 것", "인물·의상이 아니라<br>공간·건물·소품")}
+{submit("기초", "인체·실루엣이 아니라<br>투시·조명·스케일", True)}
+{submit("넘기는 곳", "3D 배경 모델러와<br>레벨 제작")}
+<p class="body" style="margin-top:44px">배경은 여러 사람이 나눠 그려도<br>한 세계처럼 보여야 해요.<br>그래서 내 화풍보다 프로젝트 화풍이 먼저예요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임잡 시프트업·NC 배경 원화 공고 자격 요건(2026.11.10 확인)</p>
+"""
+
+# 4 연습 여섯 단계 — 실제 순서이므로 번호
+B4 = f"""
+<h1 style="margin-top:48px;font-size:88px">연습은 여섯 단계예요.</h1>
+{step(1, "투시", "1·2·3점 투시로 상자와 건물. 눈높이 선부터")}
+{step(2, "명암·조명", "광원 하나, 흑백 서너 단계로 덩어리 나누기")}
+{step(3, "소품", "문·가로등을 앞·옆에서. 사람 실루엣으로 크기 표시")}
+{step(4, "썸네일 여러 장", "한 공간을 흑백 스케치 여섯 장 이상으로", True)}
+{step(5, "키 아트 한 장", "고른 안을 분위기와 조명이 보이는 큰 그림으로")}
+{step(6, "설정 시트", "소품과 건물 조각의 형태·재질·크기 정리")}
+"""
+
+# 5 공고가 본 것 — 핵심 한 줄 오렌지 선
+B5 = f"""
+<h1 style="margin-top:48px;font-size:88px">공고 세 건,<br>전부 포트폴리오 필수.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">3D 이해는 세 건 모두 우대,<br>화풍은 회사마다 반대였어요.</div>
+</div>
+<p class="body" style="margin-top:48px">빅게임스튜디오는 2D 애니풍,<br>NC는 실사풍 컨셉을 찾았어요.<br>지원할 프로젝트 화풍부터 정해요.</p>
+<p class="body" style="margin-top:36px">포트폴리오는 키 아트 한 장에<br>썸네일 과정, 프랍 시트, 스케일 표시를 붙여요.<br>완성작보다 설계 과정이 보여야 해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임잡 시프트업(2026.09.10)·빅게임스튜디오(06.22)·NC(09.28) 공고 (11.10 확인)<br>포트폴리오 구성은 공고 문구에서 끌어낸 제안이에요. 지원 전에 공고 원문을 확인하세요.</p>
+"""
+
+# 6 상담
+B6 = f"""
+<h1 style="margin-top:60px;font-size:92px">배경만 넣으면<br>그림이 무너진다면?</h1>
+<p class="lead" style="margin-top:44px">지금 그린 그림을 같이 보고<br>투시부터 다시 잡을지 정해요.</p>
+<p class="body" style="margin-top:40px">대전점 게임그래픽 과정에서 배울 수 있어요.<br>과정 구성은 상담에서 확인해요.<br>국비는 상담 → 과정 확인 → 카드 신청 순서예요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1003,6 +1070,7 @@ SETS = {
     "12": (Q_CHIP, Q_SERIES, [Q1, Q2, Q3, Q4, Q5, Q6]),
     "13": (P_CHIP, P_SERIES, [P1, P2, P3, P4, P5, P6]),
     "14": (T_CHIP, T_SERIES, [T1, T2, T3, T4, T5, T6]),
+    "15": (B_CHIP, B_SERIES, [B1, B2, B3, B4, B5, B6]),
 }
 
 if __name__ == "__main__":
