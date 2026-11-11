@@ -453,6 +453,29 @@ async function probe(cfg, htmlFile) {
   finally { await ctx.close(); }
 }
 
+// 올린 글(비공개 포함)의 실제 페이지를 로그인 상태로 읽어 문단 간격 스타일이 살아 있는지 센다(읽기만 함)
+async function peek(cfg, postId) {
+  if (!/^\d+$/.test(postId || "")) fail("글 번호를 숫자로 입력해 주세요.");
+  const ctx = await browser(false);
+  try {
+    const page = ctx.pages()[0] || await ctx.newPage();
+    page.on("dialog", (d) => d.dismiss().catch(() => {}));
+    await ensureLogin(ctx, page, cfg, `${cfg.blogUrl}/manage/posts/`);
+    await page.goto(`${cfg.blogUrl}/${postId}`, { waitUntil: "domcontentloaded", timeout: 60000 });
+    await page.waitForTimeout(1500);
+    const r = await page.evaluate(() => {
+      const root = document.querySelector(".tt_article_useless_p_margin, .contents_style, .entry-content, article") || document.body;
+      const ps = [...root.querySelectorAll("p")].filter((p) => p.textContent.trim().length > 40 && !p.closest("div[style*='background:#1E2A78'], div[style*='background: rgb(30, 42, 120)']"));
+      const mb = ps.map((p) => getComputedStyle(p).marginBottom);
+      const count = {}; for (const m of mb) count[m] = (count[m] || 0) + 1;
+      return { title: document.title, rootClass: root.className, paragraphs: ps.length, marginBottom: count,
+        styled: root.querySelectorAll("p[style*='20px']").length, pending: /불법촬영물등 여부를 검토중/.test(root.innerText) };
+    });
+    console.log(JSON.stringify(r, null, 1));
+  } catch (e) { console.error(`[실패] ${e.message}`); process.exitCode = 1; }
+  finally { await ctx.close(); }
+}
+
 function preview(dir) {
   const post = readPost(dir);
   const urls = new Map(post.slots.filter((s) => s.file).map((s) => [s.marker, "file:///" + s.file.replace(/\\/g, "/")]));
@@ -473,5 +496,6 @@ else if (cmd === "cta") await addCta(cfg, arg, process.argv[4]);
 else if (cmd === "clean") await cleanMarkers(cfg, arg);
 else if (cmd === "links") await addLinks(cfg, arg, process.argv[4]);
 else if (cmd === "probe") await probe(cfg, arg);
+else if (cmd === "peek") await peek(cfg, arg);
 else if (cmd === "replace") await replacePost(cfg, arg, await pickPost(process.argv[4]));
-else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호> | replace <글번호> [폴더] | links <글번호> <블록.html> | probe <파일.html>");
+else console.log("사용법: node upload.mjs login | check | preview [폴더] | upload [폴더] | cta <글번호> <배너.html> | clean <글번호> | replace <글번호> [폴더] | links <글번호> <블록.html> | probe <파일.html> | peek <글번호>");
