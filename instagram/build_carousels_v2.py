@@ -1,7 +1,7 @@
 """카드뉴스 v2 — .claude/skills/frontend-design/적용규칙.md 를 적용한 버전 (2026-10-28).
 
 사용: python3 instagram/build_carousels_v2.py && node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets
-파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07), v2_13_01.png ~ v2_13_06.png (6장, 2026-11-09), v2_14_01.png ~ v2_14_06.png (6장, 2026-11-09), v2_15_01.png ~ v2_15_06.png (6장, 2026-11-11)
+파일: instagram/assets/v2_02_01.png ~ v2_02_06.png (6장, 2026-10-29 개정), v2_03_01.png ~ v2_03_07.png (7장), v2_04_01.png ~ v2_04_06.png (6장), v2_05_01.png ~ v2_05_06.png (6장), v2_06_01.png ~ v2_06_06.png (6장, 2026-11-01), v2_07_01.png ~ v2_07_06.png (6장, 2026-11-02), v2_08_01.png ~ v2_08_06.png (6장, 2026-11-03), v2_09_01.png ~ v2_09_06.png (6장, 2026-11-04), v2_10_01.png ~ v2_10_06.png (6장, 2026-11-05), v2_11_01.png ~ v2_11_06.png (6장, 2026-11-06), v2_12_01.png ~ v2_12_06.png (6장, 2026-11-07), v2_13_01.png ~ v2_13_06.png (6장, 2026-11-09), v2_14_01.png ~ v2_14_06.png (6장, 2026-11-09), v2_15_01.png ~ v2_15_06.png (6장, 2026-11-11), v2_16_01.png ~ v2_16_06.png (6장, 2026-11-12)
        특정 묶음만 렌더링: node .claude/skills/aeo-blog/scripts/render.mjs instagram/assets v2_03_
 
 디자인 계획(02 성적이 낮아도 게임학과):
@@ -1056,6 +1056,73 @@ B6 = f"""
 </div>
 """
 
+# ---------- 16 첫 게임, 한 판만 끝내요 (2026-11-12, posts/2026-11-09_게임-만들기-처음-시작) ----------
+F_CHIP, F_SERIES = "진로", "첫 게임, 한 판만 끝내요"
+
+# 1 표지 — 거대한 '한 판'
+F1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">엔진 깔고 석 달째 캐릭터만 움직인다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">한 판</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">첫 게임은<br>한 판만 <span class="mark">끝내요</span>.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">크기, 도구, 순서, 올리는 곳을<br>공식 안내 기준으로 정리했어요.</p>
+"""
+
+# 2 크기 — 순서 아님
+F2 = f"""
+<h1 style="margin-top:48px;font-size:88px">첫 게임 크기는<br>이만큼이에요.</h1>
+{submit("한 화면", "스크롤 없는 맵 하나")}
+{submit("한 조작", "이동 하나나 버튼 하나", True)}
+{submit("한 목표", "점수나 생존 시간")}
+<p class="body" style="margin-top:44px">기간은 2~4주를 넘기지 않아요.<br>RPG가 하고 싶다면<br>턴제 전투 한 판만 떼어 와요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">글로벌 게임 잼도 48시간 안에 게임 하나를 끝내요.</p>
+"""
+
+# 3 도구 — 순서 아님
+F3 = f"""
+<h1 style="margin-top:48px;font-size:88px">코딩을 못해도<br>도구는 있어요.</h1>
+{submit("GDevelop", "이벤트 블록으로 만들어요.<br>무료 플랜이 있어요")}
+{submit("블루프린트", "언리얼에 들어 있어요.<br>노드를 이어서 만들어요", True)}
+{submit("비주얼<br>스크립팅", "유니티에 들어 있어요.<br>퍼스널은 무료예요")}
+<p class="body" style="margin-top:44px">도구는 기능보다<br>내 장르 튜토리얼이 공식 문서에 있는지<br>보고 골라요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: GDevelop·언리얼 엔진·유니티 공식 안내(2026.11.09 확인)</p>
+"""
+
+# 4 완성 여섯 단계 — 실제 순서이므로 번호 (6단계라 하단 문구 없음)
+F4 = f"""
+<h1 style="margin-top:48px;font-size:88px">완성은 여섯 단계예요.</h1>
+{step(1, "핵심 동작 하나", "움직이고 부딪히면 끝. 그래픽은 네모여도 돼요")}
+{step(2, "한 판 끝내기", "30초~1분 뒤 이기거나 지게. 여기까지가 게임", True)}
+{step(3, "시작·끝 화면과 점수", "제목, 시작 버튼, 결과와 다시 하기")}
+{step(4, "소리·효과", "효과음 두세 개와 배경음 하나. 라이선스 확인")}
+{step(5, "세 명에게 시켜 보기", "막히는 곳만 고쳐요. 새 기능은 안 넣어요")}
+{step(6, "빌드", "다른 컴퓨터에서 켜지는지 확인")}
+"""
+
+# 5 올리는 곳 — 핵심 한 줄 오렌지 선
+F5 = f"""
+<h1 style="margin-top:48px;font-size:88px">올리는 곳은<br>itch.io부터.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">itch.io는 무료,<br>가격도 내가 정해요.</div>
+</div>
+<p class="body" style="margin-top:48px">구글 플레이는 등록비 25달러 1회,<br>애플은 연 99달러,<br>스팀은 게임당 100달러예요.</p>
+<p class="body" style="margin-top:36px">구글 플레이 개인 계정은<br>테스터 12명이 14일 연속 참여해야<br>정식 출시를 신청할 수 있어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: itch.io 제작자 문서·구글 플레이 콘솔 고객센터·<br>애플 개발자 프로그램·스팀웍스 문서(2026.11.09 확인)</p>
+"""
+
+# 6 상담
+F6 = f"""
+<h1 style="margin-top:60px;font-size:92px">캐릭터만 움직이고<br>멈춰 있다면?</h1>
+<p class="lead" style="margin-top:44px">지금 만든 걸 같이 보고<br>한 판으로 줄일 범위를 정해요.</p>
+<p class="body" style="margin-top:40px">끝낸 게임 하나가 입시·취업 포트폴리오의 시작이에요.<br>대전점 게임프로그래밍(유니티·언리얼) 과정에서 배울 수 있어요.<br>국비는 상담 → 과정 확인 → 카드 신청 순서예요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1071,6 +1138,7 @@ SETS = {
     "13": (P_CHIP, P_SERIES, [P1, P2, P3, P4, P5, P6]),
     "14": (T_CHIP, T_SERIES, [T1, T2, T3, T4, T5, T6]),
     "15": (B_CHIP, B_SERIES, [B1, B2, B3, B4, B5, B6]),
+    "16": (F_CHIP, F_SERIES, [F1, F2, F3, F4, F5, F6]),
 }
 
 if __name__ == "__main__":
