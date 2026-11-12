@@ -18,6 +18,7 @@
 > - 2026-11-09 공식 API: 릴스 r11(청강대 게임 프로그래밍 합격생, 간담회 프로그래밍편) https://www.instagram.com/reel/DfgCdtJjG1u/ · 게시물 13(게임 C++, 책 말고 게임 하나, 6장) https://www.instagram.com/p/DfgCkVwj5sA/ (사용자 수동 지시)
 > - 2026-11-10 공식 API: 게시물 14(TV에 나온 게임 기획자, 전착시 선공개 자막 기반, 6장) https://www.instagram.com/p/Dfira6Wj9tc/ (사용자 확인 후 게시) · 릴스 r12(청강대 게임 기획 합격생 인터뷰) https://www.instagram.com/reel/DfizLorHALK/
 > - 2026-11-11 공식 API: 릴스 r13(수강생 게임 프로그래밍 포트폴리오) https://www.instagram.com/reel/DflNAiJCSsW/ · 게시물 15(배경 원화, 투시부터, 6장) https://www.instagram.com/p/DflNL6GDwd7/ (사용자 수동 지시)
+> - 2026-11-12 공식 API: 릴스 r14(게임회사 면접, 한 게임만 10년) https://www.instagram.com/reel/DfnxOTUCsyO/ · 게시물 16(첫 게임, 한 판만 끝내요, 6장) https://www.instagram.com/p/DfnxX6bDxaG/ (사용자 수동 지시)
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
