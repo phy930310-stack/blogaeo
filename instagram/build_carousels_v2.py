@@ -1123,6 +1123,72 @@ F6 = f"""
 </div>
 """
 
+# ---------- 17 게임 자격증, 따야 할까요? (2026-11-13, posts/2026-11-11_게임-자격증) ----------
+L_CHIP, L_SERIES = "취업", "게임 자격증, 따야 할까요?"
+
+# 1 표지 — 거대한 '자격증'
+L1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임회사 가려면 자격증부터?</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">자격증</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">공고는 <span class="mark">포트폴리오</span>를<br>먼저 봤어요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">종목, 일정, 합격률, 쓸모를<br>공식 누리집 기준으로 정리했어요.</p>
+"""
+
+# 2 종목 셋 — 순서 아님
+L2 = f"""
+<h1 style="margin-top:48px;font-size:88px">게임 자격증은<br>세 종목이에요.</h1>
+{submit("기획", "게임기획전문가")}
+{submit("그래픽", "게임그래픽전문가", True)}
+{submit("프로그래밍", "게임프로그래밍전문가")}
+<p class="body" style="margin-top:52px">한국콘텐츠진흥원이 시행하는<br>국가기술자격이에요.</p>
+<p class="body" style="margin-top:36px">필기는 누구나 볼 수 있고<br>실기는 필기 합격 뒤 2년 안에 봐요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임국가기술자격검정 누리집(2026.11.11 확인)</p>
+"""
+
+# 3 일정 — 한 해에 한 번
+L3 = f"""
+<h1 style="margin-top:48px;font-size:88px">시험은 한 해에<br>한 번이에요.</h1>
+{submit("필기", "2026년 5월 16일<br>접수는 4월 8~17일", True)}
+{submit("실기", "2026년 9월 12일<br>접수는 8월 5~14일")}
+<p class="body" style="margin-top:52px">2027년 일정은 아직 공고 전이에요.<br>필기를 놓치면 1년을 기다려야 해요.<br>3월 말부터 공지사항을 확인하세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">2026년 시험 지역은 서울·대전·광주·부산·제주였어요.<br>2027년 공고 여부는 2026.11.13 확인</p>
+"""
+
+# 4 합격률 — 2025년
+L4 = f"""
+<h1 style="margin-top:48px;font-size:88px">2025년<br>합격률이에요.</h1>
+{submit("기획", "필기 86.15%<br>실기 66.05%")}
+{submit("그래픽", "필기 92.30%<br>실기 44.13%", True)}
+{submit("프로그래밍", "필기 82.25%<br>실기 100%")}
+<p class="body" style="margin-top:48px">프로그래밍 실기는 응시자가 35명이었어요.<br>응시자가 적어서 합격률이<br>해마다 크게 흔들려요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임국가기술자격검정 누리집 종목별 검정 현황(2025년)</p>
+"""
+
+# 5 쓸모 — 핵심 한 줄 오렌지 선
+L5 = f"""
+<h1 style="margin-top:48px;font-size:88px">채용 공고는<br>뭘 봤을까요?</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">공고 세 건에<br>자격증 이름은 없었어요.</div>
+</div>
+<p class="body" style="margin-top:48px">2026년 6~10월 게임잡 공고<br>세 건을 열어 봤어요.<br>두 건은 포트폴리오를 받았어요.</p>
+<p class="body" style="margin-top:36px">자격증의 공식 우대는<br>학점은행제 20학점,<br>병역특례업체 지원 가산점 10점이에요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 게임잡 채용 공고 3건(2026년 6~10월 등록),<br>게임국가기술자격검정 누리집 자격정보</p>
+"""
+
+# 6 상담
+L6 = f"""
+<h1 style="margin-top:60px;font-size:92px">자격증부터 딸지<br>작품부터 만들지?</h1>
+<p class="lead" style="margin-top:44px">목표 직군과 지금까지 만든 걸<br>같이 보고 순서를 정해요.</p>
+<p class="body" style="margin-top:40px">대전점에는 게임기획·게임그래픽·게임프로그래밍 과정이 있어요.<br>국비는 상담 → 과정 확인 → 카드 신청 순서예요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1139,6 +1205,7 @@ SETS = {
     "14": (T_CHIP, T_SERIES, [T1, T2, T3, T4, T5, T6]),
     "15": (B_CHIP, B_SERIES, [B1, B2, B3, B4, B5, B6]),
     "16": (F_CHIP, F_SERIES, [F1, F2, F3, F4, F5, F6]),
+    "17": (L_CHIP, L_SERIES, [L1, L2, L3, L4, L5, L6]),
 }
 
 if __name__ == "__main__":
