@@ -1189,6 +1189,73 @@ L6 = f"""
 </div>
 """
 
+# ---------- 18 게임 그래픽 디자이너, 갈래부터 (2026-11-14, posts/2026-10-31_게임-그래픽-디자이너-되는-법) ----------
+D_CHIP, D_SERIES = "진로", "게임 그래픽 디자이너, 갈래부터"
+
+# 1 표지 — 거대한 '5갈래'
+D1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임 그래픽 디자이너가 되고 싶다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">5갈래</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">툴보다 <span class="mark">갈래</span>부터<br>정해요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">하는 일, 고르는 법, 가는 길을<br>채용 공고 기준으로 정리했어요.</p>
+"""
+
+# 2 다섯 갈래 — 순서 아님
+D2 = f"""
+<h1 style="margin-top:48px;font-size:88px">하는 일이<br>다섯으로 나뉘어요.</h1>
+{submit("2D 원화", "캐릭터·배경 설정 그림")}
+{submit("3D 모델링", "입체와 질감", True)}
+{submit("애니메이션", "뼈대와 움직임")}
+{submit("이펙트", "스킬·폭발 연출")}
+{submit("UI", "메뉴·버튼·화면 배치")}
+<p class="body" style="margin-top:48px">채용 공고도 이 단위로 나눠 뽑아요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 2026년 10월 게임 채용 공고의 모집 분야</p>
+"""
+
+# 3 고르는 순서 — 실제 순서이므로 번호
+D3 = f"""
+<h1 style="margin-top:48px;font-size:88px">갈래는 이렇게<br>골라요.</h1>
+{step(1, "게임 한 장면을 멈춰요", "눈에 먼저 들어오는 걸 적어요", True)}
+{step(2, "첫 툴을 2주 써 봐요", "클립스튜디오 체험판, 블렌더, 유니티, 피그마")}
+{step(3, "더 만들고 싶으면 정해요", "지겨우면 옆 갈래로 옮겨 다시 2주")}
+<p class="body" style="margin-top:56px">학과 이름이나 과정 이름으로<br>먼저 고르면 순서가 뒤집혀요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">학과에 들어가도 안에서 다시 갈래를 정해야 해요.</p>
+"""
+
+# 4 공통 기초 — 핵심 한 줄 오렌지 선
+D4 = f"""
+<h1 style="margin-top:48px;font-size:88px">공통 기초는<br>드로잉이에요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">툴은 갈래를 정한 뒤<br>하나부터 배워요.</div>
+</div>
+<p class="body" style="margin-top:48px">형태, 명암, 색, 인체 비례는<br>3D·이펙트·UI에서도 그대로 써요.</p>
+<p class="body" style="margin-top:36px">3D는 3ds Max로 형태를 잡고<br>지브러쉬로 세부를 조각하고<br>서브스턴스 페인터로 질감을 입혀요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">채용 공고의 툴 요건에는 3ds Max가 자주 보였어요(2026년 10월 확인).</p>
+"""
+
+# 5 가는 길 둘 — 순서 아님
+D5 = f"""
+<h1 style="margin-top:48px;font-size:88px">가는 길은<br>둘이에요.</h1>
+{submit("고등학생", "포트폴리오·면접 전형<br>청강대 그래픽 분야는<br>창작물과 제작 과정을 내요", True)}
+{submit("성인", "국비 게임그래픽 과정<br>상담 → 과정 확인 → 카드 신청")}
+<p class="body" style="margin-top:52px">신입 공고는 갈래별로 뽑고<br>포트폴리오를 받아요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: ZDNet Korea 2026.09.09(청강대 2027학년도),<br>2026년 10월 게임 채용 공고</p>
+"""
+
+# 6 상담
+D6 = f"""
+<h1 style="margin-top:60px;font-size:92px">2D인지 3D인지<br>모르겠다면?</h1>
+<p class="lead" style="margin-top:44px">그린 그림이나 만든 걸 같이 보고<br>갈래와 첫 툴을 정해요.</p>
+<p class="body" style="margin-top:40px">고등학생은 지원할 수 있는 전형까지,<br>성인은 국비 과정 대상 여부까지 봐 드려요.<br>수시 2차 원서접수는 11월 25일까지예요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1206,6 +1273,7 @@ SETS = {
     "15": (B_CHIP, B_SERIES, [B1, B2, B3, B4, B5, B6]),
     "16": (F_CHIP, F_SERIES, [F1, F2, F3, F4, F5, F6]),
     "17": (L_CHIP, L_SERIES, [L1, L2, L3, L4, L5, L6]),
+    "18": (D_CHIP, D_SERIES, [D1, D2, D3, D4, D5, D6]),
 }
 
 if __name__ == "__main__":
