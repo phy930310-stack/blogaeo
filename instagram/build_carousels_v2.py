@@ -1256,6 +1256,72 @@ D6 = f"""
 </div>
 """
 
+# ---------- 19 게임학과 정시, 기다려도 될까요? (2026-11-15, posts/2026-11-14_게임학과-정시-면접전형) ----------
+Z_CHIP, Z_SERIES = "입시", "게임학과 정시, 기다려도 될까요?"
+
+# 1 표지 — 거대한 '17명'
+Z1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">세 학교 게임 전공이 정시에 뽑는 인원</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:220px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">17명</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">면접전형은<br><span class="mark">정시에 없어요.</span></h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">청강대·계원예대·한국영상대<br>2027학년도 모집요강을 열어 봤어요.</p>
+"""
+
+# 2 정시 모집 — 순서 아님
+Z2 = f"""
+<h1 style="margin-top:48px;font-size:88px">정시는 성적과<br>실기로 뽑아요.</h1>
+{submit("청강대", "학생부교과 3명<br>학생부 100%")}
+{submit("계원예대", "수능위주 3명, 실기위주 10명<br>실기는 소묘", True)}
+{submit("한국영상대", "학생부 1명")}
+<p class="body" style="margin-top:48px">작품을 내는 전형은 없어요.<br>정시 면접전형은 웹툰·만화 전공에 있어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 세 학교 2027학년도 모집요강(게임 전공, 정원 내)</p>
+"""
+
+# 3 수시 2차 모집 — 순서 아님
+Z3 = f"""
+<h1 style="margin-top:48px;font-size:88px">면접전형은<br>수시 2차에 있어요.</h1>
+{submit("청강대", "면접전형 50명<br>면접 100%, 포트폴리오 필수", True)}
+{submit("계원예대", "비교과전형 38명<br>면접 100%")}
+{submit("한국영상대", "면접전형 5명<br>면접 60% + 학생부 40%")}
+<p class="body" style="margin-top:48px">합치면 93명이에요.<br>정시 17명과 나란히 놓아 보세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 세 학교 2027학년도 모집요강(게임 전공, 정원 내)</p>
+"""
+
+# 4 마감 — 핵심 한 줄 오렌지 선
+Z4 = f"""
+<h1 style="margin-top:48px;font-size:88px">접수는<br>11월 25일까지예요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">새로 만들 시간은 없어요.<br>있는 작품을 묶어요.</div>
+</div>
+<p class="body" style="margin-top:48px">세 학교는 겹쳐 쓸 수 있어요.<br>전문대 수시는 6회 제한에 안 들어가요.</p>
+<p class="body" style="margin-top:36px">수시에 합격하면 등록을 안 해도<br>정시에는 지원할 수 없어요.<br>가고 싶은 순서부터 정하세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">계원예대는 18시, 한국영상대는 20시에 접수를 닫아요.</p>
+"""
+
+# 5 할 일 — 실제 순서이므로 번호
+Z5 = f"""
+<h1 style="margin-top:48px;font-size:88px">마감 전에<br>이 순서로 해요.</h1>
+{step(1, "학교와 전형을 정해요", "한 학교 안에서는 한 번만 쓸 수 있어요", True)}
+{step(2, "작품에 과정을 붙여요", "청강대 그래픽은 단계별 이미지가 필수")}
+{step(3, "접수하고 올려요", "청강대는 30MB 안쪽, 마감 전 다시 올릴 수 있어요")}
+{step(4, "면접에서 할 말을 정리해요", "청강대 15분 안팎, 한국영상대 10분 안팎")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 청강문화산업대·한국영상대 2027학년도 모집요강</p>
+"""
+
+# 6 상담
+Z6 = f"""
+<h1 style="margin-top:60px;font-size:92px">정시로 쓸지<br>고민 중이라면?</h1>
+<p class="lead" style="margin-top:44px">성적표와 작품을 같이 보고<br>쓸 수 있는 전형을 정리해요.</p>
+<p class="body" style="margin-top:40px">수시 2차 뒤에 남는 길도 봐 드려요.<br>정시 접수는 2027년 1월 4일~20일,<br>자율모집은 2월 27일까지예요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1274,6 +1340,7 @@ SETS = {
     "16": (F_CHIP, F_SERIES, [F1, F2, F3, F4, F5, F6]),
     "17": (L_CHIP, L_SERIES, [L1, L2, L3, L4, L5, L6]),
     "18": (D_CHIP, D_SERIES, [D1, D2, D3, D4, D5, D6]),
+    "19": (Z_CHIP, Z_SERIES, [Z1, Z2, Z3, Z4, Z5, Z6]),
 }
 
 if __name__ == "__main__":
