@@ -1322,6 +1322,73 @@ Z6 = f"""
 </div>
 """
 
+# ---------- 20 유니티, 돈 내고 써야 할까요? (2026-11-16, posts/2026-11-13_유니티-입문) ----------
+Y_CHIP, Y_SERIES = "개발", "유니티, 돈 내고 써야 할까요?"
+
+# 1 표지 — 거대한 '0원'
+Y1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">유니티로 첫 게임을 만들고 싶다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:220px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">0원</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">개인은 <span class="mark">무료</span>로<br>시작해요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">무료 조건, PC 사양, 시작 순서를<br>유니티 공식 문서로 확인했어요.</p>
+"""
+
+# 2 무료 조건 — 순서 아님
+Y2 = f"""
+<h1 style="margin-top:48px;font-size:88px">무료 조건은<br>20만 달러 미만.</h1>
+{submit("Personal", "매출·자금 20만 달러 미만<br>무료", True)}
+{submit("Pro", "20만 달러를 넘는 사업체<br>유료 구독")}
+{submit("Enterprise", "연 매출 2,500만 달러 초과<br>별도 견적")}
+<p class="body" style="margin-top:48px">지난 12개월 매출과 조달 자금이 기준이에요.<br>공부하는 단계에서는 닿지 않는 금액이에요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Unity 플랜·가격 안내(2026년 11월 13일 확인). 조건은 바뀔 수 있어요.</p>
+"""
+
+# 3 PC 사양 — 순서 아님
+Y3 = f"""
+<h1 style="margin-top:48px;font-size:88px">메모리 8GB면<br>시작할 수 있어요.</h1>
+{submit("메모리", "8GB 이상 권장", True)}
+{submit("윈도우", "윈도우 10 버전 21H1 이상")}
+{submit("맥", "macOS 13 벤투라 이상<br>애플 실리콘 M1 이상")}
+<p class="body" style="margin-top:48px">프로젝트가 크고 복잡할수록<br>메모리가 더 필요해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Unity 6.6 매뉴얼 System requirements(에디터 항목)</p>
+"""
+
+# 4 시작 5단계 — 실제 순서이므로 번호
+Y4 = f"""
+<h1 style="margin-top:48px;font-size:88px">이 순서로 시작해요.</h1>
+{step(1, "Unity Hub를 깔아요", "따라 할 강의와 같은 버전의 에디터를 받아요")}
+{step(2, "에디터 창을 익혀요", "Scene, Game, Hierarchy, Inspector, Project")}
+{step(3, "오브젝트에 컴포넌트를 붙여요", "유니티의 뼈대예요", True)}
+{step(4, "C# 스크립트를 써요", "Start는 한 번, Update는 매 프레임 불려요")}
+{step(5, "작은 게임 하나를 끝내요", "시작 화면부터 게임 오버까지 만들고 빌드해요")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Unity 6.6 매뉴얼(시작하기·게임 오브젝트·에디터 창)</p>
+"""
+
+# 5 C# 수준 — 핵심 한 줄 오렌지 선
+Y5 = f"""
+<h1 style="margin-top:48px;font-size:88px">C#은 다섯 가지면<br>첫 게임이 돼요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">문법책을 끝내고<br>시작할 필요는 없어요.</div>
+</div>
+<p class="body" style="margin-top:48px">변수, 조건문, 반복문, 함수, 클래스.<br>나머지는 만들다가 필요할 때 익혀요.</p>
+<p class="body" style="margin-top:36px">입문 강의는 Unity Learn의<br>Unity Essentials부터 봐요.<br>2주 분량이고 영어·스페인어로 제공돼요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: Unity Learn, Unity Essentials 과정 안내(2026년 11월 13일 확인)</p>
+"""
+
+# 6 상담
+Y6 = f"""
+<h1 style="margin-top:60px;font-size:92px">빈 프로젝트에서<br>막혔다면?</h1>
+<p class="lead" style="margin-top:44px">만들던 걸 같이 보고<br>다음에 할 걸 정해요.</p>
+<p class="body" style="margin-top:40px">취미로 작은 게임을 만든다면 독학으로 충분해요.<br>기한 안에 취업 포트폴리오를 끝내야 하면<br>코드를 봐 줄 사람이 있는 쪽이 빨라요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1341,6 +1408,7 @@ SETS = {
     "17": (L_CHIP, L_SERIES, [L1, L2, L3, L4, L5, L6]),
     "18": (D_CHIP, D_SERIES, [D1, D2, D3, D4, D5, D6]),
     "19": (Z_CHIP, Z_SERIES, [Z1, Z2, Z3, Z4, Z5, Z6]),
+    "20": (Y_CHIP, Y_SERIES, [Y1, Y2, Y3, Y4, Y5, Y6]),
 }
 
 if __name__ == "__main__":
