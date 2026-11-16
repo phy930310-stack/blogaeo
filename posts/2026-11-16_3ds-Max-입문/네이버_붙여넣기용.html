@@ -1,0 +1,180 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>네이버 붙여넣기 — 2026-11-16_3ds-Max-입문</title>
+<style>
+body{margin:0;background:#EEF1F7;font-family:'Malgun Gothic',sans-serif}
+.panel{position:sticky;top:0;z-index:9;background:#1E2A78;color:#fff;padding:14px 20px;font-size:14px;line-height:1.7}
+.panel b{color:#FFB199} .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0}
+.panel button{background:#FF5A36;color:#fff;border:0;border-radius:6px;padding:8px 14px;font-weight:bold;cursor:pointer;font-size:14px}
+.panel button.sub{background:#fff;color:#1E2A78}
+.val{background:rgba(255,255,255,.12);padding:4px 8px;border-radius:4px}
+#ok{color:#9EF0B5;font-weight:bold}
+#post{max-width:700px;margin:24px auto;background:#fff;padding:40px 36px;font-family:'Nanum Gothic','Malgun Gothic',sans-serif}
+</style></head><body>
+<div class="panel">
+<div class="row"><button onclick="copyPost()">① 본문 복사</button><button class="sub" onclick="copyText('t')">제목 복사</button><button class="sub" onclick="copyText('g')">태그 복사</button><span id="ok"></span></div>
+<div class="row">제목: <span class="val" id="t">3ds Max, 비싼데 어떻게 시작해요? 가격·사양·배우는 순서</span></div>
+<div class="row">태그: <span class="val" id="g">#3dsmax #3DMAX #3D맥스 #3dsmax입문 #3dsmax독학 #3dsmax가격 #3D모델링 #게임3D그래픽 #게임그래픽 #대전게임학원</span></div>
+<div>네이버 글쓰기 → 제목 칸에 제목 붙여넣기 → 본문 첫 줄 클릭 → <b>Ctrl+V</b> → 노란 줄 자리에 이미지 4장·지도 넣고 노란 줄 삭제 → (선택) 남색 굵은 줄은 '소제목', 💡 묶음은 '인용구' 서식 → 태그 입력 → 발행</div>
+</div>
+<div id="post">
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 네이버_썸네일.png — 사진 설명: 3ds Max는 체험판 30일로 먼저 써 볼 수 있어요</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">"3ds Max는 얼마예요? 학생은 공짜라던데요." 3D 상담을 하면 꼭 나오는 질문이에요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">값이 꽤 나가는 프로그램이라 결제부터 하기엔 부담스럽죠. 다행히 돈을 안 내고 먼저 써 보는 길이 두 가지 있어요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">오늘은 3ds Max로 뭘 하는지, 값이 얼마인지, 내 컴퓨터로 되는지, 처음에 뭘 만들면 좋은지 적어 볼게요. 지브러쉬와 서브스턴스 페인터는 언제 배우는지도 같이요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">(2026년 11월 16일에 오토데스크 한국 사이트의 가격·체험판·교육용 안내와 3ds Max 2027 요구 사양, 도움말을 보고 썼어요.)</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;"><b>💡 먼저 결론</b></p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;">· 3ds Max는 구독 제품이고 월간 324,500원, 연간 2,559,700원이에요.</p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;">· 30일 체험판과 학생·교사용 교육 플랜은 무료예요.</p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;">· 윈도우 11에서 돌아가고 메모리는 8GB 이상이 권장이에요.</p>
+<p style="font-size:15px;line-height:1.8;color:#333;margin:0;">· 첫 작품은 소품 하나, 지브러쉬는 그다음이에요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>3ds Max, 게임 그래픽에서 뭘 하는 프로그램이에요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">3D 모델의 뼈대를 만드는 프로그램이에요. 게임 그래픽에서는 세 가지 일을 맡아요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 형태 잡기: 비율과 큰 덩어리를 만들어요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 리토폴로지: 게임에 넣을 수 있게 면을 가볍게 정리해요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· UV 펴기: 입체 표면을 평면으로 펼쳐 텍스처 자리를 만들어요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">오토데스크 소개 글에는 게임 말고도 영화, TV, 디자인 시각화가 쓰임새로 올라 있어요. 3D 모델러, 애니메이터, 조명 아티스트가 쓰는 프로그램이라고도 적혀 있고요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">지난 10월에 게임 그래픽 채용 공고를 열어 봤을 때도 3ds Max를 요구하는 곳이 여럿 보였어요. 그래도 회사마다 다르니 가고 싶은 곳 공고는 직접 확인해 보세요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>값은 얼마고, 안 내고 쓰는 길이 있어요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 공통_max-price.png — 사진 설명: 체험판, 교육 플랜, 구독 세 가지를 나란히 놓았어요</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">오토데스크 한국 사이트에 올라온 값이에요(2026년 11월 16일 확인).</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 월간 구독: 324,500원</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 연간 구독: 2,559,700원</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· Flex 토큰: 33토큰에 148,830원부터, 하루에 6토큰씩 써요</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">돈을 안 내는 길은 둘이에요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">첫째는 무료 체험판이에요. 30일 동안 최신 버전 기능을 전부 써 볼 수 있어요. 기간을 늘려 주지는 않아요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">둘째는 교육 플랜이에요. 자격이 확인된 학생과 교사는 1년 동안 무료로 쓰고 자격이 이어지면 매년 갱신해요. 다만 공부하는 용도로만 써야 해요. 돈을 받는 작업에는 못 써요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">내가 교육 플랜 대상인지는 오토데스크 교육용 안내에서 자격 요건을 보면 돼요. 값과 조건은 바뀔 수 있으니 결제 전에 한 번 더 확인하세요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>내 컴퓨터로 돌아갈까요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 공통_max-spec.png — 사진 설명: 3ds Max 2027 요구 사양을 항목별로 정리했어요</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">지금 버전은 3ds Max 2027이에요. 요구 사양 문서에는 이렇게 적혀 있어요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 운영체제: 윈도우 11</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· CPU: SSE4.2가 되는 64비트 멀티코어</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 메모리: 최소 4GB, 권장은 8GB 이상</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 설치 공간: 9GB</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 마우스: 버튼 세 개짜리</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">운영체제 칸에는 윈도우만 있어요. 맥북만 있다면 윈도우 컴퓨터가 따로 필요해요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">그래픽카드는 모델명이 적혀 있지 않아요. 오토데스크가 올려 둔 인증 하드웨어 목록에서 찾아보라고 해요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">최소 사양은 켜지는 기준이라고 보시면 돼요. 지브러쉬나 게임 엔진을 같이 띄우면 메모리가 더 들어요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>처음엔 이 순서로 해 보세요</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">🖼 [이미지 넣는 자리] 공통_max-steps.png — 사진 설명: 화면 익히기부터 엔진에 넣어 보기까지 다섯 단계예요</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">1. 화면부터 봐요. 가운데 뷰포트에서 장면을 보고 오른쪽 커맨드 패널에서 만들고 고쳐요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">2. 상자를 하나 만들어 Editable Poly로 바꿔요. 여기서부터 점·선·면을 직접 만져요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">3. 모디파이어를 올려 봐요. 대칭이나 표면을 부드럽게 하는 기능이 스택에 쌓여요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">4. Unwrap UVW로 UV를 펴요. 텍스처를 입힐 자리를 만드는 일이에요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">5. FBX로 뽑아서 유니티나 언리얼에 넣어 봐요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">2번에서 시간을 가장 많이 쓰게 돼요. Editable Poly에는 버텍스, 에지, 보더, 폴리곤, 엘리먼트 다섯 단계가 있어요. 어느 단계를 골랐느냐에 따라 만질 수 있는 게 달라져요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">스택은 아래에서 위로 읽어요. 3ds Max가 맨 아래 것부터 차례로 계산하거든요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">메뉴 이름이 생각 안 날 땐 뷰포트 빈 곳에서 X 키를 눌러 보세요. 검색 창이 떠요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>지브러쉬·서브스턴스 페인터는 언제 배워요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">세 프로그램은 하는 일이 달라요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 3ds Max: 형태, 면 정리, UV</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 지브러쉬: 주름이나 흠집 같은 세부 조각</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 서브스턴스 페인터: 굴곡을 굽고 색과 질감을 칠하기</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">그렇다고 셋을 한꺼번에 시작하진 마세요. 첫 소품은 3ds Max와 서브스턴스 페인터 둘로 끝까지 가 보는 걸 권해요. 지브러쉬는 두 번째 작품에서 붙여도 늦지 않아요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">고등학생이라면 만드는 동안 스케치와 중간 화면을 꼭 모아 두세요. 게임학과 포트폴리오·면접 전형은 완성작과 함께 과정을 보거든요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>혼자 할까요, 배울까요?</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">3D가 나랑 맞는지 보는 정도는 혼자 해도 돼요. 체험판이 있고 3ds Max 2027 도움말은 한국어판도 있어요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">기한을 두고 취업을 준비한다면 얘기가 달라요. 내 모델을 보고 어디를 고칠지 짚어 주는 사람이 있어야 속도가 나요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">저희 대전점 게임그래픽 수업의 3D 파트는 3ds Max와 지브러쉬, 서브스턴스 페인터가 중심이에요. 국비로는 게임그래픽 과정이 국민내일배움카드 과정으로 올라가 있어요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">국비는 상담 → 과정 확인 → 카드 신청 순서로 하세요. 들어오기 전에 상담과 간단한 실기로 기초를 봐요. 훈련비와 자부담은 고용24에서 과정명으로 찾아보시면 돼요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>체험판 한 달을 그냥 보낸 취준생 이야기 (가상 사례)</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">아래는 상담에서 자주 나오는 고민을 재구성한 가상 사례예요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">3D 모델러로 취업하고 싶은 20대 비전공자가 왔어요. 3ds Max 체험판으로 한 달 동안 영상 강의를 따라 했대요. 노트북은 윈도우 11에 메모리 8GB였어요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">걱정은 두 가지였어요. 체험판이 끝났는데 완성작이 없다는 것, 그리고 지브러쉬부터 배워야 하느냐는 것.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">같이 들여다보니 강의마다 버전이 달라서 메뉴 찾는 데 시간을 많이 썼더라고요. 상자는 만들었는데 Editable Poly로 바꿔 끝까지 다듬은 건 없었어요. UV와 FBX는 손도 못 댔고요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">그래서 이렇게 정했어요. 나무 상자 하나를 골라 모델링, UV, 엔진에 넣기까지 먼저 한 바퀴 돌아요. 지브러쉬는 두 번째 소품에서 시작해요. 구독을 할지 국비 과정을 들을지는 과정 구성을 확인하고 정하기로 했어요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>자주 묻는 질문</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;"><b>Q. 맥북으로는 3ds Max를 못 쓰나요?</b></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">A. 3ds Max 2027 요구 사양에는 윈도우 11만 적혀 있어요. 맥에 부트캠프나 패러렐즈, VMware를 깔아 돌리는 경우는 오토데스크가 기술 지원을 하지 않는다고 밝혔어요(2023년 10월 8일 자 문서). 윈도우 컴퓨터로 하시는 게 마음 편해요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;"><b>Q. 체험판으로 만든 파일은 나중에 날아가나요?</b></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">A. 아니에요. 체험판 때 쓴 오토데스크 계정 그대로 구독하면 돼요. 작업한 프로젝트 파일과 설정이 그대로 넘어온다고 체험판 안내에 나와 있어요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:19px;font-weight:bold;line-height:1.6;color:#1E2A78;margin:0;"><b>다음 글에서 이어서 알려드릴게요</b></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 모델 하나가 완성되기까지 거치는 단계는요? '게임 3D 모델링 입문' 글에 있어요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 3D 말고 다른 그래픽 갈래는요? '게임 그래픽 디자이너 되는 법' 글로 이어져요.</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">· 만든 모델을 넣을 엔진은요? '유니티 입문' 글을 보세요.</p>
+<p style="margin:0;"><br></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;"><b>참고 자료 (2026년 11월 16일 확인)</b></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 오토데스크 한국 사이트 「3ds Max」 제품 안내 — 구독 가격, Flex 토큰, 쓰임새</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 오토데스크 한국 사이트 「3ds Max 무료 체험판」 안내 — 체험 기간, 연장 여부, 체험판 파일</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 오토데스크 한국 사이트 「학생 및 교사용 Autodesk 소프트웨어 액세스」 — 교육 플랜 기간, 자격, 사용 범위</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 오토데스크 지원 문서 「System requirements for Autodesk 3ds Max 2027」 (2026년 3월 25일 자) — 운영체제, CPU, 메모리, 설치 공간</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 오토데스크 지원 문서 「3ds Max support with Apple macOS」 (2023년 10월 8일 자) — 맥 지원 범위</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">· 3ds Max 2027 도움말 — 화면 구성, 커맨드 패널, Editable Poly, 모디파이어 스택, Unwrap UVW, FBX 내보내기</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;font-size:13px;color:#888;">값과 사양, 교육 플랜 조건은 바뀔 수 있어요. 결제하거나 설치하기 전에 오토데스크 공식 사이트에서 다시 확인해 주세요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;color:#bbb;">─────────────</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">SBS아카데미게임학원 대전점 입시&amp;취업상담팀</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">📍 대전광역시 서구 대덕대로 179, 5층 (둔산동, 엠제이굿모닝어학원빌딩 501호)</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">📞 042-716-7439</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">🕘 운영시간 09:00~22:00</p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">지금까지 만든 걸 보여 주시면 다음에 만들 작품과 맞는 과정, 국비가 되는지까지 같이 정리해 드려요.</p>
+<p style="margin:0;"><br></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">▶ 온라인 상담 신청(1~2분): <a href="https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&amp;entry.607658700=%EB%84%A4%EC%9D%B4%EB%B2%84+%EB%B8%94%EB%A1%9C%EA%B7%B8">https://docs.google.com/forms/d/e/1FAIpQLSf95pz1dP6hum4XX93TrrXMCAbCY4304xuq8iRFZPAvpzJEIw/viewform?usp=pp_url&amp;entry.607658700=%EB%84%A4%EC%9D%B4%EB%B2%84+%EB%B8%94%EB%A1%9C%EA%B7%B8</a></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">▶ 게임학원 홈페이지: <a href="https://dj-001.sbsgameacademy.com/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-11-16_3ds-Max-입문">https://dj-001.sbsgameacademy.com/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-11-16_3ds-Max-입문</a></p>
+<p style="font-size:15px;line-height:1.8;color:#222;margin:0;">▶ 웹툰학원 홈페이지: <a href="https://dj-001.sbswebtoon.com/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-11-16_3ds-Max-입문">https://dj-001.sbswebtoon.com/?utm_source=naver&amp;utm_medium=blog&amp;utm_campaign=2026-11-16_3ds-Max-입문</a></p>
+<p style="margin:0;"><br></p>
+<p style="font-size:14px;line-height:1.6;background:#FFF3B0;color:#6B5500;margin:0;">📍 [지도 넣는 자리] 툴바 '장소' → "SBS아카데미게임학원 대전점" 검색 → 추가 → 이 줄 삭제</p>
+</div>
+<script>
+function flash(m){const o=document.getElementById('ok');o.textContent=m;setTimeout(()=>o.textContent='',2500)}
+function copyPost(){const r=document.createRange();r.selectNodeContents(document.getElementById('post'));const s=getSelection();s.removeAllRanges();s.addRange(r);const ok=document.execCommand('copy');s.removeAllRanges();flash(ok?'본문 복사됨 — 네이버 본문에 Ctrl+V':'복사 실패 — 본문을 드래그해 Ctrl+C')}
+function copyText(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>flash('복사됨'),()=>{const r=document.createRange();r.selectNodeContents(document.getElementById(id));const s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();flash('복사됨')})}
+</script>
+</body></html>
