@@ -97,6 +97,7 @@ Claude 세션이 있으면 **값을 보지 않고** 클립보드에서 바로 �
 | `check`에서 "Cannot parse access token" | `graph.instagram.com`으로 보낸 것. publish.py는 `graph.facebook.com`을 써야 한다 |
 | 게시할 때 권한 오류(#10, #200) | 구성 권한에 `instagram_content_publish`가 있는지 확인 → 토큰 재발급 |
 | 이미지 오류 | Claude가 처리한다(JPEG, 공개 주소, push 여부) |
+| 모든 호출이 `API access blocked.`(code 200, error_subcode 5258005) — `/me` 조회까지 막힘 | 토큰·앱 문제가 아니라 **Meta 개발자 계정 잠금**이다(2026-11-17 확인). 크롬에서 developers.facebook.com/apps 를 열면 "계정 확인이 필요합니다 — 이 개발자 계정에서 비정상적인 활동이 감지되었습니다"가 뜬다. **계정 확인 → 계속 → 신원 확인(이메일로 인증 코드)** 을 사용자가 직접 마치면 풀린다. 인증 코드는 Claude가 대신 넣지 않는다. 토큰 없는 호출은 정상 오류(2500)를 돌려주므로 IP 차단이 아니다. 풀린 뒤 `publish.py check`부터 확인. 반복 호출 금지 |
 
 ## 참고 (Meta 공식 문서)
 - [Instagram Platform 개요 · Unified Login](https://developers.facebook.com/docs/instagram-platform/)
