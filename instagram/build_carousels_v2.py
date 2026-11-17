@@ -1389,6 +1389,73 @@ Y6 = f"""
 </div>
 """
 
+# ---------- 21 3ds Max, 비싼데 어떻게 시작해요? (2026-11-17, posts/2026-11-16_3ds-Max-입문) ----------
+X_CHIP, X_SERIES = "그래픽", "3ds Max, 비싼데 어떻게 시작해요?"
+
+# 1 표지 — 거대한 '30일'
+X1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">3ds Max를 배워 보고 싶다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:220px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">30일</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">체험판은 <span class="mark">무료</span>로<br>써 볼 수 있어요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">가격, PC 사양, 시작 순서를<br>오토데스크 공식 안내로 확인했어요.</p>
+"""
+
+# 2 쓰는 길 셋 — 순서 아님
+X2 = f"""
+<h1 style="margin-top:48px;font-size:88px">쓰는 길은<br>세 가지예요.</h1>
+{submit("체험판", "30일 무료<br>최신 버전 전체 기능", True)}
+{submit("교육 플랜", "자격이 확인된 학생·교사<br>1년 무료, 매년 갱신")}
+{submit("구독", "월 324,500원<br>연 2,559,700원")}
+<p class="body" style="margin-top:48px">체험판 기간은 늘릴 수 없어요.<br>교육 플랜은 교육 목적으로만 써요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 오토데스크 한국 사이트(2026년 11월 16일 확인). 가격과 조건은 바뀔 수 있어요.</p>
+"""
+
+# 3 PC 사양 — 순서 아님
+X3 = f"""
+<h1 style="margin-top:48px;font-size:88px">윈도우 11에서<br>돌아가요.</h1>
+{submit("운영체제", "윈도우 11", True)}
+{submit("메모리", "최소 4GB<br>권장 8GB 이상")}
+{submit("설치 공간", "9GB")}
+<p class="body" style="margin-top:48px">요구 사양에 적힌 운영체제는 윈도우뿐이에요.<br>맥북만 있다면 윈도우 PC가 필요해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 오토데스크 3ds Max 2027 System requirements(2026.3.25 자)</p>
+"""
+
+# 4 시작 5단계 — 실제 순서이므로 번호
+X4 = f"""
+<h1 style="margin-top:48px;font-size:88px">이 순서로 시작해요.</h1>
+{step(1, "화면을 익혀요", "뷰포트에서 보고 커맨드 패널에서 만들어요")}
+{step(2, "상자를 Editable Poly로 바꿔요", "점·선·면을 직접 만지는 단계예요", True)}
+{step(3, "모디파이어를 올려요", "스택은 아래에서 위로 읽어요")}
+{step(4, "Unwrap UVW로 UV를 펴요", "텍스처를 입힐 자리를 만들어요")}
+{step(5, "FBX로 엔진에 넣어요", "유니티나 언리얼에서 크기와 방향을 봐요")}
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 3ds Max 2027 도움말(2026년 11월 16일 확인)</p>
+"""
+
+# 5 다른 툴 — 핵심 한 줄 오렌지 선
+X5 = f"""
+<h1 style="margin-top:48px;font-size:88px">셋을 한꺼번에<br>시작하지 마세요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">첫 작품은<br>소품 하나로 끝까지.</div>
+</div>
+<p class="body" style="margin-top:48px">3ds Max는 형태와 면 정리, UV를 맡아요.<br>지브러쉬는 주름과 흠집 같은 세부 조각,<br>서브스턴스 페인터는 색과 질감이에요.</p>
+<p class="body" style="margin-top:36px">첫 소품은 3ds Max와 서브스턴스 페인터로,<br>지브러쉬는 두 번째 작품에서 더해도 돼요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">역할 구분은 블로그 「게임 3D 모델링 입문」 글을 따랐어요.</p>
+"""
+
+# 6 상담
+X6 = f"""
+<h1 style="margin-top:60px;font-size:92px">체험판 30일,<br>어떻게 쓸까요?</h1>
+<p class="lead" style="margin-top:44px">만들어 본 걸 같이 보고<br>첫 작품과 순서를 정해요.</p>
+<p class="body" style="margin-top:40px">대전점 게임그래픽 수업의 3D는<br>3ds Max, 지브러쉬, 서브스턴스 페인터가 중심이에요.<br>국비는 상담 → 과정 확인 → 카드 신청 순서예요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1409,6 +1476,7 @@ SETS = {
     "18": (D_CHIP, D_SERIES, [D1, D2, D3, D4, D5, D6]),
     "19": (Z_CHIP, Z_SERIES, [Z1, Z2, Z3, Z4, Z5, Z6]),
     "20": (Y_CHIP, Y_SERIES, [Y1, Y2, Y3, Y4, Y5, Y6]),
+    "21": (X_CHIP, X_SERIES, [X1, X2, X3, X4, X5, X6]),
 }
 
 if __name__ == "__main__":
