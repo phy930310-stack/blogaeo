@@ -23,7 +23,7 @@
 > - 2026-11-14 공식 API: 릴스 r16(청강대 간담회 게임 기획편 2탄, 기획서 디테일) https://www.instagram.com/reel/DftD6n5GVMS/ · 게시물 18(게임 그래픽 디자이너, 갈래부터, 6장) https://www.instagram.com/p/DftEGcyj_lQ/ (사용자 수동 지시)
 > - 2026-11-15 공식 API: 릴스 r17(모작만 하면 그림 망치는 이유, 세미나 특강) https://www.instagram.com/reel/Dfwh_tTAn24/ · 게시물 19(게임학과 정시, 기다려도 될까요?, 6장) https://www.instagram.com/p/DfwiLryEwnZ/ (사용자 수동 지시 "오늘은 SNS 한 건씩만")
 > - 2026-11-16 공식 API: 릴스 r18(자소서 '단점' 칸, 취업 세미나) https://www.instagram.com/reel/DfyCR6lD4G7/ · 게시물 20(유니티, 돈 내고 써야 할까요?, 6장) https://www.instagram.com/p/DfyCdJpjxZ8/ (사용자 수동 지시)
-> - 2026-11-17 공식 API: 릴스 r19(캐릭터 디자인, 얼굴부터 그리는 실수) (2026-11-17 API 차단으로 미게시 — 수동 업로드 대기) · 게시물 21(3ds Max, 비싼데 어떻게 시작해요?, 6장) (2026-11-17 API 차단으로 미게시 — 수동 업로드 대기) (사용자 수동 지시 "오늘 SNS 2건 업로드")
+> - 2026-11-17 공식 API: 릴스 r19(캐릭터 디자인, 얼굴부터 그리는 실수) https://www.instagram.com/reel/Df1WLRpGXht/ · 게시물 21(3ds Max, 비싼데 어떻게 시작해요?, 6장) https://www.instagram.com/p/Df1WW5Vj8Lx/ (사용자 수동 지시 "오늘 SNS 2건 업로드") — 개발자 계정 잠금으로 한 번 막혔다가 사용자 신원 확인 뒤 같은 날 게시
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
