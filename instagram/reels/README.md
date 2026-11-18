@@ -28,7 +28,7 @@
 | r17 | r17_모작만-하면-그림-망치는-이유.mp4 | https://www.youtube.com/shorts/2R1dzYXMq_U | 36초 | 1080×1920 | 2026-11-15 https://www.instagram.com/reel/Dfwh_tTAn24/ |
 | r18 | r18_자소서-단점-칸.mp4 | https://www.youtube.com/shorts/cZAXtIgENWY | 66초 | 720×1280 | 2026-11-16 https://www.instagram.com/reel/DfyCR6lD4G7/ |
 | r19 | r19_캐릭터-디자인-초보-실수.mp4 | https://www.youtube.com/shorts/gyJkhHb4WTQ | 72초 | 1080×1920 | 2026-11-17 https://www.instagram.com/reel/Df1WLRpGXht/ |
-| r20 | r20_웹툰-신입-회사도-기다려준다.mp4 | https://www.youtube.com/shorts/85IujCC_m4E | 60초 | 1080×1920 | 2026-11-18 (2026-11-18 게시 대기) |
+| r20 | r20_웹툰-신입-회사도-기다려준다.mp4 | https://www.youtube.com/shorts/85IujCC_m4E | 60초 | 1080×1920 | 2026-11-18 https://www.instagram.com/reel/Df3a7aRgKkJ/ |
 
 2026-11-03 두 번째 묶음(r06~r09)을 `yt-dlp --flat-playlist -J --extractor-args "youtube:lang=ko" <채널>/shorts`(224개)에서 입시 관련 제목으로 골라 자동 자막과 함께 받음. '청강대 같이 가볼까?'(hMXQ1oowixI)는 음악만 있어 제외. 영상 코덱은 AV1이어도 r01~r05처럼 API 게시가 됐다. 다음 묶음 후보(미확보): 24학년도 청강대 간담회 [게임 기획편](35mThaUTMKI)·[게임 프로그래밍편](RMYkvGk2vEc), 게임 기획 합격생 인터뷰(Qk7I9u6eJ7g), 청강대 합격생 '안 늦었어요'(YJiVm0_X6MA).
 
