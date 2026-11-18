@@ -1456,6 +1456,73 @@ X6 = f"""
 </div>
 """
 
+# ---------- 22 고2 겨울방학, 포트폴리오 시작 (2026-11-18, 새 주제 기준: 상담할 이유가 생기는 주제) ----------
+# 근거: 전문대교협 2028학년도 전문대학 입학전형 기본사항 보도(대학저널 2025.09.11·한국교육신문 2025.09.12 — 수시 1차 원서접수 2027.9.20 시작),
+# 청강대 게임콘텐츠스쿨 2027학년도 면접전형(면접 100%, 포트폴리오 필수, 분야별 제출물)·계원예대 게임미디어과 면접 100%(기존 카드 02·05·19 확인분).
+# 기억 요소 = 거대한 글자 '열 달'(2026-11-18 기준 접수 시작까지). 툴·가격 정보 없음.
+W_CHIP, W_SERIES = "입시", "고2 겨울방학, 포트폴리오 시작"
+
+# 1 표지 — 거대한 '열 달'
+W1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">지금 고2라면 수시 1차 접수까지</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:220px;line-height:.95;font-weight:800;letter-spacing:-6px;margin-left:-6px">열 달</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">포트폴리오는<br><span class="mark">겨울방학</span>에 시작해요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">성적이 낮아도 가는 면접전형,<br>방학에 할 일을 순서대로 적었어요.</p>
+"""
+
+# 2 면접전형 — 순서 아님
+W2 = f"""
+<h1 style="margin-top:48px;font-size:88px">면접전형은<br>내신을 안 봐요.</h1>
+{submit("청강대", "게임콘텐츠스쿨 면접전형<br>면접 100%, 포트폴리오 필수", True)}
+{submit("계원예대", "게임미디어과<br>면접 100%")}
+<p class="body" style="margin-top:48px">성적이 낮아도 작품과 면접으로 평가받아요.<br>그래서 낼 작품이 먼저 있어야 해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">2027학년도 모집요강 기준. 2028학년도는 요강이 나오면 다시 확인하세요.</p>
+"""
+
+# 3 분야별 제출물 — 순서 아님
+W3 = f"""
+<h1 style="margin-top:48px;font-size:88px">분야부터<br>정해야 해요.</h1>
+{submit("기획", "창작기획서")}
+{submit("그래픽", "창작물과 제작 과정", True)}
+{submit("프로그래밍", "핵심 소스 코드와<br>기술명세서")}
+<p class="body" style="margin-top:48px">분야마다 내는 게 달라요.<br>분야가 안 정해지면 첫 작품도 못 정해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">청강대 게임콘텐츠스쿨 2027학년도 면접전형 기준</p>
+"""
+
+# 4 겨울방학 순서 — 실제 순서이므로 번호
+W4 = f"""
+<h1 style="margin-top:48px;font-size:88px">겨울방학엔<br>이 순서로 해요.</h1>
+{step(1, "분야를 정해요", "기획, 그래픽, 프로그래밍 중 하나", True)}
+{step(2, "기초를 잡아요", "그래픽은 크로키와 인체, 프로그래밍은 엔진 기초,<br>기획은 좋아하는 게임 분석")}
+{step(3, "작품 하나를 끝까지 만들어요", "작게 잡아야 방학 안에 끝나요")}
+{step(4, "만든 과정을 남겨요", "스케치, 중간 저장본, 고친 이유")}
+"""
+
+# 5 일정 — 핵심 한 줄 오렌지 선
+W5 = f"""
+<h1 style="margin-top:48px;font-size:88px">접수는 내년<br>9월 20일부터예요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">방학엔 첫 작품,<br>학기 중엔 고치기.</div>
+</div>
+<p class="body" style="margin-top:48px">3학년 학기 중에는 방학만큼 시간이 안 나요.<br>방학에 만든 걸 고치면서 두 번째를 준비해요.</p>
+<p class="body" style="margin-top:36px">여름방학은 마무리와 면접 연습에 써요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">전문대 수시 1차 원서접수 2027년 9월 20일 시작<br>출처: 전문대교협 2028학년도 입학전형 기본사항(2025년 9월 보도)</p>
+"""
+
+# 6 상담
+W6 = f"""
+<h1 style="margin-top:60px;font-size:92px">고2인데 뭐부터<br>해야 할까요?</h1>
+<p class="lead" style="margin-top:44px">그려 둔 그림이나 만들던 걸 같이 보고<br>분야와 방학 계획을 정해요.</p>
+<p class="body" style="margin-top:40px">아직 만든 게 없어도 괜찮아요.<br>성적표를 같이 보면<br>쓸 수 있는 전형 범위도 나와요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1477,6 +1544,7 @@ SETS = {
     "19": (Z_CHIP, Z_SERIES, [Z1, Z2, Z3, Z4, Z5, Z6]),
     "20": (Y_CHIP, Y_SERIES, [Y1, Y2, Y3, Y4, Y5, Y6]),
     "21": (X_CHIP, X_SERIES, [X1, X2, X3, X4, X5, X6]),
+    "22": (W_CHIP, W_SERIES, [W1, W2, W3, W4, W5, W6]),
 }
 
 if __name__ == "__main__":
