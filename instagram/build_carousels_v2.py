@@ -1523,6 +1523,73 @@ W6 = f"""
 </div>
 """
 
+# ---------- 23 국비 수업, 카드보다 상담 먼저 (2026-11-19, posts/2026-11-12_대전-국비지원-내일배움카드) ----------
+# 근거: 고용24 국민내일배움카드 제도 안내(2026.7.27 수정본, 2026-11-12 확인) + brand/profile.md(대전점 국비 3과정, 입과 전 상담+간단한 실기,
+# 안내 순서 상담 → 과정 확인 → 카드 신청). 기억 요소 = 거대한 글자 '상담 먼저'. 한도·금액이 주인공인 03과 달리 '순서'만 다룬다. 훈련비·자부담 금액 없음.
+V_CHIP, V_SERIES = "국비", "국비 수업, 카드보다 상담 먼저"
+
+# 1 표지 — 거대한 '상담 먼저'
+V1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">내일배움카드로 배우고 싶다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:190px;line-height:1;font-weight:800;letter-spacing:-6px;margin-left:-6px">상담 먼저</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">카드는<br><span class="mark">맨 마지막</span>에 만들어요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">카드부터 만들어 오면<br>과정에 따라 입과가 안 될 수 있어요.</p>
+"""
+
+# 2 이유 — 핵심 한 줄 오렌지 선
+V2 = f"""
+<h1 style="margin-top:48px;font-size:88px">카드가 있어도<br>바로 수업은 아니에요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">과정마다 입과 전에<br>확인하는 절차가 있어요.</div>
+</div>
+<p class="body" style="margin-top:48px">카드는 고용24에 올라간 과정에서만 결제돼요.<br>한 학원 안에서도 되는 반과 안 되는 반이 갈려요.</p>
+<p class="body" style="margin-top:36px">대전점 국비 과정은 들어오기 전에<br>상담과 간단한 실기로 기초를 봐요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 고용24 국민내일배움카드 제도 안내(2026년 7월 27일 수정본)</p>
+"""
+
+# 3 순서 — 실제 순서이므로 번호
+V3 = f"""
+<h1 style="margin-top:48px;font-size:88px">이 순서로 가요.</h1>
+{step(1, "학원 상담", "과정 구성과 입과 전 확인 절차를 들어요", True)}
+{step(2, "고용24에서 과정 확인", "과정명으로 찾아 훈련기간과 본인부담액을 봐요")}
+{step(3, "내일배움카드 신청", "고용24 온라인이나 고용센터에서 해요")}
+<p class="body" style="margin-top:56px">일을 쉬는 중이면 구직 신청이 돼 있어야<br>카드 신청이 넘어가요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">140시간 이상 과정은 수강 신청 전에 훈련 진단·상담도 받아요.</p>
+"""
+
+# 4 상담 때 먼저 말할 것 — 순서 아님
+V4 = f"""
+<h1 style="margin-top:48px;font-size:88px">상담 때 먼저<br>말해 주세요.</h1>
+{submit("실업급여", "받는 동안에는<br>훈련장려금이 안 나와요", True)}
+{submit("국민취업<br>지원제도", "참여 유형에 따라<br>자부담 비율이 달라져요")}
+{submit("옛 카드", "만든 지 5년이 넘었으면<br>다시 발급받아야 해요")}
+<p class="body" style="margin-top:48px">과정에 따라 입과가 안 될 수도 있어요.<br>고용센터 담당자와 같이 확인하는 게 정확해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">출처: 고용24 국민내일배움카드 제도 안내(2026년 7월 27일 수정본)</p>
+"""
+
+# 5 대전점 국비 과정 — 순서 아님
+V5 = f"""
+<h1 style="margin-top:48px;font-size:88px">대전점 국비 과정은<br>세 가지예요.</h1>
+{course("게임그래픽", "국민내일배움카드 과정")}
+{course("웹툰", "국민내일배움카드 과정")}
+{course("게임프로그래밍(유니티)", "국가기간·전략산업직종훈련", True)}
+<p class="body" style="margin-top:auto;padding-bottom:40px">훈련비와 자부담은 사람마다 달라요.<br>고용24에서 과정명으로 확인하세요.</p>
+"""
+
+# 6 상담
+V6 = f"""
+<h1 style="margin-top:60px;font-size:92px">국비로 배우고<br>싶다면?</h1>
+<p class="lead" style="margin-top:44px">배우고 싶은 과정만 알려 주세요.<br>국비가 되는지부터 안내해 드려요.</p>
+<p class="body" style="margin-top:40px">입과 전에 뭘 확인하는지도 같이 알려 드려요.<br>카드 신청은 그다음이에요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1545,6 +1612,7 @@ SETS = {
     "20": (Y_CHIP, Y_SERIES, [Y1, Y2, Y3, Y4, Y5, Y6]),
     "21": (X_CHIP, X_SERIES, [X1, X2, X3, X4, X5, X6]),
     "22": (W_CHIP, W_SERIES, [W1, W2, W3, W4, W5, W6]),
+    "23": (V_CHIP, V_SERIES, [V1, V2, V3, V4, V5, V6]),
 }
 
 if __name__ == "__main__":
