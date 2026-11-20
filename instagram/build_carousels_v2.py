@@ -1590,6 +1590,81 @@ V6 = f"""
 </div>
 """
 
+# ---------- 24 일러스트 학원, 목적부터 (2026-11-20, posts/2026-11-19_일러스트-학원-고르는-법) ----------
+# 근거: 위 글(검색어 '일러스트레이터 학원'의 두 뜻, 목적별 네 종류 = 작성자 분류, 상담 질문 여섯 가지 = 작성자 조언, 대전점은 포트폴리오 과정 쪽).
+# 기억 요소 = 거대한 글자 '목적부터'. 학원비·교습비·조회처 없음(2026-11-19 원칙). 과정은 이름 수준만.
+N_CHIP, N_SERIES = "진로", "일러스트 학원, 목적부터"
+
+
+def nq(text, hot=False):
+    return f"""
+<p style="margin-top:30px;font-size:50px;font-weight:700;letter-spacing:-1.5px;line-height:1.2;color:{ORANGE if hot else NAVY}">{text}</p>"""
+
+
+# 1 표지 — 거대한 '목적부터'
+N1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">일러스트 학원을 찾는 중이라면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:1;font-weight:800;letter-spacing:-6px;margin-left:-6px">목적부터</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">이름은 같아도<br><span class="mark">배우는 게</span> 달라요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">어디가 좋은지는<br>뭘 하려고 배우는지에 따라 달라져요.</p>
+"""
+
+# 2 검색어의 두 뜻 — 핵심 한 줄 오렌지 선
+N2 = f"""
+<h1 style="margin-top:48px;font-size:84px">'일러스트레이터 학원'은<br>뜻이 두 가지예요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">프로그램을 배우는 곳,<br>그림을 배우는 곳.</div>
+</div>
+<p class="body" style="margin-top:48px">프로그램 수업에서는 로고와 아이콘을 만드는<br>도구 사용법을 배워요.</p>
+<p class="body" style="margin-top:36px">그림 수업에서는 형태와 인체, 색을 배워요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">전화로는 이렇게 물어보세요. "프로그램을 배워요, 그림을 배워요?"</p>
+"""
+
+# 3 네 종류 — 순서 아님
+N3 = f"""
+<h1 style="margin-top:48px;font-size:88px">학원은 네 종류로<br>갈려요.</h1>
+{submit("프로그램<br>교육", "일러스트레이터·포토샵 사용법<br>디자인 실무와 자격증이 목적이에요")}
+{submit("취미<br>드로잉", "주 1~2회 가볍게 그려요<br>시간대와 거리를 봐요")}
+{submit("입시 미술", "소묘·기초디자인 실기시험 준비<br>가려는 전형이 실기인지부터 봐요")}
+{submit("포트폴리오<br>과정", "게임·웹툰 쪽 입시와 취업 작품<br>기초에서 작품까지 이어지는지 봐요", True)}
+<p class="small" style="margin-top:auto;padding-bottom:40px">법이 나눈 종류는 아니에요. 배우는 목적에 따라 묶어 봤어요.</p>
+"""
+
+# 4 상담 질문 — 순서 아님
+N4 = f"""
+<h1 style="margin-top:48px;font-size:88px">상담 가면<br>이걸 물어보세요.</h1>
+{nq("수업이 어떤 순서로 이어져요?")}
+{nq("끝나면 어떤 작품이 몇 점쯤 남아요?", True)}
+{nq("그림은 누가, 얼마나 자주 봐 줘요?")}
+{nq("한 반 인원과 수업 시간은요?")}
+{nq("먼저 배운 수강생 작품을 볼 수 있어요?")}
+{nq("지금 제 그림으로는 어디서 시작해요?")}
+<p class="body" style="margin-top:auto;padding-bottom:40px">여러 학원에 똑같이 묻고 답을 적어 두세요.<br>나란히 놓으면 차이가 보여요.</p>
+"""
+
+# 5 대전점 — 순서 아님
+N5 = f"""
+<h1 style="margin-top:48px;font-size:88px">대전점은<br>포트폴리오 과정이에요.</h1>
+{course("게임원화·일러스트", "입시와 취업에 낼 작품")}
+{course("웹툰", "입시와 취업에 낼 작품")}
+{course("게임 3D그래픽", "취업 포트폴리오 중심", True)}
+<p class="body" style="margin-top:auto;padding-bottom:40px">일러스트레이터 사용법이나 디자인 자격증이 목적이면<br>그 과정이 있는 컴퓨터·디자인 학원이 빨라요.</p>
+"""
+
+# 6 상담
+N6 = f"""
+<h1 style="margin-top:60px;font-size:92px">내 그림으로<br>어디서 시작할까요?</h1>
+<p class="lead" style="margin-top:44px">그려 둔 그림을 가져오세요.<br>지금 어디쯤인지 같이 봐 드려요.</p>
+<p class="body" style="margin-top:40px">전화로 목적만 알려 주셔도<br>저희와 맞는지부터 말씀드려요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1613,6 +1688,7 @@ SETS = {
     "21": (X_CHIP, X_SERIES, [X1, X2, X3, X4, X5, X6]),
     "22": (W_CHIP, W_SERIES, [W1, W2, W3, W4, W5, W6]),
     "23": (V_CHIP, V_SERIES, [V1, V2, V3, V4, V5, V6]),
+    "24": (N_CHIP, N_SERIES, [N1, N2, N3, N4, N5, N6]),
 }
 
 if __name__ == "__main__":
