@@ -26,7 +26,7 @@
 > - 2026-11-17 공식 API: 릴스 r19(캐릭터 디자인, 얼굴부터 그리는 실수) https://www.instagram.com/reel/Df1WLRpGXht/ · 게시물 21(3ds Max, 비싼데 어떻게 시작해요?, 6장) https://www.instagram.com/p/Df1WW5Vj8Lx/ (사용자 수동 지시 "오늘 SNS 2건 업로드") — 개발자 계정 잠금으로 한 번 막혔다가 사용자 신원 확인 뒤 같은 날 게시. 게시물 21은 2026-11-18 사용자가 삭제
 > - 2026-11-18 공식 API: 릴스 r20(웹툰 회사 신입, 노력하면 기다려 준대요) https://www.instagram.com/reel/Df3a7aRgKkJ/ · 게시물 22(고2 겨울방학, 포트폴리오 시작, 6장) https://www.instagram.com/p/Df3bIM8D8xA/ (사용자 수동 지시 "오늘 SNS 새 기준으로 2건 발행")
 > - 2026-11-19 공식 API: 릴스 r21(비전공자도 게임회사에 들어갈 수 있을까요?) https://www.instagram.com/reel/Df55erfE6oY/ · 게시물 23(국비 수업, 카드보다 상담 먼저, 6장) https://www.instagram.com/p/Df55puXj2EE/ (사용자 수동 지시 "오늘 SNS 2건과 블로그 2건")
-> - 2026-11-20 공식 API: 릴스 r22(독학으로 그림, 어디서 막히셨나요?) (2026-11-20 게시 대기) · 게시물 24(일러스트 학원, 목적부터, 6장) (2026-11-20 게시 대기) (사용자 수동 지시 "오늘 SNS 2건 쓰고나서 티스토리")
+> - 2026-11-20 공식 API: 릴스 r22(독학으로 그림, 어디서 막히셨나요?) https://www.instagram.com/reel/Df8gOWRnFR4/ · 게시물 24(일러스트 학원, 목적부터, 6장) https://www.instagram.com/p/Df8gZo2j_9A/ (사용자 수동 지시 "오늘 SNS 2건 쓰고나서 티스토리")
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
