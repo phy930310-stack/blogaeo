@@ -1665,6 +1665,74 @@ N6 = f"""
 </div>
 """
 
+# ---------- 25 캐릭터 일러스트, 한 장으론 모자라요 (2026-11-21, posts/2026-11-20_캐릭터-일러스트-포트폴리오) ----------
+# 근거: 위 글(게임잡 캐릭터 원화 공고 3건, 2026년 8~10월 등록, 2026-11-20 원문 재열람 — 따옴표 안은 공고 문장의 일부를 그대로 옮김).
+# 취미/포트폴리오 구분·막히는 세 곳·연습 네 단계는 작성자 조언이라 장마다 밝힌다. 기억 요소 = 거대한 글자 '한 장'. 회사명·학원비·과정 상세 없음.
+H_CHIP, H_SERIES = "취업", "캐릭터 일러스트, 한 장으론 모자라요"
+
+# 1 표지 — 거대한 '한 장'
+H1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">캐릭터 일러스트를 혼자 그리고 있다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:260px;line-height:1;font-weight:800;letter-spacing:-8px;margin-left:-8px">한 장</span>
+</div>
+<h1 style="margin-top:70px;font-size:84px">잘 나온 한 장으로는<br><span class="mark">모자라요.</span></h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">채용 공고에 적힌 문장에서<br>연습 순서를 거꾸로 잡았어요.</p>
+"""
+
+# 2 취미 그림과 포트폴리오 — 핵심 한 줄 오렌지 선
+H2 = f"""
+<h1 style="margin-top:48px;font-size:88px">취미 그림과<br>포트폴리오는 달라요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">같은 캐릭터를<br>다른 각도로도 그려요.</div>
+</div>
+<p class="body" style="margin-top:48px">취미 그림은 마음에 드는 한 장이면 충분해요.<br>자신 있는 각도만 그려도 괜찮아요.</p>
+<p class="body" style="margin-top:36px">포트폴리오는 어떻게 만들었는지<br>과정도 같이 내요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">공고에 적힌 구분은 아니에요. 공고 문장을 읽고 저희가 나눠 봤어요.</p>
+"""
+
+# 3 공고 문장 — 순서 아님
+H3 = f"""
+<h1 style="margin-top:48px;font-size:88px">공고에는 이렇게<br>적혀 있어요.</h1>
+{submit("인체", "&quot;인체 구조와 비례에 대한 이해&quot;<br>전신과 여러 포즈로 보여 줘요", True)}
+{submit("연출", "&quot;구도, 포즈, 배경 및 화면 연출&quot;<br>배경이 있는 완성작으로 보여 줘요")}
+{submit("설계", "&quot;캐릭터 시트, 디자인 바리에이션&quot;<br>앞·옆·뒤와 의상 변형으로 보여 줘요")}
+<p class="body" style="margin-top:48px">경력 칸이 '무관'이어도 제작 경험을 적은 곳이 있어요.<br>자격 요건까지 읽어 보세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">게임잡 캐릭터 원화 공고 3건(2026년 8~10월 등록). 보여 줄 그림은 저희 해석이에요.</p>
+"""
+
+# 4 혼자 그릴 때 막히는 곳 — 순서 아님
+H4 = f"""
+<h1 style="margin-top:48px;font-size:88px">혼자 그리면<br>여기서 막혀요.</h1>
+{submit("얼굴만", "전신과 옆모습, 뒷모습이<br>거의 없어요", True)}
+{submit("미완성", "선화에서 멈추거나<br>배경 없이 인물만 남아요")}
+{submit("못 찾음", "어색한 건 보이는데<br>어디를 고칠지 모르겠어요")}
+<p class="body" style="margin-top:48px">하나라도 내 얘기라면 연습량을 늘리기보다<br>그리는 대상을 바꿔 보세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">공고에 있는 말이 아니라 저희 의견이에요.</p>
+"""
+
+# 5 연습 순서 — 실제 순서이므로 번호
+H5 = f"""
+<h1 style="margin-top:48px;font-size:88px">공고에서 거꾸로<br>잡은 네 단계.</h1>
+{step(1, "전신과 포즈", "앉고 뛰고 돌아보는 몸을 그려요")}
+{step(2, "캐릭터 한 명의 시트", "앞·옆·뒤에 표정과 의상 변형을 붙여요")}
+{step(3, "구도가 있는 한 장", "배경과 상황 안에 넣고 끝까지 완성해요")}
+{step(4, "과정 남기기", "러프, 선화, 채색을 단계마다 저장해요", True)}
+<p class="small" style="margin-top:auto;padding-bottom:40px">이 순서는 공고에 있는 게 아니라 저희가 권하는 거예요.</p>
+"""
+
+# 6 상담
+H6 = f"""
+<h1 style="margin-top:60px;font-size:92px">그려 둔 그림,<br>그대로 가져오세요.</h1>
+<p class="lead" style="margin-top:44px">잘 나온 것만 고르지 않아도 돼요.<br>없는 게 있으면 거기가 시작점이에요.</p>
+<p class="body" style="margin-top:40px">전신, 같은 캐릭터 여러 장, 완성작 한 장,<br>지우지 않은 러프가 있으면 빨리 정해져요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1689,6 +1757,7 @@ SETS = {
     "22": (W_CHIP, W_SERIES, [W1, W2, W3, W4, W5, W6]),
     "23": (V_CHIP, V_SERIES, [V1, V2, V3, V4, V5, V6]),
     "24": (N_CHIP, N_SERIES, [N1, N2, N3, N4, N5, N6]),
+    "25": (H_CHIP, H_SERIES, [H1, H2, H3, H4, H5, H6]),
 }
 
 if __name__ == "__main__":
