@@ -1733,6 +1733,74 @@ H6 = f"""
 </div>
 """
 
+# ---------- 26 게임 프로그래머 포폴, 코드도 내요 (2026-11-24, posts/2026-11-23_게임-프로그래머-포트폴리오) ----------
+# 근거: 위 글(게임잡 게임 프로그래머 공고 3건, 2026년 7~11월 등록, 2026-11-23 원문 재열람 — 따옴표 안은 공고 문장의 일부를 그대로 옮김).
+# 영상/묶음 구분·혼자 만들 때 빠지는 세 가지·준비 네 단계는 작성자 조언이라 장마다 밝힌다. 기억 요소 = 거대한 글자 '코드'. 회사명·학원비·과정 상세 없음.
+I_CHIP, I_SERIES = "취업", "게임 프로그래머 포폴, 코드도 내요"
+
+# 1 표지 — 거대한 '코드'
+I1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임 프로그래머 포트폴리오를 만들고 있다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:260px;line-height:1;font-weight:800;letter-spacing:-8px;margin-left:-8px">코드</span>
+</div>
+<h1 style="margin-top:70px;font-size:84px">공고는 영상 말고<br><span class="mark">코드를</span> 달라고 해요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">게임 프로그래머 공고 세 건에 적힌<br>제출물을 옮겨 왔어요.</p>
+"""
+
+# 2 공고 문장 — 순서 아님
+I2 = f"""
+<h1 style="margin-top:48px;font-size:88px">공고에는 이렇게<br>적혀 있어요.</h1>
+{submit("코드", "&quot;본인이 직접 작성한 소스코드&quot;<br>직접 쓴 코드 파일로 내요", True)}
+{submit("설명", "&quot;개발 철학과 코딩 스타일&quot;<br>왜 그렇게 짰는지 문서로 적어요")}
+{submit("형태", "&quot;블로그 및 클라우드 URL 주소&quot;<br>pdf 한 부나 링크 한 곳으로 묶어요")}
+<p class="body" style="margin-top:48px">경력 칸이 '무관'이어도 실무 경험을 적은 곳이 있어요.<br>지원 자격까지 읽어 보세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">게임잡 게임 프로그래머 공고 3건(2026년 7~11월 등록). 낼 것은 저희 해석이에요.</p>
+"""
+
+# 3 영상만 낼 때 — 핵심 한 줄 오렌지 선
+I3 = f"""
+<h1 style="margin-top:48px;font-size:88px">영상만 내면<br>이게 안 보여요.</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">코드를 어떻게<br>짰는지가 안 보여요.</div>
+</div>
+<p class="body" style="margin-top:48px">영상은 게임이 돌아간다는 걸 보여 줘요.<br>공고가 달라는 건 직접 쓴 코드예요.</p>
+<p class="body" style="margin-top:36px">영상은 빼지 말고 맨 앞에 두세요.<br>코드와 문서를 열기 전에 전체가 보여요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">공고에 적힌 구분은 아니에요. 공고 문장을 읽고 저희가 나눠 봤어요.</p>
+"""
+
+# 4 혼자 만들 때 빠지는 것 — 순서 아님
+I4 = f"""
+<h1 style="margin-top:48px;font-size:88px">혼자 만들면<br>이게 빠져요.</h1>
+{submit("내 코드", "강의 코드, 에셋 코드와<br>내가 쓴 코드가 섞여 있어요", True)}
+{submit("구조", "기능이 한 파일에 몰려 있고<br>이름만 봐선 역할을 몰라요")}
+{submit("이유", "돌아가긴 하는데<br>왜 그렇게 짰는지 적어 둔 게 없어요")}
+<p class="body" style="margin-top:48px">앞의 둘은 혼자 정리해도 고칠 수 있어요.<br>이유는 누가 물어봐야 드러나요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">공고에 있는 말이 아니라 저희 의견이에요.</p>
+"""
+
+# 5 준비 순서 — 실제 순서이므로 번호
+I5 = f"""
+<h1 style="margin-top:48px;font-size:88px">낼 것부터 정하고<br>네 단계로 가요.</h1>
+{step(1, "작은 게임 하나 완성", "범위를 줄여서 끝까지 만들고 영상을 남겨요")}
+{step(2, "내가 쓴 코드 가려내기", "가져온 코드는 폴더를 나누고 출처를 적어요")}
+{step(3, "핵심 기능 하나 설명", "문제, 고른 방법, 결과를 한 쪽에 적어요")}
+{step(4, "한곳에 묶기", "pdf 한 부에 저장소와 영상 주소를 넣어요", True)}
+<p class="small" style="margin-top:auto;padding-bottom:40px">이 순서는 저희가 권하는 거예요. 공고엔 없어요.</p>
+"""
+
+# 6 상담
+I6 = f"""
+<h1 style="margin-top:60px;font-size:92px">만들던 프로젝트,<br>그대로 가져오세요.</h1>
+<p class="lead" style="margin-top:44px">정리하지 않아도 돼요.<br>없는 게 있으면 거기가 시작점이에요.</p>
+<p class="body" style="margin-top:40px">실행되는 게임, 직접 쓴 코드, 따라 만든 강의 목록,<br>막힌 곳을 적은 메모가 있으면 빨리 정해져요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1758,6 +1826,7 @@ SETS = {
     "23": (V_CHIP, V_SERIES, [V1, V2, V3, V4, V5, V6]),
     "24": (N_CHIP, N_SERIES, [N1, N2, N3, N4, N5, N6]),
     "25": (H_CHIP, H_SERIES, [H1, H2, H3, H4, H5, H6]),
+    "26": (I_CHIP, I_SERIES, [I1, I2, I3, I4, I5, I6]),
 }
 
 if __name__ == "__main__":
