@@ -28,7 +28,7 @@
 > - 2026-11-19 공식 API: 릴스 r21(비전공자도 게임회사에 들어갈 수 있을까요?) https://www.instagram.com/reel/Df55erfE6oY/ · 게시물 23(국비 수업, 카드보다 상담 먼저, 6장) https://www.instagram.com/p/Df55puXj2EE/ (사용자 수동 지시 "오늘 SNS 2건과 블로그 2건")
 > - 2026-11-20 공식 API: 릴스 r22(독학으로 그림, 어디서 막히셨나요?) https://www.instagram.com/reel/Df8gOWRnFR4/ · 게시물 24(일러스트 학원, 목적부터, 6장) https://www.instagram.com/p/Df8gZo2j_9A/ (사용자 수동 지시 "오늘 SNS 2건 쓰고나서 티스토리")
 > - 2026-11-21 공식 API: 릴스 r23(게임회사 면접에서는 뭘 물어볼까요?) https://www.instagram.com/reel/Df_GF0wlcAK/ · 게시물 25(캐릭터 일러스트, 한 장으론 모자라요, 6장) https://www.instagram.com/p/Df_GQ-dj66K/ (사용자 수동 지시 "오늘은 SNS 2개만 올려줘")
-> - 2026-11-24 공식 API: 릴스 r24(포트폴리오 만들다 막막해질 때) (2026-11-24 게시 대기) · 게시물 26(게임 프로그래머 포폴, 코드도 내요, 6장) (2026-11-24 게시 대기) (사용자 수동 지시 "오늘 SNS 2건 올려줘")
+> - 2026-11-24 공식 API: 릴스 r24(포트폴리오 만들다 막막해질 때) https://www.instagram.com/reel/DgGsYT8mUSy/ · 게시물 26(게임 프로그래머 포폴, 코드도 내요, 6장) https://www.instagram.com/p/DgGsiDdj13a/ (사용자 수동 지시 "오늘 SNS 2건 올려줘")
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
