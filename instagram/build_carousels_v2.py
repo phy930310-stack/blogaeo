@@ -1801,6 +1801,73 @@ I6 = f"""
 </div>
 """
 
+# ---------- 27 미술학원, 전형부터 정해요 (2026-11-25, posts/2026-10-29_대전-미술학원) ----------
+# 근거: 위 글(ZDNet Korea 2026.09.09 청강대 게임콘텐츠스쿨 2027학년도 모집 보도 — 입학정원 238명, 면접전형 수시 1차 88명·2차 50명,
+# 실기전형 수시 1차 60명·4절지 4시간·주제 당일 공개, 면접전형 서류 2배수 → 1인당 15분 이내 심층 면접).
+# 학원 구분·상담 질문은 작성자 의견이라 장마다 밝힌다. 손그림 실기 대비반 없음은 2026-10-29 사용자 확인. 기억 요소 = 거대한 글자 '실기 없이'.
+# 경쟁률·학원비·과정 상세 없음.
+O_CHIP, O_SERIES = "입시", "미술학원, 전형부터 정해요"
+
+# 1 표지 — 거대한 '실기 없이'
+O1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">대전에서 미술학원을 알아보는 중이라면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:200px;line-height:1;font-weight:800;letter-spacing:-6px;margin-left:-6px">실기 없이</span>
+</div>
+<h1 style="margin-top:90px;font-size:84px">손그림 시험 없이<br><span class="mark">뽑는 전형</span>이 있어요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">학원을 고르기 전에<br>전형부터 정해요.</p>
+"""
+
+# 2 두 전형 — 순서 아님
+O2 = f"""
+<h1 style="margin-top:48px;font-size:88px">전형이 다르면<br>시험도 달라요.</h1>
+{submit("실기", "시험장에서 정해진 시간 안에 그려요<br>4절지 한 장, 4시간, 주제는 당일 공개")}
+{submit("면접", "미리 만든 작품을 내고 면접을 봐요<br>서류로 두 배수, 한 명씩 15분 안쪽", True)}
+<p class="body" style="margin-top:48px">둘 다 청강대 게임콘텐츠스쿨 전형이에요.<br>같은 학교 안에서도 이렇게 갈려요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">2027학년도 기준(ZDNet Korea 2026.09.09).<br>2028학년도는 요강이 나오면 다시 확인하세요.</p>
+"""
+
+# 3 모집 인원 — 큰 숫자 둘
+O3 = f"""
+<h1 style="margin-top:48px;font-size:88px">뽑는 인원은<br>면접전형이 더 많아요.</h1>
+{adm("138", "명", "면접전형", "수시 1차 88명, 수시 2차 50명", True)}
+{adm("60", "명", "실기전형", "수시 1차")}
+<p class="body" style="margin-top:56px">면접전형은 포트폴리오가 필수예요.<br>낼 작품이 먼저 있어야 해요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">청강대 게임콘텐츠스쿨 2027학년도 입학정원 238명 기준<br>(ZDNet Korea 2026.09.09)</p>
+"""
+
+# 4 학원 구분 — 순서 아님, 작성자 의견
+O4 = f"""
+<h1 style="margin-top:48px;font-size:88px">그래서 다닐<br>학원도 갈려요.</h1>
+{submit("실기", "소묘와 기초디자인<br>시간 안에 완성하는 연습<br>입시미술학원이 맞아요")}
+{submit("포트폴리오", "디지털 완성작 여러 점, 제작 과정<br>말로 설명하기<br>게임·웹툰·일러스트 학원 쪽이에요", True)}
+<p class="body" style="margin-top:48px">저희는 포트폴리오·면접 전형을 준비해요.<br>손그림 실기 대비반은 없어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">학원 구분은 저희 의견이에요.</p>
+"""
+
+# 5 상담 질문 — 순서 아님, 작성자 조언
+O5 = f"""
+<h1 style="margin-top:48px;font-size:88px">상담에 가면<br>이렇게 물어보세요.</h1>
+{nq("포트폴리오 전형에 맞춰 봐 주시나요?", True)}
+{nq("수업은 태블릿으로 하나요,<br>손그림으로 하나요?")}
+{nq("끝나면 작품이 몇 점,<br>어떤 묶음으로 남나요?")}
+{nq("면접 연습도 같이 하나요?")}
+<p class="body" style="margin-top:48px">여러 학원에 똑같이 묻고<br>답을 나란히 놓아 보세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">질문은 저희가 권하는 거예요.</p>
+"""
+
+# 6 상담
+O6 = f"""
+<h1 style="margin-top:60px;font-size:92px">성적표와 그려 둔<br>그림을 가져오세요.</h1>
+<p class="lead" style="margin-top:44px">어느 전형이 맞는지부터 같이 봐요.</p>
+<p class="body" style="margin-top:40px">고1·고2는 겨울방학 전에 방향을 정해 두면<br>방학에 완성작을 만들 수 있어요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1827,6 +1894,7 @@ SETS = {
     "24": (N_CHIP, N_SERIES, [N1, N2, N3, N4, N5, N6]),
     "25": (H_CHIP, H_SERIES, [H1, H2, H3, H4, H5, H6]),
     "26": (I_CHIP, I_SERIES, [I1, I2, I3, I4, I5, I6]),
+    "27": (O_CHIP, O_SERIES, [O1, O2, O3, O4, O5, O6]),
 }
 
 if __name__ == "__main__":
