@@ -1868,6 +1868,75 @@ O6 = f"""
 </div>
 """
 
+# ---------- 28 게임 기획 포폴, 문서와 숫자 (2026-11-26, posts/2026-11-25_게임-기획자-포트폴리오) ----------
+# 근거: 위 글(게임잡 게임 기획 공고 3건, 2026년 9~11월 등록, 2026-11-25 원문 대조 — 따옴표 안은 공고 문장의 일부를 그대로 옮김).
+# 노트/포트폴리오 구분·혼자 쓸 때 빠지는 세 가지·준비 네 단계는 작성자 조언이라 장마다 밝힌다. 기억 요소 = 거대한 글자 '설정만?'.
+# 회사명·학원비·과정 상세 없음. 한 글자 접두는 다 써서 28번부터 두 글자 접두(PL)를 쓴다.
+PL_CHIP, PL_SERIES = "취업", "게임 기획 포폴, 문서와 숫자"
+
+# 1 표지 — 거대한 '설정만?'
+PL1 = f"""
+<div style="margin-top:40px;font-size:40px;font-weight:600;color:{MIST};letter-spacing:-.5px">게임 기획 포트폴리오를 준비하고 있다면</div>
+<div style="margin-top:8px;color:{NAVY};white-space:nowrap">
+  <span style="display:block;font-size:240px;line-height:1;font-weight:800;letter-spacing:-8px;margin-left:-8px">설정만?</span>
+</div>
+<h1 style="margin-top:80px;font-size:84px">공고는 <span class="mark">문서와</span><br><span class="mark">숫자</span>를 봐요.</h1>
+<p class="lead" style="margin-top:34px;color:{MIST}">게임 기획 공고 세 건에 적힌<br>요건을 옮겨 왔어요.</p>
+"""
+
+# 2 공고 문장 — 순서 아님
+PL2 = f"""
+<h1 style="margin-top:48px;font-size:88px">공고에는 이렇게<br>적혀 있어요.</h1>
+{submit("문서", "&quot;기획 의도를 명확하게 문서화&quot;<br>왜 넣는지부터 글로 써요", True)}
+{submit("숫자", "&quot;스프레드시트 기반의 수치 모델&quot;<br>값과 계산식을 시트로 내요")}
+{submit("엔진", "&quot;Unity 에디터를 활용한 콘텐츠 제작&quot;<br>에디터에서 직접 넣어 봐요")}
+<p class="body" style="margin-top:48px">학력 칸은 세 건 다 '학력무관'이었어요.<br>경력 '무관'이어도 설계 경험을 적은 곳이 있어요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">게임잡 게임 기획 공고 3건(2026년 9~11월 등록).<br>낼 것은 저희 해석이에요.</p>
+"""
+
+# 3 아이디어 노트와 다른 점 — 핵심 한 줄 오렌지 선
+PL3 = f"""
+<h1 style="margin-top:48px;font-size:88px">아이디어 노트와<br>뭐가 달라요?</h1>
+<div style="margin-top:52px;padding-left:28px;border-left:14px solid {ORANGE}">
+<div style="font-size:60px;font-weight:800;letter-spacing:-2px;line-height:1.15">읽는 사람이<br>달라요.</div>
+</div>
+<p class="body" style="margin-top:48px">아이디어 노트는 내가 읽어요.<br>포트폴리오는 그걸 보고 게임을 만들 사람이 읽어요.</p>
+<p class="body" style="margin-top:36px">그래서 세계관과 캐릭터에 더해<br>규칙, 숫자, 계산한 과정까지 내요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">공고에 적힌 구분은 아니에요. 공고 문장을 읽고 저희가 나눠 봤어요.</p>
+"""
+
+# 4 혼자 쓸 때 빠지는 것 — 순서 아님
+PL4 = f"""
+<h1 style="margin-top:48px;font-size:88px">혼자 쓰면<br>이게 빠져요.</h1>
+{submit("이유", "기능 목록은 긴데<br>왜 있어야 하는지가 안 보여요", True)}
+{submit("예외", "잘될 때 얘기만 있고<br>실패하거나 꺼질 때가 비어 있어요")}
+{submit("근거", "숫자는 써 놨는데<br>계산한 식을 지워 버렸어요")}
+<p class="body" style="margin-top:48px">하나라도 내 얘기라면 쪽수를 늘리기 전에<br>문서 하나를 끝까지 채워 보세요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">공고에 있는 말이 아니라 저희 의견이에요.</p>
+"""
+
+# 5 준비 순서 — 실제 순서이므로 번호
+PL5 = f"""
+<h1 style="margin-top:48px;font-size:88px">시스템 하나로<br>네 단계를 가요.</h1>
+{step(1, "시스템 하나 고르기", "게임 전체 말고 강화나 상점처럼 좁게 잡아요")}
+{step(2, "문서로 쓰기", "왜 필요한지, 규칙, 예외, 화면 흐름 순으로 적어요")}
+{step(3, "시트로 옮기기", "숫자를 스프레드시트에 넣고 계산식은 그대로 둬요")}
+{step(4, "확인하고 묶기", "돌려 보고 고친 데를 적어 pdf 한 부로 묶어요", True)}
+<p class="small" style="margin-top:auto;padding-bottom:40px">이 순서는 저희가 권하는 거예요. 공고엔 없어요.</p>
+"""
+
+# 6 상담
+PL6 = f"""
+<h1 style="margin-top:60px;font-size:92px">쓰던 기획서,<br>그대로 가져오세요.</h1>
+<p class="lead" style="margin-top:44px">다듬지 않아도 돼요.<br>없는 게 있으면 거기가 시작점이에요.</p>
+<p class="body" style="margin-top:40px">쓰다 만 기획서, 숫자를 넣어 본 시트,<br>오래 한 게임 메모가 있으면 빨리 정해져요.</p>
+<div class="body" style="margin-top:56px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1895,6 +1964,7 @@ SETS = {
     "25": (H_CHIP, H_SERIES, [H1, H2, H3, H4, H5, H6]),
     "26": (I_CHIP, I_SERIES, [I1, I2, I3, I4, I5, I6]),
     "27": (O_CHIP, O_SERIES, [O1, O2, O3, O4, O5, O6]),
+    "28": (PL_CHIP, PL_SERIES, [PL1, PL2, PL3, PL4, PL5, PL6]),
 }
 
 if __name__ == "__main__":
