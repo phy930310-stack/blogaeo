@@ -41,10 +41,31 @@ h1{{font-weight:800;letter-spacing:-3px;line-height:1.08}}
 """
 
 
+# 2026-11-27 후킹 규칙(적용규칙.md '멈추게 하는 표지'): 장 본문이 DARK 표식으로 시작하면 네이비 바탕 + 흰 로고로 그린다.
+# 표지와 마지막 장(저장·상담 유도)에만 쓴다. 표식이 없는 장은 예전과 똑같은 HTML이 나온다.
+DARK = "<!--dark-->"
+W70 = "rgba(255,255,255,.7)"
+DARK_CSS = f"""
+.dk{{position:absolute;inset:0;background:{NAVY};color:#fff}}
+.dk .top{{color:{W70}}}
+.dk .top b{{color:#fff}}
+.dk .foot span{{color:{W70}}}
+.dk .body{{color:#fff}}
+.dk .small{{color:{W70}}}
+"""
+
+
 def frame(n, body, chip="입시", series="성적이 낮아도 게임학과", total=7):
+    dark = body.lstrip().startswith(DARK)
     top = f'<div class="top"><span><b>{chip}</b>&nbsp; {series}</span><span>{n}/{total}</span></div>' if n > 1 else ""
-    foot = f'<div class="foot"><img src="logo/SBS아카데미게임학원_Color.png" alt="SBS아카데미게임학원"><span>{"대전점" if n < total else "@sbs_game_daejeon"}</span></div>'
-    return page(1080, 1350, f'<div class="in">{top}{body}{foot}</div>', CSS)
+    tail = "대전점" if n < total else "@sbs_game_daejeon"
+    if dark and n == 1:
+        tail = "옆으로 넘겨 보세요"
+    foot = f'<div class="foot"><img src="logo/SBS아카데미게임학원_{"White" if dark else "Color"}.png" alt="SBS아카데미게임학원"><span>{tail}</span></div>'
+    inner = f'<div class="in">{top}{body}{foot}</div>'
+    if dark:
+        return page(1080, 1350, f'<div class="dk">{inner}</div>', CSS + DARK_CSS)
+    return page(1080, 1350, inner, CSS)
 
 
 # ───────────────────────── 02 성적 0%, 포트폴리오 100% (2026-10-29 개정, 6장) ─────────────────────────
@@ -1937,6 +1958,126 @@ PL6 = f"""
 </div>
 """
 
+# ---------- 29 인체 드로잉, 서 있는 그림만? (2026-11-27, posts/2026-10-23_인체-드로잉-기초) ----------
+# 근거: 위 글(움직임 → 구조 → 비율 순서, 등신 기준, 하루 30분 루틴 — 일반적인 드로잉 학습 기준을 정리한 것으로 공식 기준이 아님을 장마다 밝힌다).
+# 2026-11-27 후킹 규칙 첫 적용: 표지는 네이비 바탕 + 독자 상황을 묻는 큰 글자 + 한 장면 그림(같은 자세 넷, 다른 자세 하나),
+# 답(연습 순서)은 2번 장부터. 마지막 장은 '저장' 유도 + 상담. 본사 계정(@sbsgame_academy) 2026-11 게시물 벤치마킹
+# (합격작 분석 글의 '저장해 두고 꺼내 보세요' 마무리, 캡션의 번호 요약). 학원비·과정 상세·합격 보장 없음.
+HB_CHIP, HB_SERIES = "입시", "인체 드로잉, 서 있는 그림만?"
+
+
+def fig(pose, col, w=150, op=1.0):
+    """단순 도형 인체(마네킹). pose: stand | sit | run"""
+    limb = f'fill="none" stroke="{col}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"'
+    if pose == "stand":
+        g = f"""<circle cx="60" cy="24" r="18" fill="{col}"/>
+<rect x="41" y="50" width="38" height="66" rx="12" fill="{col}"/>
+<polyline points="41,60 30,92 30,124" {limb}/><polyline points="79,60 90,92 90,124" {limb}/>
+<polyline points="51,112 49,162 49,210" {limb}/><polyline points="69,112 71,162 71,210" {limb}/>"""
+    elif pose == "sit":
+        g = f"""<circle cx="52" cy="46" r="18" fill="{col}"/>
+<rect x="33" y="72" width="38" height="64" rx="12" fill="{col}"/>
+<polyline points="52,84 66,112 92,118" {limb}/>
+<polyline points="52,132 98,134 100,208" {limb}/>
+<line x1="22" y1="154" x2="76" y2="154" stroke="{col}" stroke-width="9" stroke-linecap="round" opacity=".45"/>
+<line x1="30" y1="156" x2="30" y2="210" stroke="{col}" stroke-width="9" stroke-linecap="round" opacity=".45"/>
+<line x1="68" y1="156" x2="68" y2="210" stroke="{col}" stroke-width="9" stroke-linecap="round" opacity=".45"/>"""
+    else:
+        g = f"""<g transform="rotate(16 60 86)"><circle cx="60" cy="26" r="18" fill="{col}"/>
+<rect x="41" y="52" width="38" height="64" rx="12" fill="{col}"/></g>
+<polyline points="70,62 96,80 108,56" {limb}/><polyline points="52,66 30,84 14,74" {limb}/>
+<polyline points="54,116 86,140 76,190" {limb}/><polyline points="46,116 28,160 2,176" {limb}/>"""
+    return f'<svg viewBox="-6 0 132 220" width="{w}" style="display:block;opacity:{op}" xmlns="http://www.w3.org/2000/svg">{g}</svg>'
+
+
+def heads(n, big, label, note, hot=False, unit="등신"):
+    """머리 n개 높이의 자. 비율(등신) 비교용."""
+    col = ORANGE if hot else NAVY
+    u, w = 46, 76
+    h = n * u
+    ticks = "".join(f'<line x1="4" y1="{4 + k * u}" x2="{w - 4}" y2="{4 + k * u}" stroke="{col}" stroke-width="4"/>' for k in range(1, int(n + 0.999)))
+    svg = (f'<svg viewBox="0 0 {w} {h + 8}" width="{w}" style="display:block" xmlns="http://www.w3.org/2000/svg">'
+           f'<rect x="4" y="4" width="{w - 8}" height="{h}" rx="14" fill="none" stroke="{col}" stroke-width="6"/>{ticks}'
+           f'<circle cx="{w / 2}" cy="{4 + u / 2}" r="{u / 2 - 7}" fill="{col}"/></svg>')
+    return f"""<div style="flex:1;display:flex;flex-direction:column;align-items:flex-start">
+<div style="height:{8 * u + 8}px;display:flex;align-items:flex-end">{svg}</div>
+<div style="margin-top:22px;font-size:62px;font-weight:800;letter-spacing:-2px;line-height:1;color:{col}">{big}<span style="font-size:30px;font-weight:700;letter-spacing:-.5px;margin-left:4px">{unit}</span></div>
+<p class="body" style="margin-top:12px;font-size:32px;font-weight:700">{label}</p>
+<p class="small" style="margin-top:2px">{note}</p></div>"""
+
+
+def seg(flex, text, col):
+    return f'<div style="flex:{flex};height:76px;background:{col};color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;letter-spacing:-.5px">{text}</div>'
+
+
+# 1 표지 — 네이비 바탕, 같은 자세 넷과 다른 자세 하나
+HB1 = f"""{DARK}
+<div style="margin-top:26px;font-size:42px;font-weight:600;color:{W70};letter-spacing:-.5px">캐릭터는 매일 그리는데</div>
+<div style="margin-top:14px;font-size:206px;line-height:1.02;font-weight:800;letter-spacing:-9px;margin-left:-8px;white-space:nowrap">서 있는<br>그림만?</div>
+<div style="margin-top:40px;display:flex;align-items:flex-end;gap:28px">
+{fig("stand", "#fff", 150, .5)}{fig("stand", "#fff", 150, .5)}{fig("stand", "#fff", 150, .5)}{fig("stand", "#fff", 150, .5)}{fig("run", ORANGE, 150)}
+</div>
+<h1 style="margin-top:44px;font-size:68px;letter-spacing:-2.5px">앉히면 몸이 꺾여 보이는<br>이유가 있어요.</h1>
+<p class="lead" style="margin-top:20px;color:{W70}">하루 30분 연습 순서를 담았어요.</p>
+"""
+
+# 2 순서 — 실제 순서이므로 번호
+HB2 = f"""
+<h1 style="margin-top:48px;font-size:88px">근육 이름부터<br>외우지 않아요.</h1>
+{step(1, "움직임", "30초~2분 크로키로 몸의 기울기와 흐름을 잡아요", True)}
+{step(2, "구조", "머리, 몸통, 골반을 상자와 원통으로 바꿔 그려요")}
+{step(3, "비율", "머리 크기를 자로 삼아 길이를 재요")}
+<p class="body" style="margin-top:52px">해부학은 그다음이에요.<br>자주 막히는 어깨, 손, 무릎부터 찾아봐요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">일반적인 연습 순서를 저희가 정리했어요. 공식 기준은 아니에요.</p>
+"""
+
+# 3 비율 — 머리 높이 자 세 개
+HB3 = f"""
+<h1 style="margin-top:48px;font-size:88px">비율은<br>머리로 재요.</h1>
+<div style="margin-top:44px;display:flex;gap:26px;align-items:flex-end">
+{heads(3, "2~3", "귀엽고 단순해요", "SD 캐릭터, 이모티콘")}
+{heads(7.5, "7~7.5", "실제 사람에 가까워요", "기초 연습은 여기서", True)}
+{heads(8, "8", "길고 늘씬해요", "게임, 웹툰 캐릭터", unit="등신 전후")}
+</div>
+<p class="body" style="margin-top:44px">7~7.5등신으로 기본을 익히고<br>그리고 싶은 화풍에 맞춰 늘리거나 줄여요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">대략의 기준이에요. 사람과 화풍에 따라 달라요.</p>
+"""
+
+# 4 하루 30분 — 실제 순서이므로 번호
+HB4 = f"""
+<h1 style="margin-top:48px;font-size:80px">하루 30분,<br>이렇게 나눠요.</h1>
+<div style="margin-top:44px;display:flex;gap:6px">{seg(2, "10분", NAVY)}{seg(2, "10분", NAVY)}{seg(1, "5분", NAVY)}{seg(1, "5분", ORANGE)}</div>
+{step(1, "크로키 10분", "1~2분짜리 포즈를 5~10장 빠르게 그려요")}
+{step(2, "마네킹 10분", "그중 한 장을 도형으로 다시 세워요")}
+{step(3, "부분 5분", "손, 발, 어깨 중 막히는 곳 하나만 봐요")}
+{step(4, "내 캐릭터 5분", "오늘 익힌 포즈를 내 캐릭터에 옮겨요", True)}
+<p class="small" style="margin-top:auto;padding-bottom:40px">30분 기준 예시예요. 시간이 더 있으면 같은 비율로 늘려요.</p>
+"""
+
+# 5 작품으로 옮기기 — 세 자세
+HB5 = f"""
+<h1 style="margin-top:48px;font-size:84px">연습 그림과 작품이<br>따로 놀면 안 돼요.</h1>
+<div style="margin-top:50px;display:flex;align-items:flex-end;gap:54px">
+{fig("stand", NAVY, 150)}{fig("sit", NAVY, 150)}{fig("run", ORANGE, 150)}
+</div>
+<p class="body" style="margin-top:44px;font-weight:700">한 달 뒤, 같은 캐릭터를<br>서기, 앉기, 달리기 세 자세로 그려 보세요.</p>
+<p class="body" style="margin-top:30px">포트폴리오·면접 전형은 완성작이 중심이에요.<br>자세가 다양한 작품은 기초를 같이 보여 줘요.</p>
+<p class="small" style="margin-top:auto;padding-bottom:40px">제출 형식과 분량은 학교마다 달라요. 모집요강에서 확인하세요.</p>
+"""
+
+# 6 저장 + 상담 — 네이비 바탕
+HB6 = f"""{DARK}
+<h1 style="margin-top:36px;font-size:104px;letter-spacing:-4px">저장해 두고<br>연습할 때<br>꺼내 보세요.</h1>
+<div style="margin-top:44px;width:260px;height:14px;background:{ORANGE}"></div>
+<p class="lead" style="margin-top:44px">혼자 그리다 막히면<br>그린 그림을 가져오세요.</p>
+<p class="body" style="margin-top:24px;color:{W70}">크로키, 구조, 비율 중 뭐부터 할지 같이 봐요.</p>
+<div class="body" style="margin-top:40px;line-height:1.8">
+<p>프로필 링크에서 <b style="color:{ORANGE}">상담 신청</b> &nbsp;<span class="small">1~2분</span></p>
+<p>전화 042-716-7439 &nbsp;<span class="small">09:00~22:00</span></p>
+<p>대전광역시 서구 대덕대로 179, 5층<br><span class="small">둔산동, 엠제이굿모닝어학원빌딩 501호</span></p>
+</div>
+"""
+
 SETS = {
     "02": ("입시", "성적 0%, 포트폴리오 100%", [S1, S2, S3, S4, S5, S6]),
     "03": (K_CHIP, K_SERIES, [K1, K2, K3, K4, K5, K6, K7]),
@@ -1965,6 +2106,7 @@ SETS = {
     "26": (I_CHIP, I_SERIES, [I1, I2, I3, I4, I5, I6]),
     "27": (O_CHIP, O_SERIES, [O1, O2, O3, O4, O5, O6]),
     "28": (PL_CHIP, PL_SERIES, [PL1, PL2, PL3, PL4, PL5, PL6]),
+    "29": (HB_CHIP, HB_SERIES, [HB1, HB2, HB3, HB4, HB5, HB6]),
 }
 
 if __name__ == "__main__":
