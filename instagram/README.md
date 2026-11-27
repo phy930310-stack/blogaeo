@@ -31,7 +31,7 @@
 > - 2026-11-24 공식 API: 릴스 r24(포트폴리오 만들다 막막해질 때) https://www.instagram.com/reel/DgGsYT8mUSy/ · 게시물 26(게임 프로그래머 포폴, 코드도 내요, 6장) https://www.instagram.com/p/DgGsiDdj13a/ (사용자 수동 지시 "오늘 SNS 2건 올려줘")
 > - 2026-11-25 공식 API: 릴스 r25(게임을 오래 했으니 기획도 잘할까요?) https://www.instagram.com/reel/DgJS_nBhnkU/ · 게시물 27(미술학원, 전형부터 정해요, 6장) https://www.instagram.com/p/DgJTLW9D4Q7/ (사용자 수동 지시 "오늘 sns 2건, 티스토리 1개 써줘")
 > - 2026-11-26 공식 API: 릴스 r26(이걸 해서 취업할 수 있을까) https://www.instagram.com/reel/DgL7ws9B7QU/ · 게시물 28(게임 기획 포폴, 문서와 숫자, 6장) https://www.instagram.com/p/DgL77sTgd2Z/ (사용자 수동 지시 "오늘 SNS 2건 작업해주고, 47번까지 색인 요청")
-> - 2026-11-27 공식 API: 릴스 r27(흑백으로 명암 볼 때, Ctrl+Shift+U?) (2026-11-27 게시 대기) · 게시물 29(인체 드로잉, 서 있는 그림만?, 6장, **후킹 규칙 첫 적용** — 네이비 표지·저장 유도 마지막 장) (2026-11-27 게시 대기) (사용자 수동 지시 "오늘 SNS 2개 올려주고 본사 인스타 … 벤치마킹해서 우리 식대로 한번 체크하자. 어제 보내준 거 적용 가능한지 보고")
+> - 2026-11-27 공식 API: 릴스 r27(흑백으로 명암 볼 때, Ctrl+Shift+U?) https://www.instagram.com/reel/DgOZHNmB5Af/ · 게시물 29(인체 드로잉, 서 있는 그림만?, 6장, **후킹 규칙 첫 적용** — 네이비 표지·저장 유도 마지막 장) https://www.instagram.com/p/DgOZQI8ElWR/ (사용자 수동 지시 "오늘 SNS 2개 올려주고 본사 인스타 … 벤치마킹해서 우리 식대로 한번 체크하자. 어제 보내준 거 적용 가능한지 보고")
 > - **웹에서는 할 수 없는 일**: 링크 추가, 연락처(전화·주소) 저장(CANNOT_UPDATE_BUSINESS_INFO 오류), 게시물 고정, 스토리·하이라이트. 휴대폰 앱에서 한다.
 
 운영 원칙(`brand/channels.md`):
